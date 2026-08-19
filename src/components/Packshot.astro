@@ -1,0 +1,92 @@
+---
+// Packshot dibujado a mano (Tier B, SVG). Marcador de posición honesto:
+// no reproduce arte con derechos ni fotos de terceros. En producción se
+// sustituye por la foto real que suba la tienda desde el panel.
+const { forma = 'display', mark = 'var(--color-accent)', ratio = '5 / 6', alt = '' } = Astro.props;
+
+const siluetas = {
+  display: [
+    { x: 66, y: 96, w: 118, h: 150, r: 6 },
+    { x: 66, y: 78, w: 118, h: 26, r: 6, tapa: true },
+  ],
+  etb: [
+    { x: 44, y: 108, w: 162, h: 126, r: 8 },
+    { x: 44, y: 92, w: 162, h: 24, r: 8, tapa: true },
+  ],
+  sobre: [{ x: 88, y: 72, w: 74, h: 168, r: 4, dentado: true }],
+  mazo: [
+    { x: 82, y: 118, w: 86, h: 120, r: 5 },
+    { x: 82, y: 104, w: 86, h: 20, r: 5, tapa: true },
+  ],
+  pack: [
+    { x: 62, y: 88, w: 68, h: 150, r: 4, dentado: true },
+    { x: 118, y: 100, w: 68, h: 150, r: 4, dentado: true },
+  ],
+  accesorio: [{ x: 56, y: 106, w: 138, h: 128, r: 10, lineas: true }],
+};
+
+const piezas = siluetas[forma] ?? siluetas.display;
+const uid = Math.random().toString(36).slice(2, 8);
+---
+
+<svg
+  viewBox="0 0 250 300"
+  style={`aspect-ratio: ${ratio}; width: 100%; --mark: ${mark};`}
+  role={alt ? 'img' : undefined}
+  aria-label={alt || undefined}
+  aria-hidden={alt ? undefined : 'true'}
+  preserveAspectRatio="xMidYMid meet"
+>
+  <defs>
+    <linearGradient id={`g-${uid}`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="var(--mark)" stop-opacity="0.34" />
+      <stop offset="100%" stop-color="var(--mark)" stop-opacity="0.08" />
+    </linearGradient>
+    <radialGradient id={`b-${uid}`} cx="0.5" cy="0.28" r="0.62">
+      <stop offset="0%" stop-color="var(--mark)" stop-opacity="0.20" />
+      <stop offset="100%" stop-color="var(--mark)" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="250" height="300" fill="var(--color-paper-3)" />
+  <rect width="250" height="300" fill={`url(#b-${uid})`} />
+
+  {piezas.map((p) => (
+    <g>
+      <rect
+        x={p.x}
+        y={p.y}
+        width={p.w}
+        height={p.h}
+        rx={p.r}
+        fill={p.tapa ? 'var(--mark)' : `url(#g-${uid})`}
+        fill-opacity={p.tapa ? '0.55' : '1'}
+        stroke="var(--mark)"
+        stroke-opacity="0.55"
+        stroke-width="1.5"
+      />
+      {p.dentado && (
+        <g stroke="var(--mark)" stroke-opacity="0.45" stroke-width="1.5">
+          <line x1={p.x + 6} y1={p.y + 14} x2={p.x + p.w - 6} y2={p.y + 14} stroke-dasharray="4 4" />
+        </g>
+      )}
+      {p.lineas && (
+        <g stroke="var(--mark)" stroke-opacity="0.35" stroke-width="1.5">
+          <line x1={p.x + 16} y1={p.y + 34} x2={p.x + p.w - 16} y2={p.y + 34} />
+          <line x1={p.x + 16} y1={p.y + 58} x2={p.x + p.w - 16} y2={p.y + 58} />
+          <line x1={p.x + 16} y1={p.y + 82} x2={p.x + p.w - 40} y2={p.y + 82} />
+        </g>
+      )}
+    </g>
+  ))}
+
+  <text
+    x="125"
+    y="278"
+    text-anchor="middle"
+    fill="var(--color-ink-3)"
+    font-family="var(--font-body)"
+    font-size="11"
+    letter-spacing="0.08em"
+  >foto pendiente</text>
+</svg>

@@ -1,0 +1,193 @@
+---
+import Base from '../layouts/Base.astro';
+import { productos, ENVIO } from '../data/productos.js';
+import { u } from '../lib/url.js';
+
+const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio: p.precio }));
+---
+
+<Base title="Finalizar pedido · Carta Alta">
+  <section class="wrap band-tight">
+    <div class="section-head">
+      <h1 style="font-size: var(--text-display-s);">Finalizar pedido</h1>
+      <p>Maqueta sin cobro real. En la fase 2 esto conecta con Stripe, Bizum y PayPal.</p>
+    </div>
+
+    <div class="split-2">
+      <form class="panel" data-form novalidate>
+        <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-md);">Dónde lo enviamos</h2>
+
+        <div class="field" data-campo>
+          <label for="nombre">Nombre y apellidos</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" required />
+          <span class="err" hidden>Escribe tu nombre para poder preparar el envío.</span>
+        </div>
+
+        <div class="field" data-campo>
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required />
+          <span class="err" hidden>Revisa el email, ahí se manda la confirmación.</span>
+        </div>
+
+        <div class="field" data-campo>
+          <label for="telefono">Teléfono</label>
+          <input id="telefono" name="telefono" type="tel" autocomplete="tel" required />
+          <span class="err" hidden>El transportista lo necesita para avisarte.</span>
+        </div>
+
+        <div class="field" data-campo>
+          <label for="direccion">Dirección</label>
+          <input id="direccion" name="direccion" type="text" autocomplete="street-address" required />
+          <span class="err" hidden>Falta la dirección de entrega.</span>
+        </div>
+
+        <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-md);">
+          <div class="field" data-campo>
+            <label for="cp">Código postal</label>
+            <input id="cp" name="cp" type="text" inputmode="numeric" autocomplete="postal-code" required />
+            <span class="err" hidden>Cinco dígitos.</span>
+          </div>
+          <div class="field" data-campo>
+            <label for="ciudad">Ciudad</label>
+            <input id="ciudad" name="ciudad" type="text" autocomplete="address-level2" required />
+            <span class="err" hidden>Falta la ciudad.</span>
+          </div>
+        </div>
+
+        <h2 style="font-size: var(--text-xl); margin-block: var(--space-lg) var(--space-md);">Cómo prefieres pagar</h2>
+        <div class="field">
+          <label for="pago">Método de pago</label>
+          <select id="pago" name="pago">
+            <option value="tarjeta">Tarjeta</option>
+            <option value="bizum">Bizum</option>
+            <option value="paypal">PayPal</option>
+            <option value="transferencia">Transferencia</option>
+          </select>
+        </div>
+
+        <p class="notice" data-nota-pago>Se cobra al confirmar el pedido. Nada se envía hasta que el pago entra.</p>
+
+        <button class="btn btn-primary" type="submit" style="width: 100%; margin-top: var(--space-lg);" data-enviar>
+          Confirmar pedido
+        </button>
+        <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-top: var(--space-sm);">
+          Al confirmar aceptas las condiciones de compra. <span class="todo">texto legal pendiente</span>
+        </p>
+      </form>
+
+      <aside class="panel" data-resumen>
+        <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-md);">Tu pedido</h2>
+        <div data-items style="display: grid; gap: var(--space-xs); font-size: var(--text-sm); margin-bottom: var(--space-md);"></div>
+        <div class="totals">
+          <div><span>Productos</span><span data-subtotal>0,00 €</span></div>
+          <div><span>Envío</span><span data-envio>0,00 €</span></div>
+          <div class="grand"><span>Total</span><span data-total>0,00 €</span></div>
+        </div>
+      </aside>
+    </div>
+
+    <div class="panel" data-gracias hidden style="margin-top: var(--space-lg);">
+      <h2 style="font-size: var(--text-2xl);">Pedido confirmado</h2>
+      <p style="color: var(--color-ink-2); margin-block: var(--space-sm) var(--space-md);">
+        Esto es una maqueta, así que aquí no se ha cobrado nada. En la tienda real llegaría el email de confirmación y el pedido entraría en el panel.
+      </p>
+      <a class="btn btn-ghost" href={u('tienda/')}>Volver a la tienda</a>
+    </div>
+  </section>
+
+  <script type="application/json" data-catalogo set:html={JSON.stringify(catalogo)}></script>
+  <script type="application/json" data-envio-config set:html={JSON.stringify(ENVIO)}></script>
+
+  <script is:inline>
+    (function () {
+      const catalogo = JSON.parse(document.querySelector('[data-catalogo]').textContent);
+      const envioCfg = JSON.parse(document.querySelector('[data-envio-config]').textContent);
+      const form = document.querySelector('[data-form]');
+      const boton = document.querySelector('[data-enviar]');
+      const items = document.querySelector('[data-items]');
+      const nota = document.querySelector('[data-nota-pago]');
+
+      const notas = {
+        tarjeta: 'Se cobra al confirmar el pedido. Nada se envía hasta que el pago entra.',
+        bizum: 'Bizum se cobra en el momento, igual que la tarjeta.',
+        paypal: 'Te llevamos a PayPal y vuelves aquí al terminar.',
+        transferencia: 'Te mandamos los datos por email. El pedido sale cuando llega el ingreso.',
+      };
+
+      document.getElementById('pago').addEventListener('change', function (e) {
+        nota.textContent = notas[e.target.value];
+      });
+
+      function eur(n) { const s = n.toFixed(2).replace('.', ','); return (s.endsWith(',00') ? s.slice(0, -3) : s) + ' €'; }
+
+      function pintar() {
+        const carro = window.carro.leer();
+        let subtotal = 0;
+        items.textContent = '';
+
+        Object.keys(carro).forEach(function (slug) {
+          const p = catalogo.find(function (x) { return x.slug === slug; });
+          if (!p) return;
+          subtotal += p.precio * carro[slug];
+          const fila = document.createElement('div');
+          fila.style.display = 'flex';
+          fila.style.justifyContent = 'space-between';
+          fila.style.gap = 'var(--space-md)';
+          const izq = document.createElement('span');
+          izq.textContent = carro[slug] + ' × ' + p.nombre;
+          const der = document.createElement('span');
+          der.textContent = eur(p.precio * carro[slug]);
+          fila.append(izq, der);
+          items.appendChild(fila);
+        });
+
+        if (!items.children.length) {
+          const aviso = document.createElement('p');
+          aviso.className = 'stock';
+          aviso.textContent = 'El carrito está vacío.';
+          items.appendChild(aviso);
+          boton.disabled = true;
+          boton.setAttribute('aria-disabled', 'true');
+        }
+
+        const envio = subtotal >= envioCfg.gratisDesde || subtotal === 0 ? 0 : envioCfg.coste;
+        document.querySelector('[data-subtotal]').textContent = eur(subtotal);
+        document.querySelector('[data-envio]').textContent = envio === 0 && subtotal > 0 ? 'Gratis' : eur(envio);
+        document.querySelector('[data-total]').textContent = eur(subtotal + envio);
+      }
+
+      function validar() {
+        let ok = true;
+        form.querySelectorAll('[data-campo]').forEach(function (campo) {
+          const input = campo.querySelector('input');
+          const err = campo.querySelector('.err');
+          let valido = input.value.trim().length > 0;
+          if (input.type === 'email') valido = /.+@.+\..+/.test(input.value);
+          if (input.id === 'cp') valido = /^\d{5}$/.test(input.value.trim());
+          campo.dataset.invalid = String(!valido);
+          err.hidden = valido;
+          input.setAttribute('aria-invalid', String(!valido));
+          if (!valido && ok) input.focus();
+          if (!valido) ok = false;
+        });
+        return ok;
+      }
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!validar()) return;
+        boton.dataset.state = 'loading';
+        boton.textContent = 'Confirmando';
+        setTimeout(function () {
+          window.carro.vaciar();
+          form.hidden = true;
+          document.querySelector('[data-resumen]').hidden = true;
+          document.querySelector('[data-gracias]').hidden = false;
+          document.querySelector('[data-gracias]').scrollIntoView({ block: 'start' });
+        }, 700);
+      });
+
+      pintar();
+    })();
+  </script>
+</Base>

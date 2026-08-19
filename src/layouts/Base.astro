@@ -1,0 +1,122 @@
+---
+import '../styles/global.css';
+import { juegos } from '../data/productos.js';
+import { u, BASE } from '../lib/url.js';
+
+const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Magic, One Piece y Naruto.', activo = '' } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es" data-base={BASE}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Demo con contenido de muestra. Fuera de buscadores hasta que sea una tienda real. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#251d16" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap"
+    />
+    <script is:inline>
+      (function () {
+        const KEY = 'carta-alta-carro';
+
+        function leer() {
+          try {
+            return JSON.parse(localStorage.getItem(KEY)) || {};
+          } catch (e) {
+            return {};
+          }
+        }
+
+        function guardar(carro) {
+          localStorage.setItem(KEY, JSON.stringify(carro));
+          pintarContador();
+          document.dispatchEvent(new CustomEvent('carro:cambio', { detail: carro }));
+        }
+
+        function unidades(carro) {
+          return Object.values(carro).reduce(function (t, n) { return t + n; }, 0);
+        }
+
+        function pintarContador() {
+          const n = unidades(leer());
+          document.querySelectorAll('[data-cart-count]').forEach(function (el) {
+            el.textContent = String(n);
+          });
+        }
+
+        window.carro = {
+          leer: leer,
+          add: function (slug, cantidad, tope) {
+            const carro = leer();
+            const actual = carro[slug] || 0;
+            const siguiente = Math.min(actual + (cantidad || 1), tope || 99);
+            carro[slug] = siguiente;
+            guardar(carro);
+            return siguiente;
+          },
+          set: function (slug, cantidad) {
+            const carro = leer();
+            if (cantidad <= 0) delete carro[slug];
+            else carro[slug] = cantidad;
+            guardar(carro);
+          },
+          vaciar: function () {
+            localStorage.removeItem(KEY);
+            pintarContador();
+            document.dispatchEvent(new CustomEvent('carro:cambio', { detail: {} }));
+          },
+        };
+
+        document.addEventListener('DOMContentLoaded', pintarContador);
+        pintarContador();
+      })();
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#principal">Saltar al contenido</a>
+
+    <p class="demo-bar">
+      <strong>Maqueta de demostración.</strong> Tienda ficticia con datos de muestra.<span class="solo-ancho"> Sin relación con ninguna tienda real.</span>
+    </p>
+
+    <header class="nav">
+      <nav class="wrap nav-inner" aria-label="Principal">
+        <a class="wordmark" href={u()}>Carta Alta</a>
+        <ul class="nav-games">
+          <li><a href={u('tienda/')} aria-current={activo === 'tienda' ? 'page' : undefined}>Todo</a></li>
+          {juegos.map((j) => (
+            <li><a href={u(`tienda/?juego=${j.slug}`)}>{j.nombre}</a></li>
+          ))}
+        </ul>
+        <a class="nav-cart" href={u('carrito/')}>
+          Carrito <span class="cart-count" data-cart-count>0</span>
+        </a>
+      </nav>
+    </header>
+
+    <main id="principal">
+      <slot />
+    </main>
+
+    <footer class="foot">
+      <div class="wrap foot-inner">
+        <p class="foot-statement">Producto sellado, guardado como debe estar y enviado el mismo día.</p>
+        <div class="foot-meta">
+          <span>Carta Alta, tienda de muestra</span>
+          <a href={u('tienda/')}>Tienda</a>
+          <a href={u('carrito/')}>Carrito</a>
+          <span class="todo">aquí van los datos fiscales</span>
+          <span class="todo">aviso legal y condiciones de compra</span>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>

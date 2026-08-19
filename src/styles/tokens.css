@@ -1,0 +1,73 @@
+/* Forge · tokens · theme: Midnight (atmospheric)
+ * paper-band: dark (L 16%) · display-style: grotesk-sans · accent-hue: warm (amber 55)
+ */
+:root {
+  /* Paper and ink */
+  --color-paper: oklch(16% 0.012 62);
+  --color-paper-blur: oklch(16% 0.012 62 / 0.86);
+  --color-paper-2: oklch(21% 0.014 62);
+  --color-paper-3: oklch(26% 0.016 62);
+  --color-ink: oklch(95% 0.006 72);
+  --color-ink-2: oklch(74% 0.012 72);
+  --color-ink-3: oklch(68% 0.012 72);
+
+  /* Accent */
+  --color-accent: oklch(76% 0.152 68);
+  --color-accent-ink: oklch(20% 0.04 68);
+  --color-accent-soft: oklch(76% 0.152 68 / 0.14);
+  --color-bloom-a: oklch(62% 0.17 58 / 0.20);
+  --color-bloom-b: oklch(52% 0.15 18 / 0.15);
+
+  /* Feedback */
+  --color-ok: oklch(74% 0.13 150);
+  --color-warn: oklch(78% 0.14 85);
+  --color-focus: oklch(84% 0.14 68);
+  --color-line: oklch(88% 0.012 62 / 0.13);
+
+  /* Game marks (colour only, never a logo) */
+  --game-onepiece: oklch(66% 0.17 30);
+  --game-magic: oklch(68% 0.13 285);
+  --game-pokemon: oklch(80% 0.15 90);
+  --game-naruto: oklch(70% 0.14 45);
+  --game-accesorios: oklch(70% 0.06 200);
+
+  /* Type */
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-body: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-display-s: clamp(2rem, 4vw + 1rem, 3.25rem);
+  --text-display: clamp(2.5rem, 6vw + 0.5rem, 4.5rem);
+
+  /* Space, 4pt scale */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: 4.5rem;
+  --space-3xl: 6.5rem;
+  --gutter: clamp(1.375rem, 5vw, 2rem);
+
+  /* Shape */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --rule: 1px solid var(--color-line);
+
+  /* Motion */
+  --dur-fast: 120ms;
+  --dur-base: 220ms;
+  --dur-slow: 420ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}

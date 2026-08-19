@@ -1,0 +1,153 @@
+---
+import Base from '../layouts/Base.astro';
+import Packshot from '../components/Packshot.astro';
+import { productos, juegoDe, ENVIO } from '../data/productos.js';
+import { u } from '../lib/url.js';
+
+const catalogo = productos.map((p) => ({
+  slug: p.slug,
+  nombre: p.nombre,
+  precio: p.precio,
+  stock: p.stock,
+  juego: juegoDe(p.juego).nombre,
+}));
+---
+
+<Base title="Carrito · Carta Alta">
+  <section class="wrap band-tight">
+    <div class="section-head">
+      <h1 style="font-size: var(--text-display-s);">Tu carrito</h1>
+      <p>Repasa el pedido antes de dar tus datos.</p>
+    </div>
+
+    <div class="split-2">
+      <div>
+        <div data-lineas></div>
+        <p data-vacio hidden style="color: var(--color-ink-2); padding-block: var(--space-lg);">
+          Todavía no has añadido nada. <a href={u('tienda/')} style="color: var(--color-accent);">Ir a la tienda</a>
+        </p>
+      </div>
+
+      <aside class="panel" data-resumen hidden>
+        <h2 style="font-size: var(--text-xl); margin-bottom: var(--space-md);">Resumen</h2>
+        <div class="totals">
+          <div><span>Productos</span><span data-subtotal>0,00 €</span></div>
+          <div><span>Envío</span><span data-envio>0,00 €</span></div>
+          <div class="grand"><span>Total</span><span data-total>0,00 €</span></div>
+        </div>
+        <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-block: var(--space-md);" data-aviso-envio></p>
+        <a class="btn btn-primary" href={u('checkout/')} style="width: 100%;">Finalizar pedido</a>
+        <button class="btn btn-ghost" type="button" data-vaciar style="width: 100%; margin-top: var(--space-xs);">Vaciar carrito</button>
+      </aside>
+    </div>
+  </section>
+
+  <template data-thumbs>
+    {productos.map((p) => (
+      <div data-thumb-slug={p.slug}>
+        <Packshot forma={p.forma} mark={juegoDe(p.juego).mark} alt="" />
+      </div>
+    ))}
+  </template>
+
+  <script type="application/json" data-catalogo set:html={JSON.stringify(catalogo)}></script>
+  <script type="application/json" data-envio-config set:html={JSON.stringify(ENVIO)}></script>
+
+  <script is:inline>
+    (function () {
+      const catalogo = JSON.parse(document.querySelector('[data-catalogo]').textContent);
+      const envioCfg = JSON.parse(document.querySelector('[data-envio-config]').textContent);
+      const plantilla = document.querySelector('[data-thumbs]');
+      const contenedor = document.querySelector('[data-lineas]');
+      const vacio = document.querySelector('[data-vacio]');
+      const resumen = document.querySelector('[data-resumen]');
+
+      function eur(n) { const s = n.toFixed(2).replace('.', ','); return (s.endsWith(',00') ? s.slice(0, -3) : s) + ' €'; }
+      function buscar(slug) { return catalogo.find(function (p) { return p.slug === slug; }); }
+
+      function thumb(slug) {
+        const origen = plantilla.content.querySelector('[data-thumb-slug="' + slug + '"]');
+        return origen ? origen.cloneNode(true) : document.createElement('div');
+      }
+
+      function pintar() {
+        const carro = window.carro.leer();
+        const slugs = Object.keys(carro);
+        contenedor.textContent = '';
+        vacio.hidden = slugs.length > 0;
+        resumen.hidden = slugs.length === 0;
+        if (!slugs.length) return;
+
+        let subtotal = 0;
+
+        slugs.forEach(function (slug) {
+          const p = buscar(slug);
+          if (!p) return;
+          const cantidad = carro[slug];
+          subtotal += p.precio * cantidad;
+
+          const fila = document.createElement('div');
+          fila.className = 'line';
+
+          const media = document.createElement('div');
+          media.className = 'line-thumb';
+          media.appendChild(thumb(slug));
+
+          const info = document.createElement('div');
+          info.className = 'line-info';
+          const titulo = document.createElement('p');
+          titulo.style.fontWeight = '600';
+          titulo.textContent = p.nombre;
+          const meta = document.createElement('p');
+          meta.className = 'stock';
+          meta.textContent = p.juego + ' · ' + eur(p.precio) + ' la unidad';
+          info.append(titulo, meta);
+
+          const ctrl = document.createElement('div');
+          ctrl.className = 'line-ctrl';
+
+          const qty = document.createElement('div');
+          qty.className = 'qty';
+          const menos = document.createElement('button');
+          menos.type = 'button';
+          menos.textContent = '−';
+          menos.setAttribute('aria-label', 'Quitar una unidad de ' + p.nombre);
+          const num = document.createElement('span');
+          num.textContent = String(cantidad);
+          const mas = document.createElement('button');
+          mas.type = 'button';
+          mas.textContent = '+';
+          mas.setAttribute('aria-label', 'Añadir una unidad de ' + p.nombre);
+          mas.disabled = cantidad >= p.stock;
+          menos.addEventListener('click', function () { window.carro.set(slug, cantidad - 1); });
+          mas.addEventListener('click', function () { if (cantidad < p.stock) window.carro.set(slug, cantidad + 1); });
+          qty.append(menos, num, mas);
+
+          const importe = document.createElement('span');
+          importe.className = 'price';
+          importe.textContent = eur(p.precio * cantidad);
+
+          ctrl.append(qty, importe);
+          fila.append(media, info, ctrl);
+          contenedor.appendChild(fila);
+        });
+
+        const gratis = subtotal >= envioCfg.gratisDesde;
+        const envio = gratis ? 0 : envioCfg.coste;
+        document.querySelector('[data-subtotal]').textContent = eur(subtotal);
+        document.querySelector('[data-envio]').textContent = gratis ? 'Gratis' : eur(envio);
+        document.querySelector('[data-total]').textContent = eur(subtotal + envio);
+        document.querySelector('[data-aviso-envio]').textContent = gratis
+          ? 'Envío gratis aplicado.'
+          : 'Te faltan ' + eur(envioCfg.gratisDesde - subtotal) + ' para el envío gratis.';
+      }
+
+      document.querySelector('[data-vaciar]').addEventListener('click', function () {
+        window.carro.vaciar();
+      });
+
+      document.addEventListener('carro:cambio', pintar);
+      pintar();
+    })();
+  </script>
+</Base>

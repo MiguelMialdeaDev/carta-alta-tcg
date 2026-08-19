@@ -1,0 +1,124 @@
+---
+import Base from '../../layouts/Base.astro';
+import Packshot from '../../components/Packshot.astro';
+import CardProducto from '../../components/CardProducto.astro';
+import { productos, juegoDe, ENVIO, eur } from '../../data/productos.js';
+
+export function getStaticPaths() {
+  return productos.map((p) => ({ params: { slug: p.slug }, props: { producto: p } }));
+}
+
+const { producto } = Astro.props;
+const juego = juegoDe(producto.juego);
+const agotado = producto.stock === 0;
+const pocas = producto.stock > 0 && producto.stock <= 3;
+const relacionados = productos
+  .filter((p) => p.juego === producto.juego && p.slug !== producto.slug)
+  .slice(0, 4);
+---
+
+<Base title={`${producto.nombre} · ${juego.nombre} · Carta Alta`} description={producto.resumen}>
+  <section class="wrap band-tight detail" style={`--mark: ${juego.mark};`}>
+    <div class="detail-media">
+      <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />
+    </div>
+
+    <div>
+      <span class="card-game">{juego.nombre}</span>
+      <h1 style="margin-block: var(--space-xs) var(--space-md);">{producto.nombre}</h1>
+      <p style="color: var(--color-ink-2); margin-bottom: var(--space-lg);">{producto.resumen}</p>
+
+      <p class="detail-price">{eur(producto.precio)}</p>
+      <p class="stock" style="margin-bottom: var(--space-lg);">
+        {agotado
+          ? 'Sin stock ahora mismo'
+          : pocas
+            ? `Quedan ${producto.stock} unidades`
+            : 'En stock, sale hoy'}
+      </p>
+
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-md); align-items: center; margin-bottom: var(--space-lg);">
+        <div class="qty" data-qty>
+          <button type="button" data-menos aria-label="Quitar una unidad" disabled>−</button>
+          <span data-valor aria-live="polite">1</span>
+          <button type="button" data-mas aria-label="Añadir una unidad">+</button>
+        </div>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-add
+          data-slug={producto.slug}
+          data-stock={producto.stock}
+          disabled={agotado}
+          aria-disabled={agotado ? 'true' : 'false'}
+        >{agotado ? 'Sin stock' : 'Añadir al carrito'}</button>
+      </div>
+
+      <dl class="spec" style="margin-bottom: var(--space-lg);">
+        <dt>Tipo</dt><dd>{producto.tipo}</dd>
+        <dt>Idioma</dt><dd>{producto.idioma}</dd>
+        <dt>Expansión</dt><dd><span class="todo">dato pendiente</span></dd>
+        <dt>Envío</dt><dd>{eur(ENVIO.coste)}, gratis desde {eur(ENVIO.gratisDesde)}</dd>
+      </dl>
+
+      <p class="notice">
+        ¿Buscas cartas sueltas de {juego.nombre}? Están en el perfil de CardMarket, no en esta web.
+      </p>
+    </div>
+  </section>
+
+  {relacionados.length > 0 && (
+    <section class="wrap band">
+      <div class="section-head">
+        <h2>Más de {juego.nombre}</h2>
+      </div>
+      <ul class="grid-products">
+        {relacionados.map((p) => <CardProducto producto={p} />)}
+      </ul>
+    </section>
+  )}
+
+  <script is:inline>
+    (function () {
+      const boton = document.querySelector('[data-add]');
+      if (!boton) return;
+
+      const stock = Number(boton.dataset.stock);
+      const menos = document.querySelector('[data-menos]');
+      const mas = document.querySelector('[data-mas]');
+      const valor = document.querySelector('[data-valor]');
+      let cantidad = 1;
+      let etiqueta = boton.textContent;
+
+      function pintar() {
+        valor.textContent = String(cantidad);
+        menos.disabled = cantidad <= 1;
+        mas.disabled = cantidad >= Math.max(stock, 1);
+      }
+
+      menos.addEventListener('click', function () { if (cantidad > 1) { cantidad--; pintar(); } });
+      mas.addEventListener('click', function () { if (cantidad < stock) { cantidad++; pintar(); } });
+      pintar();
+
+      boton.addEventListener('click', function () {
+        if (boton.disabled) return;
+        boton.dataset.state = 'loading';
+        boton.textContent = 'Añadiendo';
+        setTimeout(function () {
+          try {
+            window.carro.add(boton.dataset.slug, cantidad, stock);
+            boton.dataset.state = 'success';
+            boton.textContent = 'Añadido al carrito';
+          } catch (e) {
+            boton.dataset.state = 'error';
+            boton.textContent = 'No se pudo añadir';
+          }
+          setTimeout(function () {
+            delete boton.dataset.state;
+            boton.textContent = etiqueta;
+          }, 1800);
+        }, 260);
+      });
+    })();
+  </script>
+</Base>

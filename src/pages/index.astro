@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import CardProducto from '../components/CardProducto.astro';
+import { productos, juegos, ENVIO, eur } from '../data/productos.js';
+import { u } from '../lib/url.js';
+
+const destacados = productos.filter((p) => p.destacado);
+const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
+---
+
+<Base title="Carta Alta · Cartas selladas con envío en 24 horas" activo="home">
+  <section class="wrap hero">
+    <h1>Cartas selladas, enviadas en 24 horas</h1>
+    <p class="lede">
+      Sobres, cajas y mazos de Pokémon, Magic, One Piece y Naruto. Todo precintado y guardado en almacén propio.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href={u('tienda/')}>Ver la tienda</a>
+      <a class="btn btn-ghost" href="#juegos">Buscar por juego</a>
+    </div>
+  </section>
+
+  <section class="wrap band-tight" id="juegos" aria-label="Explorar la tienda">
+    <div class="bento">
+      <div class="cell span-2 reveal">
+        <span class="stat-num">24 h</span>
+        <h2>Sale el mismo día</h2>
+        <p>
+          Pedidos antes de las 17:00 salen ese día. Envío {eur(ENVIO.coste)} y gratis a partir de {eur(ENVIO.gratisDesde)}.
+        </p>
+        <a class="cell-link" href={u('tienda/')}>Empezar a comprar</a>
+      </div>
+
+      <div class="cell span-2 reveal">
+        <h2>Detrás del mostrador hay una persona</h2>
+        <p>
+          Te atiende quien prepara los pedidos. Si tienes dudas con una expansión o un idioma, pregunta antes de comprar.
+        </p>
+        <p><span class="todo">aquí va tu foto y tu nombre</span></p>
+      </div>
+
+      {juegos.slice(0, 4).map((j) => (
+        <a class="cell cell-game reveal" style={`--mark: ${j.mark};`} href={u(`tienda/?juego=${j.slug}`)}>
+          <h3>{j.nombre}</h3>
+          <span class="count">{cuenta(j.slug)} referencias</span>
+        </a>
+      ))}
+
+      <a class="cell cell-game reveal" style={`--mark: ${juegos[4].mark};`} href={u('tienda/?juego=accesorios')}>
+        <h3>{juegos[4].nombre}</h3>
+        <span class="count">{cuenta('accesorios')} referencias</span>
+      </a>
+
+      <div class="cell span-2 reveal">
+        <h2>Las cartas sueltas están en CardMarket</h2>
+        <p>
+          Aquí vendemos producto sellado. Para cartas individuales entra en el perfil, con el historial de ventas y las valoraciones ya hechas.
+        </p>
+        <a class="cell-link" href="#" rel="noopener">Ver el perfil de CardMarket</a>
+      </div>
+
+      <div class="cell reveal">
+        <h3>Precintado de fábrica</h3>
+        <p>Nada abierto ni reempaquetado. Si un sobre viene suelto, se dice en la ficha.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap band">
+    <div class="section-head">
+      <h2>Lo que más se mueve</h2>
+      <p>Cuatro referencias con stock hoy mismo.</p>
+    </div>
+    <ul class="grid-products">
+      {destacados.map((p) => <CardProducto producto={p} />)}
+    </ul>
+  </section>
+
+  <section class="wrap band-tight">
+    <div class="split-2">
+      <div>
+        <div class="section-head">
+          <h2>Antes de que preguntes</h2>
+        </div>
+        <dl class="spec">
+          <dt>Envío</dt>
+          <dd>{eur(ENVIO.coste)} a península. Gratis desde {eur(ENVIO.gratisDesde)}.</dd>
+          <dt>Plazo</dt>
+          <dd>Entrega en 24 o 48 horas según la zona.</dd>
+          <dt>Devoluciones</dt>
+          <dd><span class="todo">tu política, palabra por palabra</span></dd>
+        </dl>
+      </div>
+      <div class="panel">
+        <h3>¿Buscas algo que no está?</h3>
+        <p style="color: var(--color-ink-2); font-size: var(--text-sm); margin-block: var(--space-xs) var(--space-md);">
+          Escribe y te digo si puedo conseguirlo y a qué precio.
+        </p>
+        <a class="btn btn-primary" href="#">Escribir por WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</Base>

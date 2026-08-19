@@ -1,0 +1,28 @@
+---
+import Packshot from './Packshot.astro';
+import { juegoDe, eur } from '../data/productos.js';
+import { u } from '../lib/url.js';
+
+const { producto } = Astro.props;
+const juego = juegoDe(producto.juego);
+const agotado = producto.stock === 0;
+const ultimas = producto.stock > 0 && producto.stock <= 3;
+---
+
+<li class="card" data-juego={producto.juego} style={`--mark: ${juego.mark};`}>
+  <div class="card-media">
+    <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />
+  </div>
+  <div class="card-body">
+    <span class="card-game">{juego.nombre}</span>
+    <h3 class="card-name"><a href={u(`producto/${producto.slug}/`)}>{producto.nombre}</a></h3>
+    <div class="card-foot">
+      <span class="price">{eur(producto.precio)}</span>
+      {agotado
+        ? <span class="stock">Sin stock</span>
+        : ultimas
+          ? <span class="stock stock-low">Quedan {producto.stock}</span>
+          : <span class="stock">En stock</span>}
+    </div>
+  </div>
+</li>
