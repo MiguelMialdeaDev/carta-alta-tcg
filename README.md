@@ -1,5 +1,7 @@
 # Carta Alta TCG · demo fase 1
 
+**En vivo:** https://miguelmialdeadev.github.io/carta-alta-tcg/
+
 Maqueta de tienda de producto sellado de cartas. Marca ficticia, datos de muestra.
 
 ## Qué es y qué no es
@@ -11,6 +13,10 @@ Maqueta de tienda de producto sellado de cartas. Marca ficticia, datos de muestr
 ## Alcance decidido
 
 La web vende **producto sellado y accesorios**. Las cartas sueltas se quedan en CardMarket y desde la web se enlaza al perfil. Así no se vende dos veces la misma carta.
+
+## Publicar
+
+Cada push a `main` despliega solo con GitHub Actions. La web vive bajo `/carta-alta-tcg/`, asi que ningun enlace puede escribirse absoluto a la raiz: todos pasan por `u()` en `src/lib/url.js`.
 
 ## Arrancar
 
