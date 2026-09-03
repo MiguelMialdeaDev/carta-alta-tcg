@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Packshot from '../../components/Packshot.astro';
 import CardProducto from '../../components/CardProducto.astro';
 import { productos, juegoDe, ENVIO, eur } from '../../data/productos.js';
+import { titulo } from '../../data/marca.js';
 import { u } from '../../lib/url.js';
 
 export function getStaticPaths() {
@@ -19,7 +20,7 @@ const relacionados = productos
 ---
 
 <Base
-  title={`${producto.nombre} · ${juego.nombre} · Carta Alta`}
+  title={titulo(`${producto.nombre} · ${juego.nombre}`)}
   description={producto.resumen}
   activo={producto.juego}
 >

@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { juegos } from '../data/productos.js';
+import { MARCA } from '../data/marca.js';
 import { u, BASE } from '../lib/url.js';
 
 const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Magic, One Piece y Naruto.', activo = '' } = Astro.props;
@@ -15,7 +16,10 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
     <meta name="robots" content="noindex, nofollow" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#251d16" />
+    <meta name="theme-color" content="#faf9fc" />
+    <link rel="icon" type="image/png" sizes="32x32" href={u('favicon-32.png')} />
+    <link rel="icon" type="image/png" sizes="192x192" href={u('favicon-192.png')} />
+    <link rel="apple-touch-icon" href={u('apple-touch-icon.png')} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -24,7 +28,7 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
     />
     <script is:inline>
       (function () {
-        const KEY = 'carta-alta-carro';
+        const KEY = 'cardzadora-carro';
 
         function leer() {
           try {
@@ -83,12 +87,15 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
     <a class="skip" href="#principal">Saltar al contenido</a>
 
     <p class="demo-bar">
-      <strong>Maqueta de demostración.</strong> Tienda ficticia con datos de muestra.<span class="solo-ancho"> Sin relación con ninguna tienda real.</span>
+      <strong>Maqueta de demostración.</strong> Catálogo de muestra, todavía no se puede comprar.<span class="solo-ancho"> Los precios y el stock no son reales.</span>
     </p>
 
     <header class="nav">
       <nav class="wrap nav-inner" aria-label="Principal">
-        <a class="wordmark" href={u()}>Carta Alta</a>
+        <a class="wordmark" href={u()}>
+          <img src={u(MARCA.isotipo)} width="35" height="34" alt="" />
+          <span>{MARCA.palabra.antes}<span class="z">{MARCA.palabra.letra}</span>{MARCA.palabra.despues}</span>
+        </a>
         <ul class="nav-games">
           <li><a href={u('tienda/')} aria-current={activo === 'tienda' ? 'page' : undefined}>Todo</a></li>
           {juegos.map((j) => (
@@ -113,7 +120,7 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
       <div class="wrap foot-inner">
         <p class="foot-statement">Producto sellado, guardado como debe estar y enviado el mismo día.</p>
         <div class="foot-meta">
-          <span>Carta Alta, tienda de muestra</span>
+          <span>{MARCA.nombre}, catálogo de muestra</span>
           <a href={u('tienda/')}>Tienda</a>
           <a href={u('carrito/')}>Carrito</a>
           <span class="todo">aquí van los datos fiscales</span>

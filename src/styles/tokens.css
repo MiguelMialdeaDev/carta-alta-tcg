@@ -1,37 +1,56 @@
-/* Forge · tokens · theme: Midnight (atmospheric)
- * paper-band: dark (L 16%) · display-style: grotesk-sans · accent-hue: warm (amber 55)
+/* Forge · tokens · theme: CardZadora (marca propia)
+ * paper-band: light (L 98.5%) · display-style: grotesk-sans · accent-hue: warm (oro 86)
+ *
+ * Los tres colores de marca están tomados del logo, píxel a píxel, y no se retocan:
+ *   morado #5F18A0 · oro #F4BA01 · negro #080808
+ *
+ * Reparto de papeles, que es lo que evita el circo de dos colores fuertes:
+ *   el MORADO es la marca (títulos de categoría, enlaces, estado activo, foco)
+ *   el ORO es la acción y solo la acción (botón principal y carrito)
+ * El oro nunca lleva texto que no sea negro: oro sobre blanco da 1,77:1.
  */
 :root {
-  /* Paper and ink */
-  --color-paper: oklch(16% 0.012 62);
-  --color-paper-blur: oklch(16% 0.012 62 / 0.86);
-  --color-paper-2: oklch(21% 0.014 62);
-  --color-paper-3: oklch(26% 0.016 62);
-  --color-ink: oklch(95% 0.006 72);
-  --color-ink-2: oklch(74% 0.012 72);
-  --color-ink-3: oklch(68% 0.012 72);
+  /* Papel y tinta */
+  --color-paper: oklch(98.5% 0.004 300);
+  --color-paper-blur: oklch(98.5% 0.004 300 / 0.86);
+  --color-paper-2: oklch(96% 0.007 300);
+  --color-paper-3: oklch(92% 0.010 300);
+  --color-ink: oklch(18% 0.030 300);
+  --color-ink-2: oklch(44% 0.025 300);
+  --color-ink-3: oklch(53% 0.020 300);
 
-  /* Accent */
-  --color-accent: oklch(76% 0.152 68);
-  --color-accent-ink: oklch(20% 0.04 68);
-  --color-accent-soft: oklch(76% 0.152 68 / 0.14);
-  --color-bloom-a: oklch(62% 0.17 58 / 0.20);
-  --color-bloom-b: oklch(52% 0.15 18 / 0.15);
+  /* Marca */
+  --color-brand: oklch(41% 0.196 301);
+  --color-brand-hover: oklch(33% 0.170 301);
+  --color-brand-soft: oklch(41% 0.196 301 / 0.10);
 
-  /* Feedback */
-  --color-ok: oklch(74% 0.13 150);
-  --color-warn: oklch(78% 0.14 85);
-  --color-focus: oklch(84% 0.14 68);
-  --color-line: oklch(88% 0.012 62 / 0.13);
+  /* Acción */
+  --color-accent: oklch(82% 0.168 86);
+  --color-accent-ink: oklch(13% 0 90);
+  --color-accent-soft: oklch(82% 0.168 86 / 0.22);
+  /* El oro sobre papel se recorta a 1,69:1, por debajo del 3:1 que pide un control.
+   * Por eso el botón lleva filo negro, que además es como el logo dibuja sus cartas. */
+  --color-accent-line: oklch(13% 0 90);
 
-  /* Game marks (colour only, never a logo) */
-  --game-onepiece: oklch(66% 0.17 30);
-  --game-magic: oklch(68% 0.13 285);
-  --game-pokemon: oklch(80% 0.15 90);
-  --game-naruto: oklch(70% 0.14 45);
-  --game-accesorios: oklch(70% 0.06 200);
+  --color-bloom-a: transparent;
+  --color-bloom-b: transparent;
 
-  /* Type */
+  /* Estados */
+  --color-ok: oklch(72% 0.16 150);
+  --color-warn: oklch(52% 0.17 32);
+  --color-focus: oklch(41% 0.196 301);
+  --color-line: oklch(18% 0.030 300 / 0.14);
+  --color-line-strong: oklch(18% 0.030 300 / 0.40);
+
+  /* Marcas de juego. Apagadas a propósito: en esta web los únicos colores
+   * saturados son el morado y el oro. El juego lo dice la etiqueta, no el color. */
+  --game-onepiece: oklch(52% 0.10 25);
+  --game-magic: oklch(52% 0.08 250);
+  --game-pokemon: oklch(52% 0.09 75);
+  --game-naruto: oklch(52% 0.09 150);
+  --game-accesorios: oklch(52% 0.02 300);
+
+  /* Tipografía */
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
 
@@ -45,7 +64,7 @@
   --text-display-s: clamp(2rem, 4vw + 1rem, 3.25rem);
   --text-display: clamp(2.5rem, 6vw + 0.5rem, 4.5rem);
 
-  /* Space, 4pt scale */
+  /* Espacio, escala de 4pt */
   --space-2xs: 0.25rem;
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
@@ -56,14 +75,14 @@
   --space-3xl: 6.5rem;
   --gutter: clamp(1.375rem, 5vw, 2rem);
 
-  /* Shape */
+  /* Forma */
   --radius-sm: 6px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-pill: 999px;
   --rule: 1px solid var(--color-line);
 
-  /* Motion */
+  /* Movimiento */
   --dur-fast: 120ms;
   --dur-base: 220ms;
   --dur-slow: 420ms;

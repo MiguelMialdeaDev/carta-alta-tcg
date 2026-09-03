@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Rejilla from '../../components/Rejilla.astro';
 import { juegos, productosDe } from '../../data/productos.js';
+import { titulo } from '../../data/marca.js';
 
 export function getStaticPaths() {
   return juegos.map((j) => ({ params: { juego: j.slug }, props: { juego: j } }));
@@ -13,7 +14,7 @@ const esAccesorios = juego.slug === 'accesorios';
 ---
 
 <Base
-  title={`${juego.nombre} · Carta Alta`}
+  title={titulo(juego.nombre)}
   description={juego.entradilla}
   activo={juego.slug}
 >

@@ -2,13 +2,14 @@
 import Base from '../layouts/Base.astro';
 import CardProducto from '../components/CardProducto.astro';
 import { productos, juegos, ENVIO, eur } from '../data/productos.js';
+import { MARCA } from '../data/marca.js';
 import { u } from '../lib/url.js';
 
 const destacados = productos.filter((p) => p.destacado);
 const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
 ---
 
-<Base title="Carta Alta · Cartas selladas con envío en 24 horas" activo="home">
+<Base title={`${MARCA.nombre} · ${MARCA.claim}`} activo="home">
   <section class="wrap hero">
     <h1>Cartas selladas, enviadas en 24 horas</h1>
     <p class="lede">
@@ -96,7 +97,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
         <p style="color: var(--color-ink-2); font-size: var(--text-sm); margin-block: var(--space-xs) var(--space-md);">
           Escribe y te digo si puedo conseguirlo y a qué precio.
         </p>
-        <a class="btn btn-primary" href="#">Escribir por WhatsApp</a>
+        <a class="btn btn-brand" href="#">Escribir por WhatsApp</a>
       </div>
     </div>
   </section>

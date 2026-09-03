@@ -2,9 +2,10 @@
 import Base from '../layouts/Base.astro';
 import Rejilla from '../components/Rejilla.astro';
 import { productos } from '../data/productos.js';
+import { titulo } from '../data/marca.js';
 ---
 
-<Base title="Tienda · Carta Alta" activo="tienda">
+<Base title={titulo('Tienda')} activo="tienda">
   <section class="wrap band-tight">
     <div class="section-head">
       <h1 style="font-size: var(--text-display-s);">Tienda</h1>

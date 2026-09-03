@@ -1,12 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import { productos, ENVIO, FUERA_DE_COBERTURA, eur } from '../data/productos.js';
+import { titulo } from '../data/marca.js';
 import { u } from '../lib/url.js';
 
 const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio: p.precio }));
 ---
 
-<Base title="Finalizar pedido · Carta Alta">
+<Base title={titulo('Finalizar pedido')}>
   <section class="wrap band-tight">
     <div class="section-head">
       <h1 style="font-size: var(--text-display-s);">Finalizar pedido</h1>

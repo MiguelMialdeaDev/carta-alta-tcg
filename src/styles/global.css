@@ -1,6 +1,6 @@
 /* Forge · genre: atmospheric · macrostructure: Bento Grid (home) + Catalogue (tienda)
- * theme: Midnight · enrichment: Tier B hand-built SVG packshots · nav: N1b · footer: Ft5
- * pre-emit critique: P4 H5 E4 S5 R4 V4
+ * theme: CardZadora (marca) · enrichment: Tier B hand-built SVG packshots · nav: N1b · footer: Ft5
+ * pre-emit critique: P5 H5 E4 S5 R5 V4
  */
 @import './tokens.css';
 
@@ -108,15 +108,15 @@ a { color: inherit; }
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
+  color: var(--color-ink);
 }
-.wordmark::before {
-  content: "";
-  width: 10px;
-  height: 14px;
-  background: var(--color-accent);
-  border-radius: 2px;
-  transform: rotate(-12deg);
+.wordmark img {
+  width: auto;
+  height: 34px;
+  flex: none;
 }
+/* La Z va en morado, como en el logo. Provisional hasta que llegue el lockup en SVG. */
+.wordmark .z { color: var(--color-brand); }
 .nav-games {
   display: flex;
   gap: var(--space-xs);
@@ -138,8 +138,8 @@ a { color: inherit; }
 }
 .nav-games a:hover { color: var(--color-ink); background: var(--color-paper-2); }
 .nav-games a[aria-current="page"] {
-  color: var(--color-ink);
-  background: var(--color-accent-soft);
+  color: var(--color-brand);
+  background: var(--color-brand-soft);
   font-weight: 600;
 }
 .nav-cart {
@@ -151,6 +151,7 @@ a { color: inherit; }
   border-radius: var(--radius-pill);
   background: var(--color-accent);
   color: var(--color-accent-ink);
+  border: 1px solid var(--color-accent-line);
   font-weight: 600;
   font-size: var(--text-sm);
   text-decoration: none;
@@ -209,10 +210,17 @@ a { color: inherit; }
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
-.btn-primary { background: var(--color-accent); color: var(--color-accent-ink); }
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  border-color: var(--color-accent-line);
+}
 .btn-primary:hover { filter: brightness(1.08); }
 .btn-primary:active { transform: translateY(1px); }
-.btn-ghost { border-color: var(--color-line); color: var(--color-ink); background: transparent; }
+.btn-brand { background: var(--color-brand); color: var(--color-paper); }
+.btn-brand:hover { background: var(--color-brand-hover); }
+.btn-brand:active { transform: translateY(1px); }
+.btn-ghost { border-color: var(--color-line-strong); color: var(--color-ink); background: transparent; }
 .btn-ghost:hover { background: var(--color-paper-2); }
 .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; }
 .btn[data-state="loading"] { pointer-events: none; opacity: 0.7; }
@@ -239,7 +247,7 @@ a { color: inherit; }
 .cell p { color: var(--color-ink-2); font-size: var(--text-sm); }
 .cell-link {
   margin-top: auto;
-  color: var(--color-accent);
+  color: var(--color-brand);
   font-weight: 600;
   font-size: var(--text-sm);
   text-decoration: none;
@@ -265,8 +273,8 @@ a { color: inherit; }
   width: 60%;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--mark, var(--color-accent));
-  opacity: 0.16;
+  background: var(--mark, var(--color-brand));
+  opacity: 0.5;
   filter: blur(18px);
 }
 .cell-game:hover { border-color: var(--mark, var(--color-accent)); }
@@ -276,7 +284,7 @@ a { color: inherit; }
   font-family: var(--font-display);
   font-size: var(--text-3xl);
   font-variant-numeric: tabular-nums;
-  color: var(--color-accent);
+  color: var(--color-brand);
 }
 
 /* ---------- Rejilla de producto · Catalogue ---------- */
@@ -349,8 +357,8 @@ a { color: inherit; }
 }
 .crumbs a:hover { color: var(--color-ink); }
 .crumb-cat { color: var(--color-ink); font-weight: 600; }
-.crumb-cat:hover { color: var(--mark, var(--color-accent)); }
-.crumb-flecha { color: var(--mark, var(--color-accent)); }
+.crumb-cat:hover { color: var(--color-brand); }
+.crumb-flecha { color: var(--color-brand); }
 .crumb-sep { color: var(--color-ink-3); }
 .crumb-actual {
   white-space: nowrap;
@@ -399,7 +407,7 @@ a { color: inherit; }
 .qty {
   display: inline-flex;
   align-items: center;
-  border: var(--rule);
+  border: 1px solid var(--color-line-strong);
   border-radius: var(--radius-pill);
   overflow: hidden;
 }
@@ -431,14 +439,14 @@ a { color: inherit; }
 .field input, .field textarea, .field select {
   font: inherit;
   color: var(--color-ink);
-  background: var(--color-paper-2);
-  border: var(--rule);
+  background: var(--color-paper);
+  border: 1px solid var(--color-line-strong);
   border-radius: var(--radius-md);
   padding: var(--space-sm) var(--space-md);
   min-height: 48px;
   width: 100%;
 }
-.field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible { border-color: var(--color-focus); }
+.field input:focus-visible, .field textarea:focus-visible, .field select:focus-visible { border-color: var(--color-brand); }
 .field[data-invalid="true"] input { border-color: var(--color-warn); }
 .field .err { font-size: var(--text-xs); color: var(--color-warn); }
 
@@ -449,8 +457,8 @@ a { color: inherit; }
   padding: var(--space-lg);
 }
 .notice {
-  background: var(--color-accent-soft);
-  border: 1px solid var(--color-accent);
+  background: var(--color-brand-soft);
+  border: 1px solid var(--color-brand);
   border-radius: var(--radius-md);
   padding: var(--space-md);
   font-size: var(--text-sm);
@@ -476,7 +484,7 @@ a { color: inherit; }
   align-items: center;
   gap: var(--space-md);
 }
-.cat-head h1 { color: var(--mark, var(--color-ink)); }
+.cat-head h1 { color: var(--color-brand); }
 .section-head h2 { font-size: var(--text-2xl); }
 .section-head p { color: var(--color-ink-2); font-size: var(--text-sm); }
 
