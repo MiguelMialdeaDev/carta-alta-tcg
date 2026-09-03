@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import Rejilla from '../../components/Rejilla.astro';
+import { juegos, productosDe } from '../../data/productos.js';
+
+export function getStaticPaths() {
+  return juegos.map((j) => ({ params: { juego: j.slug }, props: { juego: j } }));
+}
+
+const { juego } = Astro.props;
+const lista = productosDe(juego.slug);
+const esAccesorios = juego.slug === 'accesorios';
+---
+
+<Base
+  title={`${juego.nombre} · Carta Alta`}
+  description={juego.entradilla}
+  activo={juego.slug}
+>
+  <section class="wrap band-tight" style={`--mark: ${juego.mark};`}>
+    <div class="section-head cat-head">
+      <h1 style="font-size: var(--text-display-s);">{juego.nombre}</h1>
+      <p>{juego.entradilla}</p>
+    </div>
+
+    <Rejilla
+      productos={lista}
+      vacio={`Ahora mismo no queda nada de ${juego.nombre} en almacén. Prueba con otro juego o escríbenos y te avisamos cuando entre.`}
+    />
+
+    {!esAccesorios && (
+      <p class="notice" style="margin-top: var(--space-xl);">
+        ¿Buscas cartas sueltas de {juego.nombre}? Están en el perfil de CardMarket, no en esta web.
+      </p>
+    )}
+  </section>
+</Base>

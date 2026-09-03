@@ -1,0 +1,15 @@
+---
+// Rejilla de producto compartida por la tienda y por cada página de juego.
+// Antes esto vivía duplicado dentro de tienda.astro junto al filtro por chips.
+import CardProducto from './CardProducto.astro';
+
+const { productos, vacio = 'No hay nada aquí ahora mismo.' } = Astro.props;
+---
+
+{productos.length > 0 ? (
+  <ul class="grid-products">
+    {productos.map((p) => <CardProducto producto={p} />)}
+  </ul>
+) : (
+  <p style="color: var(--color-ink-2); padding-block: var(--space-xl);">{vacio}</p>
+)}

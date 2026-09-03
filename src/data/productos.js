@@ -2,11 +2,36 @@
 // Fase 3: esta lista pasa a ser una tabla de Supabase editable desde el panel.
 
 export const juegos = [
-  { slug: 'one-piece', nombre: 'One Piece', mark: 'var(--game-onepiece)' },
-  { slug: 'magic', nombre: 'Magic', mark: 'var(--game-magic)' },
-  { slug: 'pokemon', nombre: 'Pokémon', mark: 'var(--game-pokemon)' },
-  { slug: 'naruto', nombre: 'Naruto', mark: 'var(--game-naruto)' },
-  { slug: 'accesorios', nombre: 'Accesorios', mark: 'var(--game-accesorios)' },
+  {
+    slug: 'one-piece',
+    nombre: 'One Piece',
+    mark: 'var(--game-onepiece)',
+    entradilla: 'Sobres, cajas y mazos de inicio del juego de cartas de One Piece. Todo precintado de fábrica.',
+  },
+  {
+    slug: 'magic',
+    nombre: 'Magic',
+    mark: 'var(--game-magic)',
+    entradilla: 'Displays, mazos y sobres de Magic. El idioma de cada producto está en su ficha.',
+  },
+  {
+    slug: 'pokemon',
+    nombre: 'Pokémon',
+    mark: 'var(--game-pokemon)',
+    entradilla: 'Elite Trainer Box, displays y sobres de Pokémon. Sellado, sin abrir ni reempaquetar.',
+  },
+  {
+    slug: 'naruto',
+    nombre: 'Naruto',
+    mark: 'var(--game-naruto)',
+    entradilla: 'Producto sellado de Naruto. Catálogo corto: lo que está aquí es lo que hay en almacén.',
+  },
+  {
+    slug: 'accesorios',
+    nombre: 'Accesorios',
+    mark: 'var(--game-accesorios)',
+    entradilla: 'Fundas, cajas y tapetes para guardar y jugar sin que las cartas se estropeen.',
+  },
 ];
 
 export const productos = [
@@ -192,10 +217,35 @@ export const productos = [
   },
 ];
 
-export const ENVIO = { coste: 4.95, gratisDesde: 60 };
+// Solo se envía a península. Para abrir Baleares o Canarias, quita el prefijo de
+// FUERA_DE_COBERTURA y añade su tarifa: el checkout deja de bloquear ese código postal.
+export const ENVIO = {
+  coste: 4.95,
+  gratisDesde: 200,
+  zona: 'península',
+};
+
+export const FUERA_DE_COBERTURA = {
+  '07': 'Baleares',
+  '35': 'Las Palmas',
+  '38': 'Santa Cruz de Tenerife',
+  '51': 'Ceuta',
+  '52': 'Melilla',
+};
+
+// Devuelve el nombre de la zona si el código postal cae fuera de península, o null.
+export function zonaFuera(cp) {
+  const limpio = String(cp).trim();
+  if (!/^\d{5}$/.test(limpio)) return null;
+  return FUERA_DE_COBERTURA[limpio.slice(0, 2)] || null;
+}
 
 export function juegoDe(slug) {
   return juegos.find((j) => j.slug === slug);
+}
+
+export function productosDe(slug) {
+  return productos.filter((p) => p.juego === slug);
 }
 
 export function porSlug(slug) {

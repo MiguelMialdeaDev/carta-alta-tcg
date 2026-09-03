@@ -92,7 +92,11 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
         <ul class="nav-games">
           <li><a href={u('tienda/')} aria-current={activo === 'tienda' ? 'page' : undefined}>Todo</a></li>
           {juegos.map((j) => (
-            <li><a href={u(`tienda/?juego=${j.slug}`)}>{j.nombre}</a></li>
+            <li>
+              <a href={u(`tienda/${j.slug}/`)} aria-current={activo === j.slug ? 'page' : undefined}>
+                {j.nombre}
+              </a>
+            </li>
           ))}
         </ul>
         <a class="nav-cart" href={u('carrito/')}>

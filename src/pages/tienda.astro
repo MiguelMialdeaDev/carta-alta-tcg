@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
-import CardProducto from '../components/CardProducto.astro';
-import { productos, juegos } from '../data/productos.js';
+import Rejilla from '../components/Rejilla.astro';
+import { productos } from '../data/productos.js';
 ---
 
 <Base title="Tienda · Carta Alta" activo="tienda">
@@ -10,55 +10,16 @@ import { productos, juegos } from '../data/productos.js';
       <h1 style="font-size: var(--text-display-s);">Tienda</h1>
       <p>Producto sellado con stock real. Las cartas sueltas están en CardMarket.</p>
     </div>
-
-    <ul class="filters" data-filtros>
-      <li><button class="chip" type="button" data-filtro="todo" aria-current="true">Todo</button></li>
-      {juegos.map((j) => (
-        <li><button class="chip" type="button" data-filtro={j.slug} aria-current="false">{j.nombre}</button></li>
-      ))}
-    </ul>
-  </section>
-
-  <section class="wrap band-tight">
-    <ul class="grid-products" data-rejilla>
-      {productos.map((p) => <CardProducto producto={p} />)}
-    </ul>
-    <p data-vacio hidden style="color: var(--color-ink-2); padding-block: var(--space-xl);">
-      No hay nada en esta categoría ahora mismo. Prueba con otra.
-    </p>
+    <Rejilla productos={productos} />
   </section>
 
   <script is:inline>
+    // Enlaces antiguos del tipo /tienda/?juego=pokemon. Ahora cada juego tiene página propia.
     (function () {
-      const chips = Array.from(document.querySelectorAll('[data-filtro]'));
-      const tarjetas = Array.from(document.querySelectorAll('[data-rejilla] .card'));
-      const vacio = document.querySelector('[data-vacio]');
-
-      function aplicar(valor) {
-        let visibles = 0;
-        tarjetas.forEach(function (t) {
-          const coincide = valor === 'todo' || t.dataset.juego === valor;
-          t.hidden = !coincide;
-          if (coincide) visibles++;
-        });
-        chips.forEach(function (c) {
-          c.setAttribute('aria-current', String(c.dataset.filtro === valor));
-        });
-        if (vacio) vacio.hidden = visibles > 0;
-      }
-
-      chips.forEach(function (c) {
-        c.addEventListener('click', function () {
-          const valor = c.dataset.filtro;
-          aplicar(valor);
-          const base = document.documentElement.dataset.base || '/';
-          const url = valor === 'todo' ? base + 'tienda/' : base + 'tienda/?juego=' + valor;
-          history.replaceState(null, '', url);
-        });
-      });
-
-      const inicial = new URLSearchParams(location.search).get('juego');
-      aplicar(chips.some(function (c) { return c.dataset.filtro === inicial; }) ? inicial : 'todo');
+      const juego = new URLSearchParams(location.search).get('juego');
+      if (!juego || !/^[a-z-]+$/.test(juego)) return;
+      const base = document.documentElement.dataset.base || '/';
+      location.replace(base + 'tienda/' + juego + '/');
     })();
   </script>
 </Base>

@@ -35,7 +35,10 @@ const catalogo = productos.map((p) => ({
           <div><span>Envío</span><span data-envio>0,00 €</span></div>
           <div class="grand"><span>Total</span><span data-total>0,00 €</span></div>
         </div>
-        <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-block: var(--space-md);" data-aviso-envio></p>
+        <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-block: var(--space-md) var(--space-2xs);" data-aviso-envio></p>
+        <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-bottom: var(--space-md);">
+          Solo enviamos a península.
+        </p>
         <a class="btn btn-primary" href={u('checkout/')} style="width: 100%;">Finalizar pedido</a>
         <button class="btn btn-ghost" type="button" data-vaciar style="width: 100%; margin-top: var(--space-xs);">Vaciar carrito</button>
       </aside>

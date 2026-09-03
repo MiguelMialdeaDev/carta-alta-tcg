@@ -26,7 +26,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
         <span class="stat-num">24 h</span>
         <h2>Sale el mismo día</h2>
         <p>
-          Pedidos antes de las 17:00 salen ese día. Envío {eur(ENVIO.coste)} y gratis a partir de {eur(ENVIO.gratisDesde)}.
+          Pedidos antes de las 17:00 salen ese día. Envío {eur(ENVIO.coste)} a {ENVIO.zona} y gratis a partir de {eur(ENVIO.gratisDesde)}.
         </p>
         <a class="cell-link" href={u('tienda/')}>Empezar a comprar</a>
       </div>
@@ -40,13 +40,13 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
       </div>
 
       {juegos.slice(0, 4).map((j) => (
-        <a class="cell cell-game reveal" style={`--mark: ${j.mark};`} href={u(`tienda/?juego=${j.slug}`)}>
+        <a class="cell cell-game reveal" style={`--mark: ${j.mark};`} href={u(`tienda/${j.slug}/`)}>
           <h3>{j.nombre}</h3>
           <span class="count">{cuenta(j.slug)} referencias</span>
         </a>
       ))}
 
-      <a class="cell cell-game reveal" style={`--mark: ${juegos[4].mark};`} href={u('tienda/?juego=accesorios')}>
+      <a class="cell cell-game reveal" style={`--mark: ${juegos[4].mark};`} href={u('tienda/accesorios/')}>
         <h3>{juegos[4].nombre}</h3>
         <span class="count">{cuenta('accesorios')} referencias</span>
       </a>
@@ -84,7 +84,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
         </div>
         <dl class="spec">
           <dt>Envío</dt>
-          <dd>{eur(ENVIO.coste)} a península. Gratis desde {eur(ENVIO.gratisDesde)}.</dd>
+          <dd>{eur(ENVIO.coste)} a {ENVIO.zona}. Gratis desde {eur(ENVIO.gratisDesde)}. Fuera de {ENVIO.zona} todavía no llegamos.</dd>
           <dt>Plazo</dt>
           <dd>Entrega en 24 o 48 horas según la zona.</dd>
           <dt>Devoluciones</dt>

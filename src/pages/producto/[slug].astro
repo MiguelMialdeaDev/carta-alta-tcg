@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Packshot from '../../components/Packshot.astro';
 import CardProducto from '../../components/CardProducto.astro';
 import { productos, juegoDe, ENVIO, eur } from '../../data/productos.js';
+import { u } from '../../lib/url.js';
 
 export function getStaticPaths() {
   return productos.map((p) => ({ params: { slug: p.slug }, props: { producto: p } }));
@@ -17,7 +18,21 @@ const relacionados = productos
   .slice(0, 4);
 ---
 
-<Base title={`${producto.nombre} · ${juego.nombre} · Carta Alta`} description={producto.resumen}>
+<Base
+  title={`${producto.nombre} · ${juego.nombre} · Carta Alta`}
+  description={producto.resumen}
+  activo={producto.juego}
+>
+  <nav class="wrap crumbs" aria-label="Dónde estás">
+    <a href={u('tienda/')}>Tienda</a>
+    <span class="crumb-sep" aria-hidden="true">/</span>
+    <a class="crumb-cat" href={u(`tienda/${juego.slug}/`)} style={`--mark: ${juego.mark};`}>
+      <span class="crumb-flecha" aria-hidden="true">&#8592;</span>{juego.nombre}
+    </a>
+    <span class="crumb-sep solo-ancho" aria-hidden="true">/</span>
+    <span class="crumb-actual solo-ancho" aria-current="page">{producto.nombre}</span>
+  </nav>
+
   <section class="wrap band-tight detail" style={`--mark: ${juego.mark};`}>
     <div class="detail-media">
       <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />
@@ -58,7 +73,7 @@ const relacionados = productos
         <dt>Tipo</dt><dd>{producto.tipo}</dd>
         <dt>Idioma</dt><dd>{producto.idioma}</dd>
         <dt>Expansión</dt><dd><span class="todo">dato pendiente</span></dd>
-        <dt>Envío</dt><dd>{eur(ENVIO.coste)}, gratis desde {eur(ENVIO.gratisDesde)}</dd>
+        <dt>Envío</dt><dd>{eur(ENVIO.coste)} a {ENVIO.zona}, gratis desde {eur(ENVIO.gratisDesde)}</dd>
       </dl>
 
       <p class="notice">
@@ -69,8 +84,9 @@ const relacionados = productos
 
   {relacionados.length > 0 && (
     <section class="wrap band">
-      <div class="section-head">
+      <div class="section-head section-head-fila">
         <h2>Más de {juego.nombre}</h2>
+        <a class="btn btn-ghost" href={u(`tienda/${juego.slug}/`)}>Ver todo {juego.nombre}</a>
       </div>
       <ul class="grid-products">
         {relacionados.map((p) => <CardProducto producto={p} />)}

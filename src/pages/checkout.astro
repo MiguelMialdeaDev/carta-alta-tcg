@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { productos, ENVIO } from '../data/productos.js';
+import { productos, ENVIO, FUERA_DE_COBERTURA, eur } from '../data/productos.js';
 import { u } from '../lib/url.js';
 
 const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio: p.precio }));
@@ -44,8 +44,9 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
         <div style="display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--space-md);">
           <div class="field" data-campo>
             <label for="cp">Código postal</label>
-            <input id="cp" name="cp" type="text" inputmode="numeric" autocomplete="postal-code" required />
+            <input id="cp" name="cp" type="text" inputmode="numeric" autocomplete="postal-code" required aria-describedby="cp-ayuda" />
             <span class="err" hidden>Cinco dígitos.</span>
+            <span class="ayuda" id="cp-ayuda">Solo enviamos a {ENVIO.zona}.</span>
           </div>
           <div class="field" data-campo>
             <label for="ciudad">Ciudad</label>
@@ -83,6 +84,9 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
           <div><span>Envío</span><span data-envio>0,00 €</span></div>
           <div class="grand"><span>Total</span><span data-total>0,00 €</span></div>
         </div>
+        <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-top: var(--space-md);">
+          {eur(ENVIO.coste)} a {ENVIO.zona}, gratis desde {eur(ENVIO.gratisDesde)}.
+        </p>
       </aside>
     </div>
 
@@ -97,11 +101,13 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
 
   <script type="application/json" data-catalogo set:html={JSON.stringify(catalogo)}></script>
   <script type="application/json" data-envio-config set:html={JSON.stringify(ENVIO)}></script>
+  <script type="application/json" data-fuera-config set:html={JSON.stringify(FUERA_DE_COBERTURA)}></script>
 
   <script is:inline>
     (function () {
       const catalogo = JSON.parse(document.querySelector('[data-catalogo]').textContent);
       const envioCfg = JSON.parse(document.querySelector('[data-envio-config]').textContent);
+      const fueraCfg = JSON.parse(document.querySelector('[data-fuera-config]').textContent);
       const form = document.querySelector('[data-form]');
       const boton = document.querySelector('[data-enviar]');
       const items = document.querySelector('[data-items]');
@@ -156,22 +162,61 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
         document.querySelector('[data-total]').textContent = eur(subtotal + envio);
       }
 
+      // Devuelve el nombre de la zona si el código postal cae fuera de península, o null.
+      function zonaFuera(cp) {
+        const limpio = String(cp).trim();
+        if (!/^\d{5}$/.test(limpio)) return null;
+        return fueraCfg[limpio.slice(0, 2)] || null;
+      }
+
+      function revisarCampo(campo, enfocar) {
+        const input = campo.querySelector('input');
+        const err = campo.querySelector('.err');
+        let valido = input.value.trim().length > 0;
+
+        if (input.type === 'email') valido = /.+@.+\..+/.test(input.value);
+
+        if (input.id === 'cp') {
+          const cp = input.value.trim();
+          const cincoDigitos = /^\d{5}$/.test(cp);
+          const fuera = cincoDigitos ? zonaFuera(cp) : null;
+          valido = cincoDigitos && !fuera;
+          if (!cincoDigitos) {
+            err.textContent = 'Cinco dígitos.';
+          } else if (fuera) {
+            err.textContent = 'A ' + fuera + ' no llegamos todavía.';
+          }
+        }
+
+        campo.dataset.invalid = String(!valido);
+        err.hidden = valido;
+        input.setAttribute('aria-invalid', String(!valido));
+        if (!valido && enfocar) input.focus();
+        return valido;
+      }
+
       function validar() {
         let ok = true;
         form.querySelectorAll('[data-campo]').forEach(function (campo) {
-          const input = campo.querySelector('input');
-          const err = campo.querySelector('.err');
-          let valido = input.value.trim().length > 0;
-          if (input.type === 'email') valido = /.+@.+\..+/.test(input.value);
-          if (input.id === 'cp') valido = /^\d{5}$/.test(input.value.trim());
-          campo.dataset.invalid = String(!valido);
-          err.hidden = valido;
-          input.setAttribute('aria-invalid', String(!valido));
-          if (!valido && ok) input.focus();
+          const valido = revisarCampo(campo, !ok ? false : true);
           if (!valido) ok = false;
         });
         return ok;
       }
+
+      // El código postal se avisa al salir del campo: no tiene sentido dejar que
+      // rellene el resto del formulario si a su zona no se envía.
+      (function () {
+        const cp = document.getElementById('cp');
+        const campo = cp.closest('[data-campo]');
+        cp.addEventListener('blur', function () {
+          if (cp.value.trim() === '') return;
+          revisarCampo(campo, false);
+        });
+        cp.addEventListener('input', function () {
+          if (campo.dataset.invalid === 'true') revisarCampo(campo, false);
+        });
+      })();
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
