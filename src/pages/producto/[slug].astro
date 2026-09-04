@@ -3,7 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Packshot from '../../components/Packshot.astro';
 import CardProducto from '../../components/CardProducto.astro';
 import { productos, juegoDe, ENVIO, eur } from '../../data/productos.js';
-import { titulo } from '../../data/marca.js';
+import { titulo, MARCA } from '../../data/marca.js';
 import { u } from '../../lib/url.js';
 
 export function getStaticPaths() {
@@ -78,7 +78,9 @@ const relacionados = productos
       </dl>
 
       <p class="notice">
-        ¿Buscas cartas sueltas de {juego.nombre}? Están en el perfil de CardMarket, no en esta web.
+        De {juego.nombre} vendemos solo producto sellado. ¿Buscas una carta concreta?
+        <a href={`mailto:${MARCA.email}`} style="color: var(--color-brand); font-weight: 600;">Escríbenos</a>
+        y te decimos si podemos conseguirla.
       </p>
     </div>
   </section>

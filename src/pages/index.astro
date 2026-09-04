@@ -53,16 +53,16 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
       </a>
 
       <div class="cell span-2 reveal">
-        <h2>Las cartas sueltas están en CardMarket</h2>
+        <h2>Aquí solo hay producto sellado</h2>
         <p>
-          Aquí vendemos producto sellado. Para cartas individuales entra en el perfil, con el historial de ventas y las valoraciones ya hechas.
+          Cajas, displays, mazos y sobres precintados de fábrica. No vendemos cartas sueltas ni producto abierto, así que lo que ves en la ficha es lo que llega a tu casa.
         </p>
-        <a class="cell-link" href="#" rel="noopener">Ver el perfil de CardMarket</a>
+        <a class="cell-link" href={u('tienda/')}>Ver el catálogo</a>
       </div>
 
       <div class="cell reveal">
-        <h3>Precintado de fábrica</h3>
-        <p>Nada abierto ni reempaquetado. Si un sobre viene suelto, se dice en la ficha.</p>
+        <h3>El idioma va en la ficha</h3>
+        <p>Hay producto en español y en inglés. Lo dice cada ficha, para que no te lleves la sorpresa al abrir la caja.</p>
       </div>
     </div>
   </section>
@@ -95,9 +95,9 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
       <div class="panel">
         <h3>¿Buscas algo que no está?</h3>
         <p style="color: var(--color-ink-2); font-size: var(--text-sm); margin-block: var(--space-xs) var(--space-md);">
-          Escribe y te digo si puedo conseguirlo y a qué precio.
+          Escríbenos y te decimos si podemos conseguirlo y a qué precio.
         </p>
-        <a class="btn btn-brand" href="#">Escribir por WhatsApp</a>
+        <a class="btn btn-brand" href={`mailto:${MARCA.email}`}>Escribir a {MARCA.email}</a>
       </div>
     </div>
   </section>

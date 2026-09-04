@@ -17,7 +17,16 @@ Datos de catálogo de muestra: los precios y el stock no son reales.
 
 ## Alcance decidido
 
-La web vende **producto sellado y accesorios**. Las cartas sueltas se quedan en CardMarket y desde la web se enlaza al perfil. Así no se vende dos veces la misma carta.
+La web vende **producto sellado y accesorios**, y nada más. Las cartas sueltas no se
+venden aquí y la web **no menciona dónde se venden**: la tienda usa una cuenta ajena y
+ha pedido expresamente que las dos marcas no se relacionen. Quien busque una carta
+concreta va al correo.
+
+El motivo de fondo sigue siendo el mismo que el primer día: si el mismo stock se
+lista en dos sitios, se vende dos veces.
+
+**Contacto:** `cardzadora@gmail.com`, en `src/data/marca.js`. Es el único canal que
+la web ofrece.
 
 ## Publicar
 
