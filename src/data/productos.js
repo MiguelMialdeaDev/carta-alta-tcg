@@ -166,6 +166,13 @@ export const productos = [
     stock: null,
     destacado: false,
     resumen: "Double Pack Set del bloque OP-17, The World's Strongest Warriors.",
+    foto: {
+      src: 'productos/double-pack-set-dp12.webp',
+      mini: 'productos/double-pack-set-dp12-mini.webp',
+      ancho: 1000,
+      alto: 920,
+      alt: 'Caja del Double Pack Set 12 de One Piece junto a las cartas que incluye',
+    },
   },
   {
     slug: 'illustration-box-vol7',

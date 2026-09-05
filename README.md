@@ -117,6 +117,23 @@ De las reales falta lo que solo puede dar la tienda:
   proveedor, y además la tienda pidió que las dos marcas no se relacionen. Por eso
   los títulos tampoco arrastran la marca del proveedor.
 
+### Fotos de producto
+
+Un producto con el campo `foto` deja de usar el packshot dibujado y muestra la
+imagen. Dos ficheros por producto, WebP: uno a 1000px para la ficha y otro a 600px
+para la rejilla. De 700 KB de original se baja a unos 100 KB.
+
+```
+public/productos/<slug>.webp        1000px, ficha
+public/productos/<slug>-mini.webp    600px, rejilla y carrito
+```
+
+**Nada de imágenes generadas con IA en una ficha de producto.** Una foto de producto
+es una promesa de lo que llega a casa: si la caja no es exactamente esa, es publicidad
+engañosa. Y si la imagen añade cifras (probabilidades de rareza, número de cartas),
+son promesas sobre el contenido que la tienda tendrá que sostener ante una
+reclamación. Solo fotos reales del producto que se envía.
+
 ## Siguiente
 
 **Fase 2:** Stripe con tarjeta y Bizum, PayPal, transferencia como pedido pendiente, envíos por tramos, emails y textos legales de venta.

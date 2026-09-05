@@ -1,0 +1,20 @@
+---
+// Foto real de producto. Sustituye al packshot dibujado a mano en cuanto la
+// tienda sube una imagen suya. En la rejilla recorta para llenar la tarjeta,
+// en la ficha se ve entera.
+import { u } from '../lib/url.js';
+
+const { foto, encaje = 'cover', ratio = '5 / 6', prioridad = false } = Astro.props;
+const src = encaje === 'cover' && foto.mini ? foto.mini : foto.src;
+---
+
+<img
+  class="foto"
+  src={u(src)}
+  width={foto.ancho}
+  height={foto.alto}
+  alt={foto.alt}
+  loading={prioridad ? 'eager' : 'lazy'}
+  decoding="async"
+  style={`aspect-ratio: ${ratio}; object-fit: ${encaje};`}
+/>

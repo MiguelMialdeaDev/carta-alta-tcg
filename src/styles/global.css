@@ -308,6 +308,8 @@ a { color: inherit; }
 }
 .card:hover { border-color: var(--mark, var(--color-line)); }
 .card-media { background: var(--color-paper-3); }
+.foto { width: 100%; height: auto; display: block; background: var(--color-paper-3); }
+.detail-media .foto { aspect-ratio: auto; }
 .card-body {
   padding: var(--space-md);
   display: flex;

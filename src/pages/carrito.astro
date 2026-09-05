@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Packshot from '../components/Packshot.astro';
+import Foto from '../components/Foto.astro';
 import { productos, juegoDe, ENVIO, disponibles } from '../data/productos.js';
 import { titulo } from '../data/marca.js';
 import { u } from '../lib/url.js';
@@ -49,7 +50,9 @@ const catalogo = productos.map((p) => ({
   <template data-thumbs>
     {productos.map((p) => (
       <div data-thumb-slug={p.slug}>
-        <Packshot forma={p.forma} mark={juegoDe(p.juego).mark} alt="" />
+        {p.foto
+          ? <Foto foto={{ ...p.foto, alt: '' }} ratio="1 / 1" />
+          : <Packshot forma={p.forma} mark={juegoDe(p.juego).mark} alt="" />}
       </div>
     ))}
   </template>

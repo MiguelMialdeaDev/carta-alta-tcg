@@ -1,5 +1,6 @@
 ---
 import Packshot from './Packshot.astro';
+import Foto from './Foto.astro';
 import { juegoDe, eur, hayStock, quedanPocas } from '../data/productos.js';
 import { u } from '../lib/url.js';
 
@@ -11,7 +12,9 @@ const ultimas = quedanPocas(producto);
 
 <li class="card" data-juego={producto.juego} style={`--mark: ${juego.mark};`}>
   <div class="card-media">
-    <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />
+    {producto.foto
+      ? <Foto foto={producto.foto} />
+      : <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />}
   </div>
   <div class="card-body">
     <span class="card-game">{juego.nombre}</span>
