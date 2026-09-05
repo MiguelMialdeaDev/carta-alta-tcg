@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Packshot from '../../components/Packshot.astro';
 import CardProducto from '../../components/CardProducto.astro';
-import { productos, juegoDe, ENVIO, eur } from '../../data/productos.js';
+import { productos, juegoDe, ENVIO, eur, hayStock, quedanPocas, disponibles } from '../../data/productos.js';
 import { titulo, MARCA } from '../../data/marca.js';
 import { u } from '../../lib/url.js';
 
@@ -12,8 +12,9 @@ export function getStaticPaths() {
 
 const { producto } = Astro.props;
 const juego = juegoDe(producto.juego);
-const agotado = producto.stock === 0;
-const pocas = producto.stock > 0 && producto.stock <= 3;
+const agotado = !hayStock(producto);
+const pocas = quedanPocas(producto);
+const tope = disponibles(producto);
 const relacionados = productos
   .filter((p) => p.juego === producto.juego && p.slug !== producto.slug)
   .slice(0, 4);
@@ -64,7 +65,7 @@ const relacionados = productos
           type="button"
           data-add
           data-slug={producto.slug}
-          data-stock={producto.stock}
+          data-stock={tope}
           disabled={agotado}
           aria-disabled={agotado ? 'true' : 'false'}
         >{agotado ? 'Sin stock' : 'Añadir al carrito'}</button>
@@ -72,7 +73,7 @@ const relacionados = productos
 
       <dl class="spec" style="margin-bottom: var(--space-lg);">
         <dt>Tipo</dt><dd>{producto.tipo}</dd>
-        <dt>Idioma</dt><dd>{producto.idioma}</dd>
+        <dt>Idioma</dt><dd>{producto.idioma ?? <span class="todo">dato pendiente</span>}</dd>
         <dt>Expansión</dt><dd><span class="todo">dato pendiente</span></dd>
         <dt>Envío</dt><dd>{eur(ENVIO.coste)} a {ENVIO.zona}, gratis desde {eur(ENVIO.gratisDesde)}</dd>
       </dl>

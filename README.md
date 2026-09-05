@@ -99,6 +99,24 @@ tienda, por orden:
 
 Todo lo que lleva el estilo `.todo` (recuadro discontinuo) es un dato que tiene que dar la tienda: foto y nombre del dueño, política de devoluciones, expansión de cada producto, datos fiscales y textos legales.
 
+### Catálogo
+
+Las seis referencias de One Piece son **reales**: nombre, precio e idioma comprobados
+en la ficha de origen. El resto del catálogo sigue siendo de muestra.
+
+De las reales falta lo que solo puede dar la tienda:
+
+- **La cantidad de stock.** `stock: null` significa "hay, pero sin confirmar cuántas":
+  la ficha dice "En stock" y el carrito tope en `TOPE_SIN_CONFIRMAR` (6). No se inventa
+  un número.
+- **La descripción propia.** Los resúmenes de ahora solo repiten lo que dice el título,
+  para no afirmar contenidos sin comprobar.
+- **El idioma** del Double Pack DP-12 y de la Premium Card Collection Vol.6, que su
+  ficha de origen no declara.
+- **Las fotos.** No se pueden usar las del proveedor: son de Bandai y del propio
+  proveedor, y además la tienda pidió que las dos marcas no se relacionen. Por eso
+  los títulos tampoco arrastran la marca del proveedor.
+
 ## Siguiente
 
 **Fase 2:** Stripe con tarjeta y Bizum, PayPal, transferencia como pedido pendiente, envíos por tramos, emails y textos legales de venta.

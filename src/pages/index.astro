@@ -5,7 +5,7 @@ import { productos, juegos, ENVIO, eur } from '../data/productos.js';
 import { MARCA } from '../data/marca.js';
 import { u } from '../lib/url.js';
 
-const destacados = productos.filter((p) => p.destacado);
+const destacados = productos.filter((p) => p.destacado).slice(0, 4);
 const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
 ---
 
@@ -70,7 +70,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
   <section class="wrap band">
     <div class="section-head">
       <h2>Lo que más se mueve</h2>
-      <p>Cuatro referencias con stock hoy mismo.</p>
+      <p>Una selección corta del catálogo.</p>
     </div>
     <ul class="grid-products">
       {destacados.map((p) => <CardProducto producto={p} />)}

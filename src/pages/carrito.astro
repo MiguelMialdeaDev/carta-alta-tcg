@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Packshot from '../components/Packshot.astro';
-import { productos, juegoDe, ENVIO } from '../data/productos.js';
+import { productos, juegoDe, ENVIO, disponibles } from '../data/productos.js';
 import { titulo } from '../data/marca.js';
 import { u } from '../lib/url.js';
 
@@ -9,7 +9,7 @@ const catalogo = productos.map((p) => ({
   slug: p.slug,
   nombre: p.nombre,
   precio: p.precio,
-  stock: p.stock,
+  stock: disponibles(p),
   juego: juegoDe(p.juego).nombre,
 }));
 ---
@@ -66,7 +66,13 @@ const catalogo = productos.map((p) => ({
       const vacio = document.querySelector('[data-vacio]');
       const resumen = document.querySelector('[data-resumen]');
 
-      function eur(n) { const s = n.toFixed(2).replace('.', ','); return (s.endsWith(',00') ? s.slice(0, -3) : s) + ' €'; }
+      function eur(n) {
+        return n.toLocaleString('es-ES', {
+          minimumFractionDigits: Number.isInteger(n) ? 0 : 2,
+          maximumFractionDigits: 2,
+          useGrouping: 'always',
+        }) + ' €';
+      }
       function buscar(slug) { return catalogo.find(function (p) { return p.slug === slug; }); }
 
       function thumb(slug) {

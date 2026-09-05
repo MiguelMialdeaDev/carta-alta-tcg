@@ -23,6 +23,10 @@ const siluetas = {
     { x: 118, y: 100, w: 68, h: 150, r: 4, dentado: true },
   ],
   accesorio: [{ x: 56, y: 106, w: 138, h: 128, r: 10, lineas: true }],
+  case: [
+    { x: 32, y: 108, w: 186, h: 140, r: 5, cinta: true },
+    { x: 32, y: 92, w: 186, h: 22, r: 5, tapa: true },
+  ],
 };
 
 const piezas = siluetas[forma] ?? siluetas.display;
@@ -68,6 +72,11 @@ const uid = Math.random().toString(36).slice(2, 8);
       {p.dentado && (
         <g stroke="var(--mark)" stroke-opacity="0.6" stroke-width="1.5">
           <line x1={p.x + 6} y1={p.y + 14} x2={p.x + p.w - 6} y2={p.y + 14} stroke-dasharray="4 4" />
+        </g>
+      )}
+      {p.cinta && (
+        <g stroke="var(--mark)" stroke-opacity="0.7" stroke-width="2">
+          <line x1={p.x + p.w / 2} y1={p.y} x2={p.x + p.w / 2} y2={p.y + p.h} />
         </g>
       )}
       {p.lineas && (

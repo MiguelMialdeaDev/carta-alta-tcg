@@ -120,40 +120,76 @@ export const productos = [
     resumen: 'Nueve sobres, tierras básicas y caja de almacenaje con el arte de la expansión.',
   },
   {
-    slug: 'booster-box-op09-one-piece',
-    nombre: 'Booster Box OP-09',
+    slug: 'caja-op17-time-of-battle',
+    nombre: 'Caja OP-17 The Time of Battle',
     juego: 'one-piece',
     tipo: 'Display',
     forma: 'display',
     idioma: 'Inglés',
-    precio: 99.95,
-    stock: 3,
+    precio: 345,
+    stock: null,
     destacado: true,
-    resumen: 'Veinticuatro sobres precintados de fábrica. La caja que más se mueve del catálogo.',
+    resumen: 'Display precintado del bloque OP-17, The Time of Battle.',
   },
   {
-    slug: 'starter-deck-one-piece',
-    nombre: 'Starter Deck',
+    slug: 'case-op17-time-of-battle',
+    nombre: 'Case OP-17 The Time of Battle',
     juego: 'one-piece',
-    tipo: 'Mazo',
-    forma: 'mazo',
+    tipo: 'Case de 12 cajas',
+    forma: 'case',
     idioma: 'Inglés',
-    precio: 12.95,
-    stock: 12,
+    precio: 4150,
+    stock: null,
     destacado: false,
-    resumen: 'Mazo cerrado de cincuenta y una cartas. Lo mejor para empezar de cero.',
+    resumen: 'Case completo de doce cajas del bloque OP-17, sin abrir.',
   },
   {
-    slug: 'double-pack-one-piece',
-    nombre: 'Double Pack Set',
+    slug: 'premium-card-collection-vol6',
+    nombre: 'Premium Card Collection Best Selection Vol.6',
     juego: 'one-piece',
-    tipo: 'Pack',
+    tipo: 'Colección',
+    forma: 'etb',
+    idioma: null,
+    precio: 59.9,
+    stock: null,
+    destacado: true,
+    resumen: 'Premium Card Collection, Best Selection volumen 6.',
+  },
+  {
+    slug: 'double-pack-set-dp12',
+    nombre: 'Double Pack Set vol.12 [DP-12]',
+    juego: 'one-piece',
+    tipo: 'Double Pack',
     forma: 'pack',
-    idioma: 'Inglés',
-    precio: 24.95,
-    stock: 0,
+    idioma: null,
+    precio: 36.9,
+    stock: null,
     destacado: false,
-    resumen: 'Dos sobres más una promocional exclusiva del pack. Tirada corta.',
+    resumen: "Double Pack Set del bloque OP-17, The World's Strongest Warriors.",
+  },
+  {
+    slug: 'illustration-box-vol7',
+    nombre: 'Illustration Box Vol.7',
+    juego: 'one-piece',
+    tipo: 'Illustration Box',
+    forma: 'etb',
+    idioma: 'Inglés',
+    precio: 32.5,
+    stock: null,
+    destacado: false,
+    resumen: 'Illustration Box volumen 7, edición 2026.',
+  },
+  {
+    slug: 'illustration-box-vol8',
+    nombre: 'Illustration Box Vol.8',
+    juego: 'one-piece',
+    tipo: 'Illustration Box',
+    forma: 'etb',
+    idioma: 'Inglés',
+    precio: 32.5,
+    stock: null,
+    destacado: false,
+    resumen: 'Illustration Box volumen 8, edición 2026.',
   },
   {
     slug: 'caja-kayou-naruto',
@@ -253,6 +289,27 @@ export function porSlug(slug) {
 }
 
 export function eur(n) {
-  const s = n.toFixed(2).replace('.', ',');
-  return (s.endsWith(',00') ? s.slice(0, -3) : s) + ' €';
+  const decimales = Number.isInteger(n) ? 0 : 2;
+  return n.toLocaleString('es-ES', {
+    minimumFractionDigits: decimales,
+    maximumFractionDigits: 2,
+    useGrouping: 'always',
+  }) + ' €';
+}
+
+// stock null quiere decir "hay, pero la tienda no ha confirmado cuántas". Es el
+// estado normal de una referencia recién dada de alta. No se inventa un número:
+// se dice que hay stock y se pone un tope de carrito prudente.
+export const TOPE_SIN_CONFIRMAR = 6;
+
+export function hayStock(p) {
+  return p.stock === null || p.stock > 0;
+}
+
+export function quedanPocas(p) {
+  return p.stock !== null && p.stock > 0 && p.stock <= 3;
+}
+
+export function disponibles(p) {
+  return p.stock === null ? TOPE_SIN_CONFIRMAR : p.stock;
 }

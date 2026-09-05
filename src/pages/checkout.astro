@@ -125,7 +125,13 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
         nota.textContent = notas[e.target.value];
       });
 
-      function eur(n) { const s = n.toFixed(2).replace('.', ','); return (s.endsWith(',00') ? s.slice(0, -3) : s) + ' €'; }
+      function eur(n) {
+        return n.toLocaleString('es-ES', {
+          minimumFractionDigits: Number.isInteger(n) ? 0 : 2,
+          maximumFractionDigits: 2,
+          useGrouping: 'always',
+        }) + ' €';
+      }
 
       function pintar() {
         const carro = window.carro.leer();

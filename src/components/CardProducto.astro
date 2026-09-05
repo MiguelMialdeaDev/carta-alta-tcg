@@ -1,12 +1,12 @@
 ---
 import Packshot from './Packshot.astro';
-import { juegoDe, eur } from '../data/productos.js';
+import { juegoDe, eur, hayStock, quedanPocas } from '../data/productos.js';
 import { u } from '../lib/url.js';
 
 const { producto } = Astro.props;
 const juego = juegoDe(producto.juego);
-const agotado = producto.stock === 0;
-const ultimas = producto.stock > 0 && producto.stock <= 3;
+const agotado = !hayStock(producto);
+const ultimas = quedanPocas(producto);
 ---
 
 <li class="card" data-juego={producto.juego} style={`--mark: ${juego.mark};`}>
