@@ -121,7 +121,7 @@ export const productos = [
   },
   {
     slug: 'caja-op17-time-of-battle',
-    nombre: 'Caja OP-17 The Time of Battle',
+    nombre: "Caja OP-17 The World's Strongest Warriors",
     juego: 'one-piece',
     tipo: 'Display',
     forma: 'display',
@@ -129,11 +129,21 @@ export const productos = [
     precio: 345,
     stock: null,
     destacado: true,
-    resumen: 'Display precintado del bloque OP-17, The Time of Battle.',
+    resumen: 'Display precintado de 24 sobres, 12 cartas por sobre. Versión inglesa.',
+    fotos: [
+      {
+        src: 'productos/caja-op17.webp',
+        mini: 'productos/caja-op17-mini.webp',
+        ancho: 1000,
+        alto: 1000,
+        etiqueta: 'El producto',
+        alt: 'Caja expositora abierta de One Piece OP-17 con los sobres dentro y dos sueltos delante',
+      },
+    ],
   },
   {
     slug: 'case-op17-time-of-battle',
-    nombre: 'Case OP-17 The Time of Battle',
+    nombre: "Case OP-17 The World's Strongest Warriors",
     juego: 'one-piece',
     tipo: 'Case de 12 cajas',
     forma: 'case',
@@ -141,7 +151,17 @@ export const productos = [
     precio: 4150,
     stock: null,
     destacado: false,
-    resumen: 'Case completo de doce cajas del bloque OP-17, sin abrir.',
+    resumen: 'Case sin abrir con doce cajas, 288 sobres en total. Versión inglesa.',
+    fotos: [
+      {
+        src: 'productos/case-op17.webp',
+        mini: 'productos/case-op17-mini.webp',
+        ancho: 1000,
+        alto: 1000,
+        etiqueta: 'El producto',
+        alt: 'Caja de transporte precintada de doce cajas de One Piece OP-17, junto a una caja expositora abierta',
+      },
+    ],
   },
   {
     slug: 'premium-card-collection-vol6',
@@ -154,6 +174,16 @@ export const productos = [
     stock: null,
     destacado: true,
     resumen: 'Premium Card Collection, Best Selection volumen 6.',
+    fotos: [
+      {
+        src: 'productos/premium-vol6.webp',
+        mini: 'productos/premium-vol6-mini.webp',
+        ancho: 1000,
+        alto: 1000,
+        etiqueta: 'El producto',
+        alt: 'Caja de la Premium Card Collection Best Selection Vol.6 de One Piece, apoyada de frente',
+      },
+    ],
   },
   {
     slug: 'double-pack-set-dp12',
@@ -191,6 +221,16 @@ export const productos = [
     stock: null,
     destacado: false,
     resumen: 'Illustration Box volumen 7, edición 2026.',
+    fotos: [
+      {
+        src: 'productos/illustration-box-7.webp',
+        mini: 'productos/illustration-box-7-mini.webp',
+        ancho: 1000,
+        alto: 1000,
+        etiqueta: 'El producto',
+        alt: 'Caja de la Illustration Box Vol.7 de One Piece vista de tres cuartos',
+      },
+    ],
   },
   {
     slug: 'illustration-box-vol8',
@@ -203,6 +243,16 @@ export const productos = [
     stock: null,
     destacado: false,
     resumen: 'Illustration Box volumen 8, edición 2026.',
+    fotos: [
+      {
+        src: 'productos/illustration-box-8.webp',
+        mini: 'productos/illustration-box-8-mini.webp',
+        ancho: 1000,
+        alto: 1000,
+        etiqueta: 'El producto',
+        alt: 'Caja de la Illustration Box Vol.8 de One Piece vista de tres cuartos',
+      },
+    ],
   },
   {
     slug: 'caja-kayou-naruto',

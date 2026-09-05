@@ -119,6 +119,15 @@ De las reales falta lo que solo puede dar la tienda:
 
 ### Fotos de producto
 
+> **Las fotos de One Piece salen de packshots oficiales pasados por Gemini**, que
+> solo generó el entorno. El método y los prompts están en
+> `Downloads/cardzadora-fotos`. Dos avisos que hay que resolver antes de vender:
+> la Illustration Box Vol.7 y la Premium Collection **conservan la marca de agua
+> SAMPLE de Bandai**, y en la Caja OP-17 el modelo **redibujó la letra pequeña**
+> ("12 cords per booster" en vez de "cards", "130+1 typos" en vez de "128+1
+> types"). A tamaño de web no se lee, pero la caja de la foto no es exactamente la
+> que se envía. Lo resuelven fotos reales del almacén.
+
 Un producto con el campo `fotos` deja de usar el packshot dibujado. Es un array:
 **la primera manda**, porque es la que sale en la rejilla y en el carrito. Si hay
 más de una, la ficha monta una galería con miniaturas debajo.
