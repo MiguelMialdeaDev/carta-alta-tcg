@@ -49,7 +49,10 @@ const relacionados = productos
       <p style="color: var(--color-ink-2); margin-bottom: var(--space-lg);">{producto.resumen}</p>
 
       <p class="detail-price">{eur(producto.precio)}</p>
-      <p class="stock" style="margin-bottom: var(--space-lg);">
+      <p
+        class={agotado ? 'stock' : pocas ? 'stock stock-low' : 'stock stock-ok'}
+        style="margin-bottom: var(--space-lg);"
+      >
         {agotado
           ? 'Sin stock ahora mismo'
           : pocas

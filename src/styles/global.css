@@ -101,7 +101,7 @@ a { color: inherit; }
 .wordmark {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--text-lg);
+  font-size: var(--text-xl);
   letter-spacing: -0.04em;
   text-decoration: none;
   white-space: nowrap;
@@ -112,7 +112,7 @@ a { color: inherit; }
 }
 .wordmark img {
   width: auto;
-  height: 34px;
+  height: 44px;
   flex: none;
 }
 /* La Z va en morado, como en el logo. Provisional hasta que llegue el lockup en SVG. */
@@ -390,8 +390,14 @@ a { color: inherit; }
   justify-content: space-between;
   gap: var(--space-sm);
 }
-.price { font-family: var(--font-display); font-size: var(--text-lg); font-variant-numeric: tabular-nums; }
+.price {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-precio);
+}
 .stock { font-size: var(--text-xs); color: var(--color-ink-3); }
+.stock-ok { color: var(--color-stock-ok); font-weight: 600; }
 .stock-low { color: var(--color-warn); }
 
 /* ---------- Migaja de pan ---------- */
@@ -439,7 +445,12 @@ a { color: inherit; }
   overflow: hidden;
 }
 .detail h1 { font-size: var(--text-display-s); }
-.detail-price { font-family: var(--font-display); font-size: var(--text-3xl); font-variant-numeric: tabular-nums; }
+.detail-price {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-precio);
+}
 .spec {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -588,6 +599,10 @@ a { color: inherit; }
 
 @media (max-width: 40rem) {
   .nav-inner { flex-wrap: wrap; padding-block: var(--space-xs); }
+  /* El isotipo se queda grande, que es lo que se pidió. Lo que cede es el
+   * nombre: con los dos agrandados no caben con el carrito en una pantalla
+   * de 320px y la cabecera se partía en tres filas. */
+  .wordmark { font-size: var(--text-lg); }
   .nav-games {
     order: 3;
     width: 100%;
@@ -613,4 +628,18 @@ a { color: inherit; }
       "ctrl ctrl";
   }
   .line-ctrl { justify-content: space-between; }
+}
+
+/* Por debajo de 360px no caben el isotipo grande, el nombre y el carrito en una
+ * fila, y la cabecera se partía en tres. Se queda el isotipo, que es el logo.
+ * El nombre sigue ahí para el lector de pantalla, solo deja de ocupar sitio. */
+@media (max-width: 22.5rem) {
+  .wordmark span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
 }
