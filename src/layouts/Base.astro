@@ -1,9 +1,10 @@
 ---
 import '../styles/global.css';
-import { juegos } from '../data/productos.js';
+import { juegos, productos } from '../data/productos.js';
 import { MARCA } from '../data/marca.js';
 import { u, BASE } from '../lib/url.js';
 
+const slugsValidos = productos.map((p) => p.slug);
 const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Magic, One Piece y Naruto.', activo = '' } = Astro.props;
 ---
 
@@ -26,16 +27,32 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Instrument+Sans:wght@400;500;600&display=swap"
     />
+    <script is:inline set:html={`window.__SLUGS__ = ${JSON.stringify(slugsValidos)};`}></script>
     <script is:inline>
       (function () {
         const KEY = 'cardzadora-carro';
+        const VALIDOS = new Set(window.__SLUGS__ || []);
 
         function leer() {
+          let bruto;
           try {
-            return JSON.parse(localStorage.getItem(KEY)) || {};
+            bruto = JSON.parse(localStorage.getItem(KEY)) || {};
           } catch (e) {
-            return {};
+            bruto = {};
           }
+          if (bruto === null || typeof bruto !== 'object' || Array.isArray(bruto)) bruto = {};
+
+          const limpio = {};
+          let sobraba = false;
+          Object.keys(bruto).forEach(function (slug) {
+            const n = Math.floor(Number(bruto[slug]));
+            if (VALIDOS.has(slug) && Number.isFinite(n) && n > 0) limpio[slug] = n;
+            else sobraba = true;
+          });
+          if (sobraba) {
+            try { localStorage.setItem(KEY, JSON.stringify(limpio)); } catch (e) {}
+          }
+          return limpio;
         }
 
         function guardar(carro) {

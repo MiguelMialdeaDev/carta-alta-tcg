@@ -26,7 +26,7 @@ const catalogo = productos.map((p) => ({
       <div>
         <div data-lineas></div>
         <p data-vacio hidden style="color: var(--color-ink-2); padding-block: var(--space-lg);">
-          Todavía no has añadido nada. <a href={u('tienda/')} style="color: var(--color-accent);">Ir a la tienda</a>
+          Todavía no has añadido nada. <a href={u('tienda/')} style="color: var(--color-brand); font-weight: 600;">Ir a la tienda</a>
         </p>
       </div>
 
@@ -146,7 +146,8 @@ const catalogo = productos.map((p) => ({
         });
 
         const gratis = subtotal >= envioCfg.gratisDesde;
-        const envio = gratis ? 0 : envioCfg.coste;
+        // Cinturón y tirantes: sin subtotal no hay envío que cobrar.
+        const envio = gratis || subtotal === 0 ? 0 : envioCfg.coste;
         document.querySelector('[data-subtotal]').textContent = eur(subtotal);
         document.querySelector('[data-envio]').textContent = gratis ? 'Gratis' : eur(envio);
         document.querySelector('[data-total]').textContent = eur(subtotal + envio);

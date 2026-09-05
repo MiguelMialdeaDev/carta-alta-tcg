@@ -69,6 +69,12 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
 
         <p class="notice" data-nota-pago>Se cobra al confirmar el pedido. Nada se envía hasta que el pago entra.</p>
 
+        <p class="notice" data-vacio hidden style="margin-top: var(--space-lg);">
+          No hay nada en el carrito.
+          <a href={u('tienda/')} style="color: var(--color-brand); font-weight: 600;">Ve a la tienda</a>
+          y añade algo antes de terminar.
+        </p>
+
         <button class="btn btn-primary" type="submit" style="width: 100%; margin-top: var(--space-lg);" data-enviar>
           Confirmar pedido
         </button>
@@ -113,6 +119,7 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
       const boton = document.querySelector('[data-enviar]');
       const items = document.querySelector('[data-items]');
       const nota = document.querySelector('[data-nota-pago]');
+      let vacio = true;
 
       const notas = {
         tarjeta: 'Se cobra al confirmar el pedido. Nada se envía hasta que el pago entra.',
@@ -154,7 +161,8 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
           items.appendChild(fila);
         });
 
-        if (!items.children.length) {
+        vacio = !items.children.length;
+        if (vacio) {
           const aviso = document.createElement('p');
           aviso.className = 'stock';
           aviso.textContent = 'El carrito está vacío.';
@@ -162,6 +170,7 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
           boton.disabled = true;
           boton.setAttribute('aria-disabled', 'true');
         }
+        document.querySelector('[data-vacio]').hidden = !vacio;
 
         const envio = subtotal >= envioCfg.gratisDesde || subtotal === 0 ? 0 : envioCfg.coste;
         document.querySelector('[data-subtotal]').textContent = eur(subtotal);
@@ -227,6 +236,13 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
 
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        // Un botón deshabilitado no impide enviar el formulario con Enter.
+        if (vacio) {
+          const aviso = document.querySelector('[data-vacio]');
+          aviso.hidden = false;
+          aviso.scrollIntoView({ block: 'center' });
+          return;
+        }
         if (!validar()) return;
         boton.dataset.state = 'loading';
         boton.textContent = 'Confirmando';
