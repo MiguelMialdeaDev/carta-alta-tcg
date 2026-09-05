@@ -1,11 +1,14 @@
 ---
 import Base from '../layouts/Base.astro';
 import CardProducto from '../components/CardProducto.astro';
-import { productos, juegos, ENVIO, eur } from '../data/productos.js';
+import { productos, juegos, ENVIO, eur, portadaDe } from '../data/productos.js';
+import Packshot from '../components/Packshot.astro';
+import Foto from '../components/Foto.astro';
 import { MARCA } from '../data/marca.js';
 import { u } from '../lib/url.js';
 
 const destacados = productos.filter((p) => p.destacado).slice(0, 4);
+const portadas = Object.fromEntries(juegos.map((j) => [j.slug, portadaDe(j.slug)]));
 const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
 ---
 
@@ -40,17 +43,17 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
         <p><span class="todo">aquí va tu foto y tu nombre</span></p>
       </div>
 
-      {juegos.slice(0, 4).map((j) => (
+      {juegos.map((j) => (
         <a class="cell cell-game reveal" style={`--mark: ${j.mark};`} href={u(`tienda/${j.slug}/`)}>
+          <span class="cell-game-media" aria-hidden="true">
+            {portadas[j.slug].tipo === 'foto'
+              ? <Foto foto={{ ...portadas[j.slug].foto, alt: '' }} ratio="1 / 1" />
+              : <Packshot forma={portadas[j.slug].forma} mark={j.mark} ratio="1 / 1" etiqueta={false} />}
+          </span>
           <h3>{j.nombre}</h3>
           <span class="count">{cuenta(j.slug)} referencias</span>
         </a>
       ))}
-
-      <a class="cell cell-game reveal" style={`--mark: ${juegos[4].mark};`} href={u('tienda/accesorios/')}>
-        <h3>{juegos[4].nombre}</h3>
-        <span class="count">{cuenta('accesorios')} referencias</span>
-      </a>
 
       <div class="cell span-2 reveal">
         <h2>Aquí solo hay producto sellado</h2>

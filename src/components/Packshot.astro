@@ -2,7 +2,7 @@
 // Packshot dibujado a mano (Tier B, SVG). Marcador de posición honesto:
 // no reproduce arte con derechos ni fotos de terceros. En producción se
 // sustituye por la foto real que suba la tienda desde el panel.
-const { forma = 'display', mark = 'var(--color-accent)', ratio = '5 / 6', alt = '' } = Astro.props;
+const { forma = 'display', mark = 'var(--color-accent)', ratio = '5 / 6', alt = '', etiqueta = true } = Astro.props;
 
 const siluetas = {
   display: [
@@ -89,13 +89,15 @@ const uid = Math.random().toString(36).slice(2, 8);
     </g>
   ))}
 
-  <text
-    x="125"
-    y="278"
-    text-anchor="middle"
-    fill="var(--color-ink-3)"
-    font-family="var(--font-body)"
-    font-size="11"
-    letter-spacing="0.08em"
-  >foto pendiente</text>
+  {etiqueta && (
+    <text
+      x="125"
+      y="278"
+      text-anchor="middle"
+      fill="var(--color-ink-3)"
+      font-family="var(--font-body)"
+      font-size="11"
+      letter-spacing="0.08em"
+    >foto pendiente</text>
+  )}
 </svg>

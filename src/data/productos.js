@@ -347,6 +347,18 @@ export function productosDe(slug) {
   return productos.filter((p) => p.juego === slug);
 }
 
+// Portada de una categoría. Misma regla que en la ficha de producto: si hay foto
+// real de algo de esa categoría, manda la foto; si no, el packshot dibujado, que
+// ya lleva el color del juego. Así ninguna categoría se queda sin imagen y no se
+// usa arte de Bandai, Nintendo ni Wizards como decoración.
+export function portadaDe(slug) {
+  const lista = productosDe(slug);
+  const conFoto = lista.find((p) => p.fotos);
+  if (conFoto) return { tipo: 'foto', foto: conFoto.fotos[0] };
+  const primero = lista[0];
+  return { tipo: 'dibujo', forma: primero ? primero.forma : 'display' };
+}
+
 export function porSlug(slug) {
   return productos.find((p) => p.slug === slug);
 }
