@@ -50,8 +50,8 @@ const catalogo = productos.map((p) => ({
   <template data-thumbs>
     {productos.map((p) => (
       <div data-thumb-slug={p.slug}>
-        {p.foto
-          ? <Foto foto={{ ...p.foto, alt: '' }} ratio="1 / 1" />
+        {p.fotos
+          ? <Foto foto={{ ...p.fotos[0], alt: '' }} ratio="1 / 1" />
           : <Packshot forma={p.forma} mark={juegoDe(p.juego).mark} alt="" />}
       </div>
     ))}

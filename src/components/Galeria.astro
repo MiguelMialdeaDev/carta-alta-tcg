@@ -1,0 +1,60 @@
+---
+// Galería de la ficha: una imagen grande y una tira de miniaturas debajo.
+// Sin JavaScript se ve la primera, que es la que manda. El script solo cambia
+// cuál está visible, así que si falla la ficha sigue teniendo su foto.
+import { u } from '../lib/url.js';
+
+const { fotos } = Astro.props;
+const principal = fotos[0];
+---
+
+<div class="galeria" data-galeria>
+  <div class="galeria-marco" style={`aspect-ratio: ${principal.ancho} / ${principal.alto};`}>
+    {fotos.map((f, i) => (
+      <img
+        class="foto"
+        src={u(f.src)}
+        width={f.ancho}
+        height={f.alto}
+        alt={f.alt}
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
+        hidden={i !== 0}
+        data-vista={i}
+      />
+    ))}
+  </div>
+
+  {fotos.length > 1 && (
+    <ul class="galeria-tira">
+      {fotos.map((f, i) => (
+        <li>
+          <button type="button" class="miniatura" data-ir={i} aria-current={i === 0 ? 'true' : 'false'}>
+            <img src={u(f.mini)} width="96" height="88" alt="" loading="lazy" decoding="async" />
+            <span>{f.etiqueta}</span>
+          </button>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
+
+<script is:inline>
+  (function () {
+    const galeria = document.querySelector('[data-galeria]');
+    if (!galeria) return;
+    const vistas = Array.from(galeria.querySelectorAll('[data-vista]'));
+    const botones = Array.from(galeria.querySelectorAll('[data-ir]'));
+
+    function mostrar(i) {
+      vistas.forEach(function (v) { v.hidden = Number(v.dataset.vista) !== i; });
+      botones.forEach(function (b) {
+        b.setAttribute('aria-current', String(Number(b.dataset.ir) === i));
+      });
+    }
+
+    botones.forEach(function (b) {
+      b.addEventListener('click', function () { mostrar(Number(b.dataset.ir)); });
+    });
+  })();
+</script>

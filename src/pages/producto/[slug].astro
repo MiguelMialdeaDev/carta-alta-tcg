@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Packshot from '../../components/Packshot.astro';
-import Foto from '../../components/Foto.astro';
+import Galeria from '../../components/Galeria.astro';
 import CardProducto from '../../components/CardProducto.astro';
 import { productos, juegoDe, ENVIO, eur, hayStock, quedanPocas, disponibles } from '../../data/productos.js';
 import { titulo, MARCA } from '../../data/marca.js';
@@ -37,14 +37,9 @@ const relacionados = productos
   </nav>
 
   <section class="wrap band-tight detail" style={`--mark: ${juego.mark};`}>
-    <div class="detail-media">
-      {producto.foto
-        ? <Foto
-            foto={producto.foto}
-            encaje="contain"
-            ratio={`${producto.foto.ancho} / ${producto.foto.alto}`}
-            prioridad
-          />
+    <div class={producto.fotos ? 'detail-media detail-media-suelta' : 'detail-media'}>
+      {producto.fotos
+        ? <Galeria fotos={producto.fotos} />
         : <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />}
     </div>
 

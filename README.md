@@ -119,9 +119,17 @@ De las reales falta lo que solo puede dar la tienda:
 
 ### Fotos de producto
 
-Un producto con el campo `foto` deja de usar el packshot dibujado y muestra la
-imagen. Dos ficheros por producto, WebP: uno a 1000px para la ficha y otro a 600px
-para la rejilla. De 700 KB de original se baja a unos 100 KB.
+Un producto con el campo `fotos` deja de usar el packshot dibujado. Es un array:
+**la primera manda**, porque es la que sale en la rejilla y en el carrito. Si hay
+más de una, la ficha monta una galería con miniaturas debajo.
+
+Dos ficheros por imagen, WebP: uno grande para la ficha y otro a 600px para la
+rejilla, el carrito y las miniaturas. De 700 KB de original se baja a unos 100 KB.
+Una imagen con texto pequeño necesita más calidad y su tamaño nativo, o la letra
+no se lee.
+
+La galería no depende de JavaScript para mostrar algo: sin JS se ve la primera
+foto. El script solo cambia cuál está visible.
 
 ```
 public/productos/<slug>.webp        1000px, ficha
