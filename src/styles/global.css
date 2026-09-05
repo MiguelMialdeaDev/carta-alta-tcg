@@ -258,54 +258,38 @@ a { color: inherit; }
 .span-4 { grid-column: span 4; }
 
 .cell-game {
-  justify-content: flex-end;
-  min-height: 168px;
-  position: relative;
+  padding: 0;
+  min-height: 0;
+  gap: 0;
   overflow: hidden;
   text-decoration: none;
   transition: border-color var(--dur-base) var(--ease-out);
 }
-/* La imagen ocupa la mitad derecha y se funde con el papel hacia el texto. El
- * degradado es opaco del todo donde cae el título, así que el contraste del
- * texto es el mismo que sin imagen. */
+/* La imagen va a sangre arriba y el texto debajo, sobre papel liso. Antes iba
+ * de fondo con un velo encima: en una tarjeta baja y ancha la imagen quedaba en
+ * una franja lateral y no se veía el producto. */
 .cell-game-media {
-  position: absolute;
-  inset-block: 0;
-  inset-inline: 30% 0;
-  z-index: 0;
-  pointer-events: none;
+  display: block;
+  width: 100%;
+  background: var(--color-paper-3);
+  border-bottom: var(--rule);
 }
 .cell-game-media > * {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform var(--dur-slow) var(--ease-out);
 }
-.cell-game::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(
-    to right,
-    var(--color-paper-2) 0%,
-    var(--color-paper-2) 72%,
-    color-mix(in oklab, var(--color-paper-2) 8%, transparent) 100%
-  );
+.cell-game-texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md) var(--space-lg) var(--space-lg);
 }
-.cell-game > h3,
-.cell-game > .count { position: relative; z-index: 1; }
 .cell-game:hover { border-color: var(--mark, var(--color-brand)); }
-.cell-game:hover::before {
-  background: linear-gradient(
-    to right,
-    var(--color-paper-2) 0%,
-    var(--color-paper-2) 68%,
-    transparent 100%
-  );
-}
 @media (prefers-reduced-motion: no-preference) {
-  .cell-game::before { transition: background var(--dur-base) var(--ease-out); }
+  .cell-game:hover .cell-game-media > * { transform: scale(1.04); }
 }
 .cell-game .count { color: var(--color-ink-3); font-size: var(--text-xs); }
 

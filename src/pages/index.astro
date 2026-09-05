@@ -47,11 +47,13 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
         <a class="cell cell-game reveal" style={`--mark: ${j.mark};`} href={u(`tienda/${j.slug}/`)}>
           <span class="cell-game-media" aria-hidden="true">
             {portadas[j.slug].tipo === 'foto'
-              ? <Foto foto={{ ...portadas[j.slug].foto, alt: '' }} ratio="1 / 1" />
-              : <Packshot forma={portadas[j.slug].forma} mark={j.mark} ratio="1 / 1" etiqueta={false} />}
+              ? <Foto foto={{ ...portadas[j.slug].foto, alt: '' }} ratio="16 / 9" />
+              : <Packshot forma={portadas[j.slug].forma} mark={j.mark} ratio="16 / 9" etiqueta={false} />}
           </span>
-          <h3>{j.nombre}</h3>
-          <span class="count">{cuenta(j.slug)} referencias</span>
+          <span class="cell-game-texto">
+            <h3>{j.nombre}</h3>
+            <span class="count">{cuenta(j.slug)} referencias</span>
+          </span>
         </a>
       ))}
 
