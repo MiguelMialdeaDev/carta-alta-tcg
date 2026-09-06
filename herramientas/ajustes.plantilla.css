@@ -1,0 +1,148 @@
+/* =============================================================
+   AJUSTES DE LA WEB DE CARDZADORA
+
+   Cambia un valor, guarda el archivo y recarga el navegador.
+   No hace falta instalar nada.
+
+   Si algo se rompe, borra lo que hayas escrito y vuelve a
+   guardar. No se puede estropear nada de forma permanente.
+   ============================================================= */
+
+:root {
+
+/* ============================================================
+   1. COLORES
+   ============================================================
+
+   Se escriben asi:   oklch(claridad intensidad tono)
+
+       claridad     0% es negro, 100% es blanco
+       intensidad   0 es gris, 0.2 es muy vivo
+       tono         0 rojo · 90 amarillo · 150 verde
+                    250 azul · 300 morado
+
+   Tambien vale pegar un color normal:
+       --color-brand: #5F18A0;
+   ============================================================ */
+
+
+  /* ---- LOS DOS COLORES DE LA MARCA ------------------------ */
+
+  /* MORADO del logo. Sale en:
+       · el titulo de cada categoria (el "One Piece" grande)
+       · los enlaces
+       · la categoria en la que estas, arriba
+       · el boton de escribir por correo
+       · el borde del recuadro de aviso                        */
+  --color-brand: @@a|color-brand@@;
+
+  /* El mismo morado, mas oscuro, para cuando pasas el raton    */
+  --color-brand-hover: @@b|color-brand-hover@@;
+
+  /* El morado muy transparente del fondo de los avisos          */
+  --color-brand-soft: @@bs|color-brand-soft@@;
+
+  /* ORO del logo. Sale SOLO en:
+       · el boton de "Anadir al carrito"
+       · el boton "Ver la tienda"
+       · el boton del carrito, arriba a la derecha
+     OJO: el oro es muy claro. Lo que va encima tiene que ser
+     negro o no se lee.                                        */
+  --color-accent: @@c|color-accent@@;
+
+  /* El negro que va encima del oro                             */
+  --color-accent-ink: @@d|color-accent-ink@@;
+
+
+  /* ---- FONDOS --------------------------------------------- */
+
+  --color-paper: @@e|color-paper@@;      /* fondo de toda la pagina */
+  --color-paper-2: @@f|color-paper-2@@;  /* fondo de las tarjetas */
+  --color-paper-3: @@g|color-paper-3@@;  /* fondo detras de las fotos */
+
+
+  /* ---- TEXTOS --------------------------------------------- */
+
+  --color-ink: @@h|color-ink@@;      /* titulos y nombres de producto */
+  --color-ink-2: @@i|color-ink-2@@;  /* parrafos y descripciones */
+  --color-ink-3: @@j|color-ink-3@@;  /* letra pequena y el pie */
+
+
+  /* ---- LA FICHA DE PRODUCTO ------------------------------- */
+
+  --color-precio: @@k|color-precio@@;      /* el precio */
+  --color-stock-ok: @@l|color-stock-ok@@;  /* "En stock" */
+  --color-warn: @@m|color-warn@@;          /* "Quedan 2" y los errores */
+
+
+  /* ---- UN COLOR POR JUEGO --------------------------------- */
+  /* Sale en la etiqueta de arriba de cada producto (ese
+     "POKEMON" pequeno) y en el borde de la tarjeta al pasar el
+     raton. Van apagados a proposito, para que no compitan con
+     el morado y el oro.                                       */
+
+  --game-onepiece: @@n|game-onepiece@@;
+  --game-magic: @@o|game-magic@@;
+  --game-pokemon: @@p|game-pokemon@@;
+  --game-naruto: @@q|game-naruto@@;
+  --game-accesorios: @@r|game-accesorios@@;
+
+
+/* ============================================================
+   2. TAMANOS
+
+   Se escriben en px (pixeles) o en rem (1rem = 16px).
+   ============================================================ */
+
+
+  /* ---- LA BARRA DE ARRIBA --------------------------------- */
+
+  /* Alto de la barra. Prueba 80px para hacerla mas alta,
+     o 56px para hacerla mas fina.                             */
+  --alto-nav: @@s|alto-nav@@;
+
+  /* Alto del logo dentro de la barra. Si lo subes mucho, sube
+     tambien --alto-nav o se quedara apretado.                 */
+  --alto-logo: @@t|alto-logo@@;
+
+
+  /* ---- LA REJILLA DE PRODUCTOS ---------------------------- */
+
+  /* Ancho minimo de cada tarjeta de producto. Cuanto MAS
+     grande, MENOS productos entran por fila.
+       12rem  ->  caben mas y salen mas pequenos
+       15rem  ->  como esta ahora
+       20rem  ->  caben menos y salen mas grandes              */
+  --ancho-min-tarjeta: @@u|ancho-min-tarjeta@@;
+
+
+  /* ---- TEXTOS --------------------------------------------- */
+
+  /* El titular grande de la portada                            */
+  --text-display: @@v|text-display@@;
+
+  /* El titulo de cada categoria y de cada producto             */
+  --text-display-s: @@w|text-display-s@@;
+
+  /* Los titulos de seccion, tipo "Lo que mas se mueve"         */
+  --text-2xl: @@x|text-2xl@@;
+
+  /* El texto normal de los parrafos                            */
+  --text-base: @@y|text-base@@;
+
+
+  /* ---- ESQUINAS Y ESPACIOS -------------------------------- */
+
+  /* Lo redondeadas que son las tarjetas y las fotos.
+     0px las deja en pico, 32px muy redondeadas.               */
+  --radius-lg: @@z|radius-lg@@;
+
+  /* Lo redondeados que son los recuadros pequenos             */
+  --radius-md: @@aa|radius-md@@;
+
+  /* Margen a los lados de la pagina                            */
+  --gutter: @@ab|gutter@@;
+
+  /* Separacion entre bloques grandes de la pagina              */
+  --space-2xl: @@ac|space-2xl@@;
+}

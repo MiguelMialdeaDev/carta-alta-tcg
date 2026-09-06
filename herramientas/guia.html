@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guia de la web - CardZadora</title>
+<link rel="stylesheet" href="ajustes.css" />
+<style>
+  *,*::before,*::after{box-sizing:border-box} *{margin:0}
+  body{background:var(--color-paper);color:var(--color-ink);
+    font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif;
+    padding:clamp(1.5rem,5vw,4rem) clamp(1.25rem,5vw,2rem);max-width:52rem;margin-inline:auto}
+  h1{font-size:clamp(1.9rem,5vw,2.6rem);line-height:1.1;letter-spacing:-.03em;margin-bottom:.4em}
+  h2{font-size:1.45rem;letter-spacing:-.02em;margin:2.6rem 0 .9rem;padding-top:1.4rem;
+     border-top:2px solid var(--color-brand)}
+  h3{font-size:1.05rem;margin:1.6rem 0 .5rem}
+  p,li{color:var(--color-ink-2);margin-bottom:.7rem}
+  strong{color:var(--color-ink)}
+  code{background:var(--color-paper-3);padding:.12em .4em;border-radius:5px;
+    font-size:.9em;font-family:ui-monospace,Consolas,monospace;color:var(--color-ink)}
+  ul{padding-left:1.3rem;margin-bottom:1rem}
+  table{width:100%;border-collapse:collapse;margin:.6rem 0 1.4rem;font-size:.92rem}
+  th,td{text-align:left;padding:.55rem .6rem;border-bottom:1px solid var(--color-paper-3);vertical-align:top}
+  th{color:var(--color-ink);font-weight:600}
+  td:first-child{white-space:nowrap}
+  .aviso{background:var(--color-brand-soft);border:1px solid var(--color-brand);
+    border-radius:12px;padding:1rem 1.1rem;margin:1.2rem 0}
+  .aviso p:last-child{margin-bottom:0}
+  .muestra{display:inline-block;width:2.6rem;height:1.5rem;border-radius:5px;
+    border:1px solid rgba(0,0,0,.18);vertical-align:middle}
+  .intro{font-size:1.08rem;color:var(--color-ink-2);margin-bottom:2rem}
+  .paso{background:var(--color-paper-2);border:1px solid var(--color-paper-3);
+    border-radius:12px;padding:.85rem 1.1rem;margin-bottom:.6rem}
+  .paso b{color:var(--color-brand)}
+</style>
+</head>
+<body>
+
+<h1>Guia de la web de CardZadora</h1>
+<p class="intro">Donde esta cada cosa, que color es cual y como cambiar los tamanos.
+No hace falta saber programar ni instalar nada.</p>
+
+<div class="aviso">
+  <p><strong>Lo primero, para que puedas tocar con tranquilidad.</strong></p>
+  <p>Nada de lo que cambies aqui toca la web publicada. Esto es una copia tuya, en tu
+  ordenador. La web de internet se genera aparte y no se entera de nada.</p>
+  <p>Puedes romperlo entero. Si algo deja de verse bien, deshaz lo que escribiste y
+  guarda otra vez.</p>
+</div>
+
+<h2>1. Como ver la web</h2>
+<p>Abre <code>VER-LA-WEB/index.html</code> haciendo doble clic. Se abre en tu navegador,
+sin internet.</p>
+<p>Puedes moverte por las categorias, entrar en las fichas de producto y ver el carrito.
+Es la tienda entera.</p>
+<p><strong>Una cosa que no funciona aqui:</strong> el carrito puede no guardarse al cambiar
+de pagina, porque los navegadores tratan de forma especial los archivos abiertos desde el
+disco. Para verlo del todo, la web esta en internet.</p>
+
+<h2>2. Donde esta cada pagina</h2>
+<p>Dentro de <code>VER-LA-WEB</code>:</p>
+<table>
+  <tr><th>Pagina</th><th>Archivo</th></tr>
+  <tr><td>Portada</td><td><code>index.html</code></td></tr>
+  <tr><td>Tienda, todo junto</td><td><code>tienda/index.html</code></td></tr>
+  <tr><td>Una categoria</td><td><code>tienda/one-piece/index.html</code></td></tr>
+  <tr><td>Una ficha de producto</td><td><code>producto/.../index.html</code></td></tr>
+  <tr><td>Carrito</td><td><code>carrito/index.html</code></td></tr>
+  <tr><td>Finalizar pedido</td><td><code>checkout/index.html</code></td></tr>
+  <tr><td>Las fotos de producto</td><td><code>productos/</code></td></tr>
+  <tr><td>El logo</td><td><code>marca/</code></td></tr>
+</table>
+
+<h2>3. Como cambiar colores y tamanos</h2>
+<div class="paso"><b>1.</b> Abre <code>VER-LA-WEB/ajustes.css</code> con el Bloc de notas.</div>
+<div class="paso"><b>2.</b> Cambia un valor.</div>
+<div class="paso"><b>3.</b> Guarda con Control + S.</div>
+<div class="paso"><b>4.</b> Vuelve al navegador y recarga con F5.</div>
+<p>Ese archivo va comentado entero y es el unico que hace falta tocar. Esta dividido en dos
+partes: los colores primero y los tamanos despues.</p>
+
+<h2>4. Que color es cual</h2>
+<p>Las muestras de esta tabla salen de tu archivo, asi que <strong>si cambias un color, aqui
+tambien cambia</strong>. Sirve para comprobar de un vistazo.</p>
+
+<h3>Los dos colores de la marca</h3>
+<table>
+  <tr><th>Color</th><th>Nombre</th><th>Donde sale</th></tr>
+  <tr><td><span class="muestra" style="background:var(--color-brand)"></span></td>
+      <td><code>--color-brand</code></td>
+      <td>El morado del logo. Titulo de cada categoria, enlaces, la categoria en la que
+      estas, el boton de escribir por correo y el borde de los recuadros de aviso.</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-accent)"></span></td>
+      <td><code>--color-accent</code></td>
+      <td>El oro del logo. Solo los botones de comprar y el carrito de arriba.</td></tr>
+</table>
+
+<h3>Fondos y textos</h3>
+<table>
+  <tr><th>Color</th><th>Nombre</th><th>Donde sale</th></tr>
+  <tr><td><span class="muestra" style="background:var(--color-paper)"></span></td>
+      <td><code>--color-paper</code></td><td>El fondo de toda la pagina</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-paper-2)"></span></td>
+      <td><code>--color-paper-2</code></td><td>El fondo de las tarjetas</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-paper-3)"></span></td>
+      <td><code>--color-paper-3</code></td><td>El fondo detras de las fotos</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-ink)"></span></td>
+      <td><code>--color-ink</code></td><td>Titulos y nombres de producto</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-ink-2)"></span></td>
+      <td><code>--color-ink-2</code></td><td>Parrafos y descripciones</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-ink-3)"></span></td>
+      <td><code>--color-ink-3</code></td><td>Letra pequena y el pie de pagina</td></tr>
+</table>
+
+<h3>La ficha de producto</h3>
+<table>
+  <tr><th>Color</th><th>Nombre</th><th>Donde sale</th></tr>
+  <tr><td><span class="muestra" style="background:var(--color-precio)"></span></td>
+      <td><code>--color-precio</code></td><td>El precio</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-stock-ok)"></span></td>
+      <td><code>--color-stock-ok</code></td><td>El "En stock"</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-warn)"></span></td>
+      <td><code>--color-warn</code></td><td>El "Quedan 2" y los mensajes de error</td></tr>
+</table>
+
+<h3>Un color por juego</h3>
+<p>Salen en la etiqueta pequena de arriba de cada producto (ese "POKEMON") y en el borde de
+la tarjeta al pasar el raton. Van apagados a proposito, para no competir con el morado y el
+oro.</p>
+<table>
+  <tr><td><span class="muestra" style="background:var(--game-onepiece)"></span></td>
+      <td><code>--game-onepiece</code></td><td>One Piece</td></tr>
+  <tr><td><span class="muestra" style="background:var(--game-magic)"></span></td>
+      <td><code>--game-magic</code></td><td>Magic</td></tr>
+  <tr><td><span class="muestra" style="background:var(--game-pokemon)"></span></td>
+      <td><code>--game-pokemon</code></td><td>Pokemon</td></tr>
+  <tr><td><span class="muestra" style="background:var(--game-naruto)"></span></td>
+      <td><code>--game-naruto</code></td><td>Naruto</td></tr>
+  <tr><td><span class="muestra" style="background:var(--game-accesorios)"></span></td>
+      <td><code>--game-accesorios</code></td><td>Accesorios</td></tr>
+</table>
+
+<h3>Como se escribe un color</h3>
+<p>Estan escritos como <code>oklch(claridad intensidad tono)</code>, por ejemplo
+<code>oklch(41% 0.196 301)</code>:</p>
+<ul>
+  <li><strong>Claridad</strong>: <code>0%</code> es negro, <code>100%</code> es blanco.</li>
+  <li><strong>Intensidad</strong>: <code>0</code> es gris, <code>0.2</code> es muy vivo.</li>
+  <li><strong>Tono</strong>: 0 rojo, 90 amarillo, 150 verde, 250 azul, 300 morado.</li>
+</ul>
+<p>Si te resulta mas comodo, tambien puedes pegar un color normal:
+<code>--color-brand: #5F18A0;</code></p>
+
+<div class="aviso">
+  <p><strong>Dos avisos que ahorran disgustos.</strong></p>
+  <p>El oro es muy claro, asi que lo que va encima tiene que ser negro. Si le pones texto
+  blanco, no se lee.</p>
+  <p>Si oscureces el fondo de la pagina, el logo deja de verse: la Z y el nombre son negros.
+  Para un fondo oscuro haria falta una version del logo en claro.</p>
+</div>
+
+<h2>5. Como cambiar tamanos</h2>
+<p>En la segunda mitad de <code>ajustes.css</code>. Van en pixeles (<code>px</code>) o en
+<code>rem</code>, donde 1rem son 16px.</p>
+<table>
+  <tr><th>Nombre</th><th>Que cambia</th><th>Para probar</th></tr>
+  <tr><td><code>--alto-nav</code></td><td>Lo alta que es la barra de arriba</td>
+      <td><code>80px</code> mas alta, <code>56px</code> mas fina</td></tr>
+  <tr><td><code>--alto-logo</code></td><td>El tamano del logo en la barra</td>
+      <td>Si lo subes mucho, sube tambien la barra</td></tr>
+  <tr><td><code>--ancho-min-tarjeta</code></td><td>Cuantos productos entran por fila</td>
+      <td><code>12rem</code> mas y pequenos, <code>20rem</code> menos y grandes</td></tr>
+  <tr><td><code>--text-display</code></td><td>El titular grande de la portada</td><td></td></tr>
+  <tr><td><code>--text-display-s</code></td><td>El titulo de categoria y de producto</td><td></td></tr>
+  <tr><td><code>--text-base</code></td><td>El texto normal de los parrafos</td><td></td></tr>
+  <tr><td><code>--radius-lg</code></td><td>Lo redondeadas que son las tarjetas</td>
+      <td><code>0px</code> en pico, <code>32px</code> muy redondas</td></tr>
+  <tr><td><code>--gutter</code></td><td>El margen a los lados de la pagina</td><td></td></tr>
+  <tr><td><code>--space-2xl</code></td><td>La separacion entre bloques grandes</td><td></td></tr>
+</table>
+
+<h2>6. Lo que NO se puede cambiar aqui</h2>
+<p>En esta copia solo manda <code>ajustes.css</code>. Todo lo demas esta ya generado, asi que
+editarlo no sirve de nada.</p>
+<p>Para cambiar <strong>productos, precios, stock, textos o fotos</strong> hay que tocar el
+proyecto, que esta en la carpeta <code>CODIGO</code>. Donde vive cada cosa:</p>
+<table>
+  <tr><th>Que</th><th>Donde</th></tr>
+  <tr><td>Productos, precios, stock, idioma</td><td><code>CODIGO/src/data/productos.js</code></td></tr>
+  <tr><td>Precio del envio y envio gratis</td><td><code>CODIGO/src/data/productos.js</code></td></tr>
+  <tr><td>Nombre de la tienda y correo</td><td><code>CODIGO/src/data/marca.js</code></td></tr>
+  <tr><td>Textos de la portada</td><td><code>CODIGO/src/pages/index.astro</code></td></tr>
+  <tr><td>Colores y tamanos de verdad</td><td><code>CODIGO/src/styles/tokens.css</code></td></tr>
+</table>
+
+<h2>7. Cuando des con algo que te guste</h2>
+<p>Pasa el archivo <code>ajustes.css</code> con tus cambios, o simplemente di los colores.
+Se aplican a la web de verdad y se publican.</p>
+<p>Si prefieres no pelearte con el archivo, manda una captura con lo que quieres cambiar
+senalado. Funciona igual de bien.</p>
+
+</body>
+</html>

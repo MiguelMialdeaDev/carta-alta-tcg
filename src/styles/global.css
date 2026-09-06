@@ -98,7 +98,7 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   gap: var(--space-md);
-  min-height: 64px;
+  min-height: var(--alto-nav);
 }
 .wordmark {
   font-family: var(--font-display);
@@ -114,7 +114,7 @@ a { color: inherit; }
 }
 .wordmark img {
   width: auto;
-  height: 44px;
+  height: var(--alto-logo);
   flex: none;
 }
 /* La Z va en morado, como en el logo. Provisional hasta que llegue el lockup en SVG. */
@@ -305,7 +305,7 @@ a { color: inherit; }
 /* ---------- Rejilla de producto · Catalogue ---------- */
 .grid-products {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--ancho-min-tarjeta)), 1fr));
   gap: var(--space-md);
   list-style: none;
   padding: 0;

@@ -31,11 +31,11 @@ for f in htmls:
 
     s = re.sub(r'\b(href|src)="/(?!/)([^"]*)"', arregla, s)
     s = re.sub(r'data-base="[^"]*"', 'data-base="%s"' % prefijo, s)
-    if 'colores.css' not in s:
-        s = s.replace('</head>', '  <link rel="stylesheet" href="%scolores.css" />\n</head>' % prefijo)
+    if 'ajustes.css' not in s:
+        s = s.replace('</head>', '  <link rel="stylesheet" href="%sajustes.css" />\n</head>' % prefijo)
     f.write_text(s, encoding='utf-8')
 
-# --- 2. Hoja de colores editable, generada desde los tokens del proyecto ----
+# --- 2. Hoja de ajustes editable, generada desde los tokens del proyecto ---
 tokens = pathlib.Path('src/styles/tokens.css').read_text(encoding='utf-8')
 def val(n):
     m = re.search(r'--' + re.escape(n) + r':\s*([^;]+);', tokens)
@@ -43,12 +43,16 @@ def val(n):
         sys.exit('No encuentro el token --' + n)
     return m.group(1).strip()
 
-plantilla = pathlib.Path('herramientas/colores.plantilla.css').read_text(encoding='utf-8')
+plantilla = pathlib.Path('herramientas/ajustes.plantilla.css').read_text(encoding='utf-8')
 for marca, token in re.findall(r'@@([a-z0-9]+)\|([a-z0-9-]+)@@', plantilla):
     plantilla = plantilla.replace('@@%s|%s@@' % (marca, token), val(token))
-(RAIZ / 'colores.css').write_text(plantilla, encoding='utf-8')
+(RAIZ / 'ajustes.css').write_text(plantilla, encoding='utf-8')
 
-# --- 3. Comprobaciones -----------------------------------------------------
+# --- 3. Guia para quien recibe la carpeta ----------------------------------
+import shutil
+shutil.copy2('herramientas/guia.html', RAIZ / 'GUIA.html')
+
+# --- 4. Comprobaciones -----------------------------------------------------
 restos = sum(len(re.findall(r'\b(?:href|src)="/(?!/)', f.read_text(encoding='utf-8'))) for f in htmls)
 carpetas = sum(len(re.findall(r'\bhref="(?:\.\./)*"', f.read_text(encoding='utf-8'))) for f in htmls)
 print('paginas procesadas :', len(htmls))
