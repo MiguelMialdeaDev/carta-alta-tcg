@@ -41,6 +41,14 @@
   --color-precio: oklch(42% 0.17 255);
   --color-stock-ok: oklch(45% 0.12 150);
 
+  /* Cabecera oscura. El morado de marca da 1,39:1 sobre este gris, o sea que no
+   * se ve: dentro de la cabecera se usa una versión más clara del mismo morado. */
+  --color-cabecera: oklch(30% 0.012 300);
+  --color-cabecera-ink: oklch(96% 0.005 300);
+  --color-cabecera-ink-2: oklch(78% 0.010 300);
+  --color-cabecera-velo: oklch(96% 0.005 300 / 0.10);
+  --color-brand-claro: oklch(72% 0.17 300);
+
   /* Estados */
   --color-ok: oklch(72% 0.16 150);
   --color-warn: oklch(52% 0.17 32);
@@ -82,8 +90,8 @@
   --gutter: clamp(1.375rem, 5vw, 2rem);
 
   /* Medidas que se tocan a menudo */
-  --alto-nav: 64px;            /* alto de la barra de arriba */
-  --alto-logo: 44px;           /* alto del logo dentro de la barra */
+  --alto-nav: 100px;           /* alto total de la cabecera, con sus dos filas */
+  --alto-logo: 48px;           /* alto del logo dentro de la cabecera */
   --ancho-min-tarjeta: 15rem;  /* cuántos productos entran por fila */
 
   /* Forma */

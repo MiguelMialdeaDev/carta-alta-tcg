@@ -85,70 +85,90 @@ a { color: inherit; }
 }
 .demo-bar strong { color: var(--color-ink); font-weight: 600; }
 
-/* ---------- Nav · N1b adaptada a tienda ---------- */
+/* ---------- Cabecera oscura, dos filas ---------- */
+/* La franja fija va en gris oscuro de arriba abajo: la fila del logo y la de las
+ * categorias. Sobre ese gris el morado de marca da 1,39:1, asi que dentro de la
+ * cabecera se usa --color-brand-claro. */
 .nav {
   position: sticky;
   top: 0;
   z-index: 50;
-  background: var(--color-paper-blur);
-  backdrop-filter: blur(14px);
-  border-bottom: var(--rule);
+  background: var(--color-cabecera);
 }
 .nav-inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-md);
+  /* Las cuentas para que la cabecera mida justo --alto-nav:
+   * 4 de aire + 48 del logo + 44 de las categorias + 4 de aire = 100. */
+  gap: 0 var(--space-md);
   min-height: var(--alto-nav);
+  padding-block: var(--space-2xs);
 }
 .wordmark {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: var(--text-xl);
-  letter-spacing: -0.04em;
+  font-size: var(--text-2xl);
+  letter-spacing: -0.03em;
   text-decoration: none;
   white-space: nowrap;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-xs);
-  color: var(--color-ink);
+  gap: var(--space-sm);
+  color: var(--color-cabecera-ink);
 }
+/* El logo lleva la Z y el nombre en negro, asi que sobre el gris oscuro se
+ * pierde. Va sobre una placa clara, que ademas lo separa del fondo. */
 .wordmark img {
+  box-sizing: border-box;
   width: auto;
   height: var(--alto-logo);
+  padding: 5px;
+  background: var(--color-paper);
+  border-radius: var(--radius-md);
   flex: none;
 }
-/* La Z va en morado, como en el logo. Provisional hasta que llegue el lockup en SVG. */
-.wordmark .z { color: var(--color-brand); }
+.wordmark .z { color: var(--color-brand-claro); }
+
 .nav-games {
+  order: 3;
+  width: 100%;
   display: flex;
-  gap: var(--space-xs);
-  margin-inline-start: auto;
+  justify-content: center;
+  gap: var(--space-2xs);
   list-style: none;
   padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
+.nav-games::-webkit-scrollbar { display: none; }
 .nav-games a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  padding-inline: var(--space-sm);
+  padding-inline: var(--space-md);
   border-radius: var(--radius-pill);
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
+  font-weight: 700;
   text-decoration: none;
-  color: var(--color-ink-2);
+  color: var(--color-cabecera-ink-2);
   white-space: nowrap;
   transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
-.nav-games a:hover { color: var(--color-ink); background: var(--color-paper-2); }
+.nav-games a:hover { color: var(--color-cabecera-ink); background: var(--color-cabecera-velo); }
 .nav-games a[aria-current="page"] {
-  color: var(--color-brand);
-  background: var(--color-brand-soft);
-  font-weight: 600;
+  color: var(--color-accent);
+  background: var(--color-cabecera-velo);
 }
+.nav :focus-visible { outline-color: var(--color-cabecera-ink); }
+
 .nav-cart {
   display: inline-flex;
   align-items: center;
   gap: var(--space-xs);
   min-height: 44px;
+  margin-inline-start: auto;
   padding-inline: var(--space-md);
   border-radius: var(--radius-pill);
   background: var(--color-accent);
@@ -613,20 +633,9 @@ a { color: inherit; }
 }
 
 @media (max-width: 40rem) {
-  .nav-inner { flex-wrap: wrap; padding-block: var(--space-xs); }
-  /* El isotipo se queda grande, que es lo que se pidió. Lo que cede es el
-   * nombre: con los dos agrandados no caben con el carrito en una pantalla
-   * de 320px y la cabecera se partía en tres filas. */
+  /* En movil el nombre cede tamano: con el logo grande y el carrito no cabe. */
   .wordmark { font-size: var(--text-lg); }
-  .nav-games {
-    order: 3;
-    width: 100%;
-    margin-inline-start: 0;
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  .nav-games::-webkit-scrollbar { display: none; }
+  .nav-games { justify-content: flex-start; }
   .solo-ancho { display: none; }
   .section-head-fila { grid-template-columns: minmax(0, 1fr); }
   .section-head-fila .btn { justify-self: start; }
