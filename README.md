@@ -50,7 +50,7 @@ src/layouts/Base.astro     nav, pie, aviso de demo y la lógica del carrito
 src/components/            Packshot (SVG a mano), CardProducto y Rejilla
 src/pages/                 index, tienda, tienda/[juego], producto/[slug], carrito, checkout
 src/styles/tokens.css      tokens de diseño (tema CardZadora)
-src/styles/global.css      hoja única, con el sello de Forge arriba
+src/styles/global.css      hoja única de estilos
 public/marca/              isotipo, palabra y logo completo en PNG
 ```
 
@@ -84,6 +84,53 @@ tienda, por orden:
    cabecera monta el isotipo junto a la palabra escrita en la tipografía de la
    web, con la Z en morado.
 3. **Un favicon simplificado.** El emblema completo a 32px se empasta.
+
+## Cambiar los colores
+
+Todos los colores de la web salen de un único archivo: `src/styles/tokens.css`.
+En el resto del proyecto no hay ni un color suelto, así que cambiando un valor ahí
+cambia en todas las páginas a la vez.
+
+Los colores se escriben en `oklch(claridad intensidad tono)`:
+
+| | |
+|---|---|
+| **claridad** | `0%` es negro y `100%` es blanco |
+| **intensidad** | `0` es gris y `0.2` es muy vivo |
+| **tono** | `0` rojo · `90` amarillo · `150` verde · `250` azul · `300` morado |
+
+También se puede pegar un color normal, `--color-brand: #5F18A0;`.
+
+Los que más se notan:
+
+| Token | Dónde sale |
+|---|---|
+| `--color-brand` | morado: títulos de categoría, enlaces, categoría activa |
+| `--color-accent` | oro: botón de comprar y carrito |
+| `--color-paper` | fondo de la página |
+| `--color-ink` | texto |
+| `--color-precio` | el precio |
+| `--color-stock-ok` | "En stock" |
+
+**Dos avisos que ahorran disgustos.** El oro es muy claro, así que lo que va encima
+tiene que ser negro o no se lee. Y si el fondo se oscurece, el logo actual deja de
+verse: la Z y el nombre son negros y haría falta una versión clara.
+
+## Ver la web sin instalar nada
+
+Para enseñarla o para probar colores sin montar el proyecto:
+
+```
+npx astro build --config astro.config.local.mjs
+python herramientas/copia-offline.py
+```
+
+Deja `dist-local/` lista para comprimir. Se abre haciendo doble clic en
+`index.html`, sin servidor, y lleva un `colores.css` suelto y comentado: se cambia
+un valor, se guarda y se recarga el navegador.
+
+Esa copia es solo para mirar. La web publicada se genera con `astro.config.mjs` y
+se despliega sola con cada push.
 
 ## Seguridad legal, no tocar sin pensarlo
 
@@ -119,14 +166,13 @@ De las reales falta lo que solo puede dar la tienda:
 
 ### Fotos de producto
 
-> **Las fotos de One Piece salen de packshots oficiales pasados por Gemini**, que
-> solo generó el entorno. El método y los prompts están en
-> `Downloads/cardzadora-fotos`. Dos avisos que hay que resolver antes de vender:
-> la Illustration Box Vol.7 y la Premium Collection **conservan la marca de agua
-> SAMPLE de Bandai**, y en la Caja OP-17 el modelo **redibujó la letra pequeña**
-> ("12 cords per booster" en vez de "cards", "130+1 typos" en vez de "128+1
-> types"). A tamaño de web no se lee, pero la caja de la foto no es exactamente la
-> que se envía. Lo resuelven fotos reales del almacén.
+> **Las fotos de One Piece son provisionales**, montadas a partir de los packshots
+> oficiales sobre un fondo neutro para que las seis parezcan la misma sesión. Dos
+> avisos antes de vender: la Illustration Box Vol.7 y la Premium Collection
+> **conservan la marca de agua SAMPLE de Bandai**, y en la Caja OP-17 la letra
+> pequeña del lateral no coincide con la del producto real. A tamaño de web no se
+> lee, pero la caja de la foto no es exactamente la que se envía. Lo resuelven
+> fotos reales del almacén.
 
 Un producto con el campo `fotos` deja de usar el packshot dibujado. Es un array:
 **la primera manda**, porque es la que sale en la rejilla y en el carrito. Si hay
@@ -145,11 +191,10 @@ public/productos/<slug>.webp        1000px, ficha
 public/productos/<slug>-mini.webp    600px, rejilla y carrito
 ```
 
-**Nada de imágenes generadas con IA en una ficha de producto.** Una foto de producto
-es una promesa de lo que llega a casa: si la caja no es exactamente esa, es publicidad
-engañosa. Y si la imagen añade cifras (probabilidades de rareza, número de cartas),
-son promesas sobre el contenido que la tienda tendrá que sostener ante una
-reclamación. Solo fotos reales del producto que se envía.
+**Solo fotos reales del producto que se envía.** Una foto de producto es una promesa
+de lo que llega a casa: si la caja no es exactamente esa, es publicidad engañosa. Y si
+la imagen añade cifras (probabilidades de rareza, número de cartas), son promesas sobre
+el contenido que la tienda tendrá que sostener ante una reclamación.
 
 ## Siguiente
 

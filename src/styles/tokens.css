@@ -1,5 +1,7 @@
-/* Forge · tokens · theme: CardZadora (marca propia)
- * paper-band: light (L 98.5%) · display-style: grotesk-sans · accent-hue: warm (oro 86)
+/* Colores, tipografías y medidas de CardZadora.
+ *
+ * Todo lo visual sale de aquí. En el resto del proyecto no hay ni un color
+ * suelto: siempre se llaman por nombre, con var(--color-brand) y compañía.
  *
  * Los tres colores de marca están tomados del logo, píxel a píxel, y no se retocan:
  *   morado #5F18A0 · oro #F4BA01 · negro #080808

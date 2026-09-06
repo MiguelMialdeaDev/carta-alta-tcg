@@ -1,6 +1,8 @@
-/* Forge · genre: atmospheric · macrostructure: Bento Grid (home) + Catalogue (tienda)
- * theme: CardZadora (marca) · enrichment: Tier B hand-built SVG packshots · nav: N1b · footer: Ft5
- * pre-emit critique: P5 H5 E4 S5 R5 V4
+/* Hoja de estilo única de CardZadora.
+ *
+ * Los colores y las medidas NO se escriben aquí: están en tokens.css y se usan
+ * por nombre, con var(--color-brand) y compañía. Para cambiar un color se toca
+ * tokens.css y cambia en toda la web de una vez.
  */
 @import './tokens.css';
 
