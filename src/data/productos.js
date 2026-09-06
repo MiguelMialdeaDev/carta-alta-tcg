@@ -355,8 +355,7 @@ export function portadaDe(slug) {
   const lista = productosDe(slug);
   const conFoto = lista.find((p) => p.fotos);
   if (conFoto) return { tipo: 'foto', foto: conFoto.fotos[0] };
-  const primero = lista[0];
-  return { tipo: 'dibujo', forma: primero ? primero.forma : 'display' };
+  return { tipo: 'dibujo', escena: slug === 'accesorios' ? 'accesorios' : 'cajas' };
 }
 
 export function porSlug(slug) {

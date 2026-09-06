@@ -297,8 +297,10 @@ a { color: inherit; }
 .cell-game-media {
   display: block;
   width: 100%;
+  aspect-ratio: 16 / 9;
   background: var(--color-paper-3);
   border-bottom: var(--rule);
+  overflow: hidden;
 }
 .cell-game-media > * {
   width: 100%;

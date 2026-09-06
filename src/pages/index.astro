@@ -2,7 +2,7 @@
 import Base from '../layouts/Base.astro';
 import CardProducto from '../components/CardProducto.astro';
 import { productos, juegos, ENVIO, eur, portadaDe } from '../data/productos.js';
-import Packshot from '../components/Packshot.astro';
+import PortadaJuego from '../components/PortadaJuego.astro';
 import Foto from '../components/Foto.astro';
 import { MARCA } from '../data/marca.js';
 import { u } from '../lib/url.js';
@@ -48,7 +48,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
           <span class="cell-game-media" aria-hidden="true">
             {portadas[j.slug].tipo === 'foto'
               ? <Foto foto={{ ...portadas[j.slug].foto, alt: '' }} ratio="16 / 9" />
-              : <Packshot forma={portadas[j.slug].forma} mark={j.mark} ratio="16 / 9" etiqueta={false} />}
+              : <PortadaJuego mark={j.mark} escena={portadas[j.slug].escena} />}
           </span>
           <span class="cell-game-texto">
             <h3>{j.nombre}</h3>
