@@ -54,6 +54,30 @@
   --color-accent-ink: @@d|color-accent-ink@@;
 
 
+  /* ---- LA CABECERA (la franja oscura de arriba) ----------- */
+
+  /* El fondo gris oscuro de la franja fija de arriba, la que no se
+     mueve al bajar por la pagina.                             */
+  --color-cabecera: @@ca|color-cabecera@@;
+
+  /* El nombre CardZadora                                       */
+  --color-cabecera-ink: @@cb|color-cabecera-ink@@;
+
+  /* Los nombres de las categorias                              */
+  --color-cabecera-ink-2: @@cc|color-cabecera-ink-2@@;
+
+  /* La Z del nombre. Es el morado de marca pero mas claro,
+     porque el morado normal sobre el gris oscuro no se lee.    */
+  --color-brand-claro: @@cd|color-brand-claro@@;
+
+  /* CUIDADO si aclaras la cabecera. Las letras de arriba son
+     casi blancas porque el fondo es oscuro. Si pones un gris
+     claro o un color pastel, el nombre y las categorias dejaran
+     de verse y habra que oscurecer tambien estos tres:
+     --color-cabecera-ink, --color-cabecera-ink-2 y
+     --color-brand-claro.                                       */
+
+
   /* ---- FONDOS --------------------------------------------- */
 
   --color-paper: @@e|color-paper@@;      /* fondo de toda la pagina */
@@ -97,8 +121,10 @@
 
   /* ---- LA BARRA DE ARRIBA --------------------------------- */
 
-  /* Alto de la barra. Prueba 80px para hacerla mas alta,
-     o 56px para hacerla mas fina.                             */
+  /* Alto total de la cabecera, contando sus dos filas: la del
+     logo y la de las categorias. Prueba 120px para hacerla mas
+     alta, o 88px para hacerla mas fina. Por debajo de 96px se
+     queda apretada.                                            */
   --alto-nav: @@s|alto-nav@@;
 
   /* Alto del logo dentro de la barra. Si lo subes mucho, sube

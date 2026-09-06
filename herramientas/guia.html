@@ -97,6 +97,30 @@ tambien cambia</strong>. Sirve para comprobar de un vistazo.</p>
       <td>El oro del logo. Solo los botones de comprar y el carrito de arriba.</td></tr>
 </table>
 
+<h3>La cabecera, la franja oscura de arriba</h3>
+<p>Es la parte que no se mueve al bajar por la pagina.</p>
+<table>
+  <tr><th>Color</th><th>Nombre</th><th>Donde sale</th></tr>
+  <tr><td><span class="muestra" style="background:var(--color-cabecera)"></span></td>
+      <td><code>--color-cabecera</code></td><td>El fondo gris oscuro de la franja</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-cabecera-ink)"></span></td>
+      <td><code>--color-cabecera-ink</code></td><td>El nombre CardZadora</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-cabecera-ink-2)"></span></td>
+      <td><code>--color-cabecera-ink-2</code></td><td>Los nombres de las categorias</td></tr>
+  <tr><td><span class="muestra" style="background:var(--color-brand-claro)"></span></td>
+      <td><code>--color-brand-claro</code></td><td>La Z del nombre</td></tr>
+</table>
+<div class="aviso">
+  <p><strong>Cuidado si aclaras la cabecera.</strong> Las letras de arriba son casi blancas
+  porque el fondo es oscuro. Si pones un gris claro o un color pastel, el nombre y las
+  categorias dejaran de verse.</p>
+  <p>Si quieres una cabecera clara, cambia tambien <code>--color-cabecera-ink</code>,
+  <code>--color-cabecera-ink-2</code> y <code>--color-brand-claro</code> por colores
+  oscuros. Cambiando solo el fondo se queda ilegible.</p>
+  <p>Lo mismo con el logo: va sobre una placa clara justamente porque su Z y su nombre son
+  negros y sobre el gris oscuro se perdian.</p>
+</div>
+
 <h3>Fondos y textos</h3>
 <table>
   <tr><th>Color</th><th>Nombre</th><th>Donde sale</th></tr>
@@ -146,11 +170,12 @@ oro.</p>
 <p>Segun vas bajando por la pagina principal, esto es lo que ves y de que color sale:</p>
 <table>
   <tr><th>Lo que ves</th><th>Color</th></tr>
-  <tr><td>La franja gris de arriba del todo</td><td><code>--color-paper-3</code> de fondo, <code>--color-ink-2</code> el texto</td></tr>
-  <tr><td>La barra con el logo</td><td><code>--color-paper</code> de fondo</td></tr>
-  <tr><td>La palabra CardZadora</td><td><code>--color-ink</code>, y la Z en <code>--color-brand</code></td></tr>
-  <tr><td>Los nombres de los juegos, arriba</td><td><code>--color-ink-2</code></td></tr>
-  <tr><td>La categoria en la que estas</td><td><code>--color-brand</code> sobre <code>--color-brand-soft</code></td></tr>
+  <tr><td>La franja del aviso de maqueta</td><td><code>--color-paper-3</code> de fondo, <code>--color-ink-2</code> el texto</td></tr>
+  <tr><td>La cabecera oscura entera</td><td><code>--color-cabecera</code></td></tr>
+  <tr><td>La placa clara detras del logo</td><td><code>--color-paper</code></td></tr>
+  <tr><td>La palabra CardZadora</td><td><code>--color-cabecera-ink</code>, y la Z en <code>--color-brand-claro</code></td></tr>
+  <tr><td>Los nombres de los juegos, arriba</td><td><code>--color-cabecera-ink-2</code></td></tr>
+  <tr><td>La categoria en la que estas</td><td><code>--color-accent</code>, el oro</td></tr>
   <tr><td>El boton Carrito</td><td><code>--color-accent</code> con el numero en <code>--color-accent-ink</code></td></tr>
   <tr><td>El titular "Cartas selladas"</td><td><code>--color-ink</code>, tamano <code>--text-display</code></td></tr>
   <tr><td>El parrafo de debajo</td><td><code>--color-ink-2</code></td></tr>
@@ -201,8 +226,8 @@ oro.</p>
 <code>rem</code>, donde 1rem son 16px.</p>
 <table>
   <tr><th>Nombre</th><th>Que cambia</th><th>Para probar</th></tr>
-  <tr><td><code>--alto-nav</code></td><td>Lo alta que es la barra de arriba</td>
-      <td><code>80px</code> mas alta, <code>56px</code> mas fina</td></tr>
+  <tr><td><code>--alto-nav</code></td><td>Lo alta que es la cabecera entera, con sus dos filas</td>
+      <td><code>120px</code> mas alta, <code>88px</code> mas fina. Por debajo de 96px se aprieta</td></tr>
   <tr><td><code>--alto-logo</code></td><td>El tamano del logo en la barra</td>
       <td>Si lo subes mucho, sube tambien la barra</td></tr>
   <tr><td><code>--ancho-min-tarjeta</code></td><td>Cuantos productos entran por fila</td>
