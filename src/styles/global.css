@@ -95,16 +95,22 @@ a { color: inherit; }
   z-index: 50;
   background: var(--color-cabecera);
 }
+/* Todo en una fila: logo, categorias y carrito.
+ *
+ * Las categorias no van al centro geometrico de la pagina, van con el MISMO
+ * hueco a cada lado. El logo es ancho y el carrito estrecho, asi que centrarlas
+ * en la pagina las deja pegadas al logo y con un claro enorme a la derecha:
+ * medido, se ve torcido aunque el numero diga que esta centrado. Los margenes
+ * automaticos reparten el hueco sobrante a partes iguales. */
 .nav-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  /* Las cuentas para que la cabecera mida justo --alto-nav:
-   * 4 de aire + 48 del logo + 44 de las categorias + 4 de aire = 100. */
-  gap: 0 var(--space-md);
+  gap: var(--space-xs) var(--space-md);
   min-height: var(--alto-nav);
   padding-block: var(--space-2xs);
 }
+.nav-games { margin-inline: auto; }
 .wordmark {
   font-family: var(--font-display);
   font-weight: 700;
@@ -131,8 +137,6 @@ a { color: inherit; }
 .wordmark .z { color: var(--color-brand-claro); }
 
 .nav-games {
-  order: 3;
-  width: 100%;
   display: flex;
   justify-content: center;
   gap: var(--space-2xs);
@@ -166,9 +170,9 @@ a { color: inherit; }
 .nav-cart {
   display: inline-flex;
   align-items: center;
+  justify-self: end;
   gap: var(--space-xs);
   min-height: 44px;
-  margin-inline-start: auto;
   padding-inline: var(--space-md);
   border-radius: var(--radius-pill);
   background: var(--color-accent);
@@ -635,7 +639,6 @@ a { color: inherit; }
 @media (max-width: 40rem) {
   /* En movil el nombre cede tamano: con el logo grande y el carrito no cabe. */
   .wordmark { font-size: var(--text-lg); }
-  .nav-games { justify-content: flex-start; }
   .solo-ancho { display: none; }
   .section-head-fila { grid-template-columns: minmax(0, 1fr); }
   .section-head-fila .btn { justify-self: start; }
@@ -666,4 +669,20 @@ a { color: inherit; }
     clip-path: inset(50%);
     white-space: nowrap;
   }
+}
+
+/* Por debajo de 62rem los tres bloques no caben en una fila sin apretarse, asi
+ * que las categorias bajan a una segunda linea a ancho completo. */
+/* A 70rem los tres bloques ya se aprietan en una fila, asi que las categorias
+ * bajan a una segunda linea. Sin separacion entre filas, para que la cabecera
+ * siga midiendo --alto-nav: 4 de aire + 48 de logo + 44 de categorias + 4. */
+@media (max-width: 70rem) {
+  .nav-inner { row-gap: 0; }
+  .nav-games {
+    order: 3;
+    width: 100%;
+    margin-inline: 0;
+    justify-content: flex-start;
+  }
+  .nav-cart { margin-inline-start: auto; }
 }
