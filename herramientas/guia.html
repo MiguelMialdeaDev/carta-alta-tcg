@@ -49,13 +49,15 @@ No hace falta saber programar ni instalar nada.</p>
 </div>
 
 <h2>1. Como ver la web</h2>
-<p>Abre <code>VER-LA-WEB/index.html</code> haciendo doble clic. Se abre en tu navegador,
-sin internet.</p>
+<p>Abre <code>VER-LA-WEB/index.html</code> haciendo doble clic. Se abre en tu navegador.</p>
 <p>Puedes moverte por las categorias, entrar en las fichas de producto y ver el carrito.
 Es la tienda entera.</p>
-<p><strong>Una cosa que no funciona aqui:</strong> el carrito puede no guardarse al cambiar
-de pagina, porque los navegadores tratan de forma especial los archivos abiertos desde el
-disco. Para verlo del todo, la web esta en internet.</p>
+<p><strong>Mejor con internet.</strong> Las tipografias se descargan de internet. Sin
+conexion la web funciona igual, pero las letras se veran con la fuente del sistema y no
+como son de verdad.</p>
+<p><strong>El carrito puede no guardarse</strong> al cambiar de pagina, porque los
+navegadores tratan de forma especial los archivos abiertos desde el disco. Para probar el
+carrito de verdad, la web esta en internet.</p>
 
 <h2>2. Donde esta cada pagina</h2>
 <p>Dentro de <code>VER-LA-WEB</code>:</p>
@@ -139,6 +141,41 @@ oro.</p>
   <tr><td><span class="muestra" style="background:var(--game-accesorios)"></span></td>
       <td><code>--game-accesorios</code></td><td>Accesorios</td></tr>
 </table>
+
+<h3>La portada, de arriba abajo</h3>
+<p>Segun vas bajando por la pagina principal, esto es lo que ves y de que color sale:</p>
+<table>
+  <tr><th>Lo que ves</th><th>Color</th></tr>
+  <tr><td>La franja gris de arriba del todo</td><td><code>--color-paper-3</code> de fondo, <code>--color-ink-2</code> el texto</td></tr>
+  <tr><td>La barra con el logo</td><td><code>--color-paper</code> de fondo</td></tr>
+  <tr><td>La palabra CardZadora</td><td><code>--color-ink</code>, y la Z en <code>--color-brand</code></td></tr>
+  <tr><td>Los nombres de los juegos, arriba</td><td><code>--color-ink-2</code></td></tr>
+  <tr><td>La categoria en la que estas</td><td><code>--color-brand</code> sobre <code>--color-brand-soft</code></td></tr>
+  <tr><td>El boton Carrito</td><td><code>--color-accent</code> con el numero en <code>--color-accent-ink</code></td></tr>
+  <tr><td>El titular "Cartas selladas"</td><td><code>--color-ink</code>, tamano <code>--text-display</code></td></tr>
+  <tr><td>El parrafo de debajo</td><td><code>--color-ink-2</code></td></tr>
+  <tr><td>Boton "Ver la tienda"</td><td><code>--color-accent</code> con texto <code>--color-accent-ink</code></td></tr>
+  <tr><td>Boton "Buscar por juego"</td><td>solo borde, texto en <code>--color-ink</code></td></tr>
+  <tr><td>Las tarjetas grandes</td><td><code>--color-paper-2</code> de fondo</td></tr>
+  <tr><td>El "24 h" grande</td><td><code>--color-brand</code></td></tr>
+  <tr><td>"Empezar a comprar" y "Ver el catalogo"</td><td><code>--color-brand</code></td></tr>
+  <tr><td>Nombre de cada categoria</td><td><code>--color-ink</code></td></tr>
+  <tr><td>El "6 referencias"</td><td><code>--color-ink-3</code></td></tr>
+  <tr><td>La etiqueta "POKEMON" de un producto</td><td>el color de ese juego, <code>--game-pokemon</code></td></tr>
+  <tr><td>El nombre del producto</td><td><code>--color-ink</code></td></tr>
+  <tr><td>El precio</td><td><code>--color-precio</code></td></tr>
+  <tr><td>El "En stock"</td><td><code>--color-stock-ok</code></td></tr>
+  <tr><td>El "Quedan 2"</td><td><code>--color-warn</code></td></tr>
+  <tr><td>Boton de escribir por correo</td><td><code>--color-brand</code> con texto <code>--color-paper</code></td></tr>
+  <tr><td>El pie de pagina</td><td><code>--color-ink-3</code>, los enlaces en <code>--color-ink-2</code></td></tr>
+</table>
+
+<div class="aviso">
+  <p><strong>Importante.</strong> Los colores son de toda la web, no de una pagina suelta.
+  Si cambias <code>--color-paper</code>, cambia el fondo de la portada, de la tienda, de las
+  fichas y del carrito a la vez. Esta hecho asi a proposito: es lo que hace que la tienda
+  parezca una sola cosa y no seis paginas distintas.</p>
+</div>
 
 <h3>Como se escribe un color</h3>
 <p>Estan escritos como <code>oklch(claridad intensidad tono)</code>, por ejemplo

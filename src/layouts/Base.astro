@@ -56,7 +56,8 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
         }
 
         function guardar(carro) {
-          localStorage.setItem(KEY, JSON.stringify(carro));
+          // Abierto desde el disco, o en ventana privada, esto puede fallar.
+          try { localStorage.setItem(KEY, JSON.stringify(carro)); } catch (e) {}
           pintarContador();
           document.dispatchEvent(new CustomEvent('carro:cambio', { detail: carro }));
         }
@@ -89,7 +90,7 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
             guardar(carro);
           },
           vaciar: function () {
-            localStorage.removeItem(KEY);
+            try { localStorage.removeItem(KEY); } catch (e) {}
             pintarContador();
             document.dispatchEvent(new CustomEvent('carro:cambio', { detail: {} }));
           },
