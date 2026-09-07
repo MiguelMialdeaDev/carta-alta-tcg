@@ -42,6 +42,9 @@ h1, h2, h3, h4 {
 }
 
 img, svg { display: block; max-width: 100%; }
+/* Va detras de las reglas de display de arriba a proposito: sin esto, cualquier
+ * elemento con display propio ignora el atributo hidden y se sigue viendo. */
+[hidden] { display: none !important; }
 a { color: inherit; }
 
 :focus-visible {
@@ -192,6 +195,7 @@ a { color: inherit; }
   transition: transform var(--dur-fast) var(--ease-out), filter var(--dur-fast) var(--ease-out);
 }
 .nav-cart:hover { filter: brightness(1.08); }
+.nav-cart svg { flex: none; }
 .nav-cart:active { transform: translateY(1px); }
 /* Boton de las tres lineas. Solo aparece en movil: en escritorio las categorias
  * caben en la propia barra. */
@@ -705,7 +709,11 @@ a { color: inherit; }
  * asi que pasan al menu de las tres lineas. Con cuatro categorias el limite esta
  * cerca de 900px: por encima entran en la barra, por debajo no. */
 @media (max-width: 56rem) {
-  .nav-inner { row-gap: 0; }
+  .nav-inner { row-gap: 0; column-gap: var(--space-sm); }
+  /* El carrito se queda en icono y numero: con la palabra entera, el boton del
+   * menu no cabia en la fila y se caia debajo del logo. */
+  .nav-cart .texto { display: none; }
+  .nav-cart { padding-inline: var(--space-sm); }
   .nav-menu { display: inline-flex; }
   .nav-cart { margin-inline-start: auto; }
 

@@ -114,8 +114,18 @@ const { title, description = 'Tienda de producto sellado de cartas. One Piece, P
           <img src={u(MARCA.isotipo)} width="35" height="34" alt="" />
           <span>{MARCA.palabra.antes}<span class="z">{MARCA.palabra.letra}</span>{MARCA.palabra.despues}</span>
         </a>
-        <a class="nav-cart" href={u('carrito/')}>
-          Carrito <span class="cart-count" data-cart-count>0</span>
+        <a class="nav-cart" href={u('carrito/')} aria-label="Carrito">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path
+              d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.55L20.5 8H6.2"
+              fill="none" stroke="currentColor" stroke-width="1.9"
+              stroke-linecap="round" stroke-linejoin="round"
+            />
+            <circle cx="10" cy="19.5" r="1.4" fill="currentColor" />
+            <circle cx="17" cy="19.5" r="1.4" fill="currentColor" />
+          </svg>
+          <span class="texto">Carrito</span>
+          <span class="cart-count" data-cart-count>0</span>
         </a>
 
         <button
@@ -166,8 +176,10 @@ const { title, description = 'Tienda de producto sellado de cartas. One Piece, P
         function poner(abierto) {
           boton.setAttribute('aria-expanded', String(abierto));
           barra.dataset.menu = abierto ? 'abierto' : 'cerrado';
-          abrir.hidden = abierto;
-          cerrar.hidden = !abierto;
+          // Con setAttribute y no con .hidden: los SVG no son elementos HTML y
+          // no tienen esa propiedad, asi que asignarla no cambia nada.
+          abrir.toggleAttribute('hidden', abierto);
+          cerrar.toggleAttribute('hidden', !abierto);
         }
 
         poner(false);
