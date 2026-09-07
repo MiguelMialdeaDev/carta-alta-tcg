@@ -13,7 +13,7 @@ export const MARCA = {
   nombre: 'CardZadora',
   // Para title, alt y sitios donde no cabe formato.
   nombreLlano: 'CardZadora',
-  claim: 'Cartas selladas, enviadas en 24 horas',
+  claim: 'Producto sellado, enviado en 24 o 48 horas',
   // Canal de contacto que dio la tienda. Cuando tengan dominio propio conviene
   // pasar a algo tipo hola@sudominio, que da mejor imagen que un gmail.
   email: 'cardzadora@gmail.com',
