@@ -114,7 +114,27 @@ const { title, description = 'Tienda de producto sellado de cartas. One Piece, P
           <img src={u(MARCA.isotipo)} width="35" height="34" alt="" />
           <span>{MARCA.palabra.antes}<span class="z">{MARCA.palabra.letra}</span>{MARCA.palabra.despues}</span>
         </a>
-        <ul class="nav-games">
+        <a class="nav-cart" href={u('carrito/')}>
+          Carrito <span class="cart-count" data-cart-count>0</span>
+        </a>
+
+        <button
+          class="nav-menu"
+          type="button"
+          data-menu-boton
+          aria-expanded="false"
+          aria-controls="menu-categorias"
+          aria-label="Categorías"
+        >
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" data-icono="abrir">
+            <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+          <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" data-icono="cerrar" hidden>
+            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+          </svg>
+        </button>
+
+        <ul class="nav-games" id="menu-categorias">
           <li><a href={u('tienda/')} aria-current={activo === 'tienda' ? 'page' : undefined}>Todo</a></li>
           {juegosVisibles.map((j) => (
             <li>
@@ -124,11 +144,53 @@ const { title, description = 'Tienda de producto sellado de cartas. One Piece, P
             </li>
           ))}
         </ul>
-        <a class="nav-cart" href={u('carrito/')}>
-          Carrito <span class="cart-count" data-cart-count>0</span>
-        </a>
       </nav>
     </header>
+
+    <script is:inline>
+      // El menu arranca ABIERTO en el HTML y lo cierra este script. Asi, si el
+      // JavaScript no llega, las categorias siguen estando ahi y accesibles.
+      (function () {
+        const boton = document.querySelector('[data-menu-boton]');
+        const lista = document.getElementById('menu-categorias');
+        if (!boton || !lista) return;
+
+        const abrir = boton.querySelector('[data-icono="abrir"]');
+        const cerrar = boton.querySelector('[data-icono="cerrar"]');
+
+        // El estado va en la cabecera, no como atributo hidden en la lista: en
+        // escritorio la lista se ve siempre y un hidden ahi seria mentira para
+        // los lectores de pantalla.
+        const barra = boton.closest('.nav');
+
+        function poner(abierto) {
+          boton.setAttribute('aria-expanded', String(abierto));
+          barra.dataset.menu = abierto ? 'abierto' : 'cerrado';
+          abrir.hidden = abierto;
+          cerrar.hidden = !abierto;
+        }
+
+        poner(false);
+
+        boton.addEventListener('click', function (e) {
+          e.stopPropagation();
+          poner(boton.getAttribute('aria-expanded') !== 'true');
+        });
+
+        document.addEventListener('click', function (e) {
+          if (boton.getAttribute('aria-expanded') !== 'true') return;
+          if (lista.contains(e.target) || boton.contains(e.target)) return;
+          poner(false);
+        });
+
+        document.addEventListener('keydown', function (e) {
+          if (e.key !== 'Escape') return;
+          if (boton.getAttribute('aria-expanded') !== 'true') return;
+          poner(false);
+          boton.focus();
+        });
+      })();
+    </script>
 
     <main id="principal">
       <slot />

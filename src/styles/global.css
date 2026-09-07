@@ -110,7 +110,10 @@ a { color: inherit; }
   min-height: var(--alto-nav);
   padding-block: var(--space-2xs);
 }
-.nav-games { margin-inline: auto; }
+.wordmark { order: 1; }
+.nav-games { order: 2; margin-inline: auto; }
+.nav-cart { order: 3; }
+.nav-menu { order: 4; display: none; }
 .wordmark {
   font-family: var(--font-display);
   font-weight: 700;
@@ -190,6 +193,24 @@ a { color: inherit; }
 }
 .nav-cart:hover { filter: brightness(1.08); }
 .nav-cart:active { transform: translateY(1px); }
+/* Boton de las tres lineas. Solo aparece en movil: en escritorio las categorias
+ * caben en la propia barra. */
+.nav-menu {
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--color-cabecera-ink-2);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-cabecera-ink);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.nav-menu:hover { background: var(--color-cabecera-velo); }
+.nav-menu:active { transform: translateY(1px); }
+
 .cart-count {
   background: var(--color-accent-ink);
   color: var(--color-accent);
@@ -680,16 +701,39 @@ a { color: inherit; }
 
 /* Por debajo de 62rem los tres bloques no caben en una fila sin apretarse, asi
  * que las categorias bajan a una segunda linea a ancho completo. */
-/* A 70rem los tres bloques ya se aprietan en una fila, asi que las categorias
- * bajan a una segunda linea. Sin separacion entre filas, para que la cabecera
- * siga midiendo --alto-nav: 4 de aire + 48 de logo + 44 de categorias + 4. */
-@media (max-width: 70rem) {
+/* Por debajo de este ancho las categorias no caben junto al logo y el carrito,
+ * asi que pasan al menu de las tres lineas. Con cuatro categorias el limite esta
+ * cerca de 900px: por encima entran en la barra, por debajo no. */
+@media (max-width: 56rem) {
   .nav-inner { row-gap: 0; }
-  .nav-games {
-    order: 3;
-    width: 100%;
-    margin-inline: 0;
-    justify-content: flex-start;
-  }
+  .nav-menu { display: inline-flex; }
   .nav-cart { margin-inline-start: auto; }
+
+  /* Las categorias dejan de ocupar una fila y pasan a un panel que cae bajo la
+   * cabecera. Va por encima de la pagina, asi que la cabecera no cambia de alto
+   * al abrirlo ni empuja el contenido. */
+  .nav-games {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    z-index: 60;
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-2xs);
+    margin-inline: 0;
+    padding: var(--space-sm) var(--gutter) var(--space-md);
+    background: var(--color-cabecera);
+    border-top: 1px solid var(--color-cabecera-velo);
+    box-shadow: 0 14px 28px oklch(18% 0.03 300 / 0.22);
+  }
+  .nav-games a {
+    width: 100%;
+    min-height: 48px;
+    justify-content: flex-start;
+    border-radius: var(--radius-md);
+  }
+
+  /* Sin JavaScript no hay data-menu, asi que el panel se queda desplegado y las
+   * categorias siguen siendo accesibles. */
+  .nav[data-menu="cerrado"] .nav-games { display: none; }
 }
