@@ -9,28 +9,25 @@ export const juegos = [
     entradilla: 'Sobres, cajas y mazos de inicio del juego de cartas de One Piece. Todo precintado de fábrica.',
   },
   {
-    slug: 'magic',
-    nombre: 'Magic',
-    mark: 'var(--game-magic)',
-    entradilla: 'Displays, mazos y sobres de Magic. El idioma de cada producto está en su ficha.',
-  },
-  {
     slug: 'pokemon',
     nombre: 'Pokémon',
     mark: 'var(--game-pokemon)',
-    entradilla: 'Elite Trainer Box, displays y sobres de Pokémon. Sellado, sin abrir ni reempaquetar.',
+    aviso: false,
+    entradilla: 'Elite Trainer Box, displays, booster box y blísters de Pokémon. Sellado, sin abrir ni reempaquetar.',
   },
   {
     slug: 'naruto',
     nombre: 'Naruto',
     mark: 'var(--game-naruto)',
-    entradilla: 'Producto sellado de Naruto. Catálogo corto: lo que está aquí es lo que hay en almacén.',
+    // Oculto hasta que haya producto. Se recupera quitando la línea de abajo.
+    oculto: true,
+    entradilla: 'Producto sellado de Naruto.',
   },
   {
     slug: 'accesorios',
     nombre: 'Accesorios',
     mark: 'var(--game-accesorios)',
-    entradilla: 'Fundas, cajas y tapetes para guardar y jugar sin que las cartas se estropeen.',
+    entradilla: 'Protege de la mejor manera tu colección.',
   },
 ];
 
@@ -70,54 +67,6 @@ export const productos = [
     stock: 40,
     destacado: false,
     resumen: 'Sobre individual sacado de display precintado. Para probar suerte sin gastar de más.',
-  },
-  {
-    slug: 'play-booster-box-magic',
-    nombre: 'Play Booster Box',
-    juego: 'magic',
-    tipo: 'Display',
-    forma: 'display',
-    idioma: 'Inglés',
-    precio: 119.95,
-    stock: 4,
-    destacado: true,
-    resumen: 'Treinta sobres de juego. El formato pensado para draft en mesa con amigos.',
-  },
-  {
-    slug: 'collector-booster-box-magic',
-    nombre: 'Collector Booster Box',
-    juego: 'magic',
-    tipo: 'Display',
-    forma: 'display',
-    idioma: 'Inglés',
-    precio: 249.95,
-    stock: 1,
-    destacado: false,
-    resumen: 'Doce sobres de coleccionista, con las versiones especiales de la expansión.',
-  },
-  {
-    slug: 'mazo-commander-magic',
-    nombre: 'Mazo Commander',
-    juego: 'magic',
-    tipo: 'Mazo',
-    forma: 'mazo',
-    idioma: 'Inglés',
-    precio: 44.95,
-    stock: 8,
-    destacado: false,
-    resumen: 'Cien cartas listas para jugar la misma tarde. No hace falta construir nada.',
-  },
-  {
-    slug: 'bundle-magic',
-    nombre: 'Bundle de expansión',
-    juego: 'magic',
-    tipo: 'Pack',
-    forma: 'pack',
-    idioma: 'Inglés',
-    precio: 54.95,
-    stock: 5,
-    destacado: false,
-    resumen: 'Nueve sobres, tierras básicas y caja de almacenaje con el arte de la expansión.',
   },
   {
     slug: 'caja-op17-time-of-battle',
@@ -319,7 +268,7 @@ export const productos = [
 // Solo se envía a península. Para abrir Baleares o Canarias, quita el prefijo de
 // FUERA_DE_COBERTURA y añade su tarifa: el checkout deja de bloquear ese código postal.
 export const ENVIO = {
-  coste: 4.95,
+  coste: 5.95,
   gratisDesde: 200,
   zona: 'península',
 };
@@ -345,6 +294,15 @@ export function juegoDe(slug) {
 
 export function productosDe(slug) {
   return productos.filter((p) => p.juego === slug);
+}
+
+// Categorías que se enseñan. Una con oculto: true conserva su página pero
+// desaparece del menú, de la portada y del listado de todo.
+export const juegosVisibles = juegos.filter((j) => !j.oculto);
+
+export function productosVisibles() {
+  const ocultos = new Set(juegos.filter((j) => j.oculto).map((j) => j.slug));
+  return productos.filter((p) => !ocultos.has(p.juego));
 }
 
 // Portada de una categoría. Misma regla que en la ficha de producto: si hay foto

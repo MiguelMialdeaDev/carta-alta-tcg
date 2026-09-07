@@ -1,11 +1,11 @@
 ---
 import '../styles/global.css';
-import { juegos, productos } from '../data/productos.js';
+import { juegos, juegosVisibles, productos } from '../data/productos.js';
 import { MARCA } from '../data/marca.js';
 import { u, BASE } from '../lib/url.js';
 
 const slugsValidos = productos.map((p) => p.slug);
-const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Magic, One Piece y Naruto.', activo = '' } = Astro.props;
+const { title, description = 'Tienda de producto sellado de cartas. One Piece, Pokémon y accesorios.', activo = '' } = Astro.props;
 ---
 
 <!doctype html>
@@ -105,7 +105,7 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
     <a class="skip" href="#principal">Saltar al contenido</a>
 
     <p class="demo-bar">
-      <strong>Maqueta de demostración.</strong> Todavía no se puede comprar.<span class="solo-ancho"> El stock no está confirmado y parte del catálogo es de muestra.</span>
+      <strong>Bienvenido a CardZadora.</strong> Producto sellado y precintado, enviado a península.<span class="solo-ancho"> Escríbenos si buscas algo que no ves en la tienda.</span>
     </p>
 
     <header class="nav">
@@ -116,7 +116,7 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
         </a>
         <ul class="nav-games">
           <li><a href={u('tienda/')} aria-current={activo === 'tienda' ? 'page' : undefined}>Todo</a></li>
-          {juegos.map((j) => (
+          {juegosVisibles.map((j) => (
             <li>
               <a href={u(`tienda/${j.slug}/`)} aria-current={activo === j.slug ? 'page' : undefined}>
                 {j.nombre}
@@ -136,11 +136,10 @@ const { title, description = 'Tienda de producto sellado de cartas. Pokémon, Ma
 
     <footer class="foot">
       <div class="wrap foot-inner">
-        <p class="foot-statement">Producto sellado, guardado como debe estar y enviado el mismo día.</p>
+        <p class="foot-statement">Producto sellado, bien protegido y enviado con cuidado.</p>
         <div class="foot-meta">
-          <span>{MARCA.nombre}, catálogo de muestra</span>
+          <span>{MARCA.nombre}</span>
           <a href={u('tienda/')}>Tienda</a>
-          <a href={u('carrito/')}>Carrito</a>
           <a href={`mailto:${MARCA.email}`}>{MARCA.email}</a>
           <span class="todo">aquí van los datos fiscales</span>
           <span class="todo">aviso legal y condiciones de compra</span>

@@ -1,32 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
 import CardProducto from '../components/CardProducto.astro';
-import { productos, juegos, ENVIO, eur, portadaDe } from '../data/productos.js';
+import { juegos, juegosVisibles, productosVisibles, ENVIO, eur, portadaDe } from '../data/productos.js';
 import PortadaJuego from '../components/PortadaJuego.astro';
 import Foto from '../components/Foto.astro';
 import { MARCA } from '../data/marca.js';
 import { u } from '../lib/url.js';
 
-const destacados = productos.filter((p) => p.destacado).slice(0, 4);
-const portadas = Object.fromEntries(juegos.map((j) => [j.slug, portadaDe(j.slug)]));
-const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
+const destacados = productosVisibles().filter((p) => p.destacado).slice(0, 4);
+const portadas = Object.fromEntries(juegosVisibles.map((j) => [j.slug, portadaDe(j.slug)]));
+const cuenta = (slug) => productosVisibles().filter((p) => p.juego === slug).length;
 ---
 
 <Base title={`${MARCA.nombre} · ${MARCA.claim}`} activo="home">
   <section class="wrap hero">
-    <h1>Cartas selladas, enviadas en 24 horas</h1>
+    <h1>Tus TCG sellados, listos para enviar</h1>
     <p class="lede">
-      Sobres, cajas y mazos de Pokémon, Magic, One Piece y Naruto. Todo precintado y guardado en almacén propio.
+      Sobres, cajas y mazos de One Piece, Pokémon y accesorios. Todo precintado y listo para el envío.
     </p>
     <div class="hero-actions">
       <a class="btn btn-primary" href={u('tienda/')}>Ver la tienda</a>
-      <a class="btn btn-ghost" href="#juegos">Buscar por juego</a>
+      {/* Oculto por ahora: solo tiene sentido si entre las categorías y este
+          botón hay algo en medio. Se recupera quitando el hidden. */}
+      <a class="btn btn-ghost" href="#juegos" hidden>Buscar por juego</a>
     </div>
   </section>
 
   <section class="wrap band-tight" id="juegos" aria-label="Explorar la tienda">
     <div class="bento">
-      {juegos.map((j) => (
+      {juegosVisibles.map((j) => (
         <a class="cell cell-game reveal" style={`--mark: ${j.mark};`} href={u(`tienda/${j.slug}/`)}>
           <span class="cell-game-media" aria-hidden="true">
             {portadas[j.slug].tipo === 'foto'
@@ -43,7 +45,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
       <div class="cell span-3 reveal">
         <h2>Detrás del mostrador hay una persona</h2>
         <p>
-          Te atiende quien prepara los pedidos. Si tienes dudas con una expansión o un idioma, pregunta antes de comprar.
+          Te atiende quien prepara los pedidos. Si tienes dudas con una expansión o un idioma, pregunta sin problemas.
         </p>
         <p><span class="todo">aquí va tu foto y tu nombre</span></p>
       </div>
@@ -57,15 +59,15 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
       </div>
 
       <div class="cell span-2 reveal">
-        <h3>El idioma va en la ficha</h3>
-        <p>Hay producto en español y en inglés. Lo dice cada ficha, para que no te lleves la sorpresa al abrir la caja.</p>
+        <h3>Solo español e inglés</h3>
+        <p>Trabajamos únicamente con producto en español y en inglés. El idioma de cada artículo va en su ficha.</p>
       </div>
     </div>
   </section>
 
   <section class="wrap band">
     <div class="section-head">
-      <h2>Lo que más se mueve</h2>
+      <h2>Producto destacado</h2>
       <p>Una selección corta del catálogo.</p>
     </div>
     <ul class="grid-products">
@@ -89,7 +91,7 @@ const cuenta = (slug) => productos.filter((p) => p.juego === slug).length;
         </dl>
       </div>
       <div class="panel">
-        <h3>¿Buscas algo que no está?</h3>
+        <h3>¿Buscas algo en específico?</h3>
         <p style="color: var(--color-ink-2); font-size: var(--text-sm); margin-block: var(--space-xs) var(--space-md);">
           Escríbenos y te decimos si podemos conseguirlo y a qué precio.
         </p>

@@ -532,7 +532,15 @@ a { color: inherit; }
 .qty button:active { background: var(--color-line); }
 .qty button[disabled] { opacity: 0.4; cursor: not-allowed; }
 .qty span { min-width: 2.5ch; text-align: center; font-variant-numeric: tabular-nums; }
-.totals { display: grid; gap: var(--space-xs); }
+/* El importe de cada linea del pedido se leia como texto normal, mas flojo que
+ * el resto de precios de la web. Va en el mismo azul y con cifras de ancho fijo. */
+.precio-linea {
+  color: var(--color-precio);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.totals { display: grid; gap: var(--space-xs); font-variant-numeric: tabular-nums; }
 .totals div { display: flex; justify-content: space-between; gap: var(--space-md); }
 .totals .grand {
   font-family: var(--font-display);

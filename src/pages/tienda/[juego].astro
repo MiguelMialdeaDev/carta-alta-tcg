@@ -10,7 +10,6 @@ export function getStaticPaths() {
 
 const { juego } = Astro.props;
 const lista = productosDe(juego.slug);
-const esAccesorios = juego.slug === 'accesorios';
 ---
 
 <Base
@@ -29,9 +28,9 @@ const esAccesorios = juego.slug === 'accesorios';
       vacio={`Ahora mismo no queda nada de ${juego.nombre} en almacén. Prueba con otro juego o escríbenos y te avisamos cuando entre.`}
     />
 
-    {!esAccesorios && (
+    {juego.aviso !== false && (
       <p class="notice" style="margin-top: var(--space-xl);">
-        De {juego.nombre} vendemos solo producto sellado. ¿Buscas una carta concreta?
+        De {juego.nombre} vendemos solo producto sellado. ¿Buscas una expansión concreta?
         <a href={`mailto:${MARCA.email}`} style="color: var(--color-brand); font-weight: 600;">Escríbenos</a>
         y te decimos si podemos conseguirla.
       </p>

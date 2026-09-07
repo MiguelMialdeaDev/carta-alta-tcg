@@ -84,11 +84,13 @@ const relacionados = productos
         <dt>Envío</dt><dd>{eur(ENVIO.coste)} a {ENVIO.zona}, gratis desde {eur(ENVIO.gratisDesde)}</dd>
       </dl>
 
-      <p class="notice">
-        De {juego.nombre} vendemos solo producto sellado. ¿Buscas una carta concreta?
-        <a href={`mailto:${MARCA.email}`} style="color: var(--color-brand); font-weight: 600;">Escríbenos</a>
-        y te decimos si podemos conseguirla.
-      </p>
+      {juego.aviso !== false && (
+        <p class="notice">
+          De {juego.nombre} vendemos solo producto sellado. ¿Buscas una expansión concreta?
+          <a href={`mailto:${MARCA.email}`} style="color: var(--color-brand); font-weight: 600;">Escríbenos</a>
+          y te decimos si podemos conseguirla.
+        </p>
+      )}
     </div>
   </section>
 
