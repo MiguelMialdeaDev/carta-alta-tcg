@@ -167,11 +167,11 @@ a { color: inherit; }
   transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
 .nav-games a:hover { color: var(--color-cabecera-ink); background: var(--color-cabecera-velo); }
-/* Sobre un fondo lila el oro no se recorta (1,24:1), asi que la categoria activa
- * se marca con una pildora morada solida en vez de con color de texto. */
+/* La categoria activa invierte la cabecera: pildora clara con el texto en el
+ * morado del fondo. En oro competiria con el carrito, que es la unica accion. */
 .nav-games a[aria-current="page"] {
-  color: var(--color-paper);
-  background: var(--color-brand);
+  color: var(--color-cabecera);
+  background: var(--color-cabecera-ink);
 }
 .nav :focus-visible { outline-color: var(--color-cabecera-ink); }
 /* El boton del carrito es oro sobre lila, que no se separa solo: lo delimita su

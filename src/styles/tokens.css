@@ -41,14 +41,14 @@
   --color-precio: oklch(42% 0.17 255);
   --color-stock-ok: oklch(45% 0.12 150);
 
-  /* Cabecera lila. Al ser un fondo CLARO, todo lo que va encima es oscuro. Si
-   * algún día se vuelve a oscurecer el fondo, hay que invertir estos cuatro o
-   * la cabecera se queda ilegible. */
-  --color-cabecera: oklch(77% 0.121 320);
-  --color-cabecera-ink: oklch(18% 0.030 300);      /* el nombre */
-  --color-cabecera-ink-2: oklch(32% 0.030 310);    /* las categorías */
-  --color-cabecera-z: oklch(35% 0.200 301);        /* la Z del nombre */
-  --color-cabecera-velo: oklch(18% 0.030 300 / 0.10);
+  /* Cabecera en el morado del logo, el mismo valor exacto. Al ser un fondo
+   * OSCURO, todo lo que va encima es claro. Si algún día se aclara el fondo,
+   * hay que invertir estos cuatro o la cabecera se queda ilegible. */
+  --color-cabecera: oklch(41% 0.196 301);
+  --color-cabecera-ink: oklch(97% 0.005 300);      /* el nombre */
+  --color-cabecera-ink-2: oklch(86% 0.020 300);    /* las categorías */
+  --color-cabecera-z: oklch(82% 0.168 86);         /* la Z, en el oro del logo */
+  --color-cabecera-velo: oklch(97% 0.005 300 / 0.14);
 
   /* Estados */
   --color-ok: oklch(72% 0.16 150);
