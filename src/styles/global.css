@@ -85,10 +85,10 @@ a { color: inherit; }
 }
 .demo-bar strong { color: var(--color-ink); font-weight: 600; }
 
-/* ---------- Cabecera oscura, dos filas ---------- */
-/* La franja fija va en gris oscuro de arriba abajo: la fila del logo y la de las
- * categorias. Sobre ese gris el morado de marca da 1,39:1, asi que dentro de la
- * cabecera se usa --color-brand-claro. */
+/* ---------- Cabecera ---------- */
+/* La franja fija lleva su propio juego de colores, porque su fondo no es el de
+ * la pagina. Los cuatro van juntos: si cambia el fondo, cambian los tres textos.
+ * Ahora el fondo es claro, asi que encima va tinta oscura. */
 .nav {
   position: sticky;
   top: 0;
@@ -134,7 +134,7 @@ a { color: inherit; }
   border-radius: var(--radius-md);
   flex: none;
 }
-.wordmark .z { color: var(--color-brand-claro); }
+.wordmark .z { color: var(--color-cabecera-z); }
 
 .nav-games {
   display: flex;
@@ -161,11 +161,15 @@ a { color: inherit; }
   transition: color var(--dur-fast) var(--ease-out), background var(--dur-fast) var(--ease-out);
 }
 .nav-games a:hover { color: var(--color-cabecera-ink); background: var(--color-cabecera-velo); }
+/* Sobre un fondo lila el oro no se recorta (1,24:1), asi que la categoria activa
+ * se marca con una pildora morada solida en vez de con color de texto. */
 .nav-games a[aria-current="page"] {
-  color: var(--color-accent);
-  background: var(--color-cabecera-velo);
+  color: var(--color-paper);
+  background: var(--color-brand);
 }
 .nav :focus-visible { outline-color: var(--color-cabecera-ink); }
+/* El boton del carrito es oro sobre lila, que no se separa solo: lo delimita su
+ * filo negro, que ya lo llevaba. */
 
 .nav-cart {
   display: inline-flex;

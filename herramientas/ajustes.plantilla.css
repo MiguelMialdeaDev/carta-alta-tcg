@@ -66,16 +66,15 @@
   /* Los nombres de las categorias                              */
   --color-cabecera-ink-2: @@cc|color-cabecera-ink-2@@;
 
-  /* La Z del nombre. Es el morado de marca pero mas claro,
-     porque el morado normal sobre el gris oscuro no se lee.    */
-  --color-brand-claro: @@cd|color-brand-claro@@;
+  /* La Z del nombre                                            */
+  --color-cabecera-z: @@cd|color-cabecera-z@@;
 
-  /* CUIDADO si aclaras la cabecera. Las letras de arriba son
-     casi blancas porque el fondo es oscuro. Si pones un gris
-     claro o un color pastel, el nombre y las categorias dejaran
-     de verse y habra que oscurecer tambien estos tres:
-     --color-cabecera-ink, --color-cabecera-ink-2 y
-     --color-brand-claro.                                       */
+  /* LOS CUATRO VAN JUNTOS. Ahora el fondo de la cabecera es
+     claro, asi que las letras van oscuras. Si lo oscureces (un
+     negro, un azul marino), el nombre y las categorias dejaran
+     de verse: hay que aclarar tambien los otros tres.
+     Regla facil: fondo claro, letras oscuras. Fondo oscuro,
+     letras claras.                                             */
 
 
   /* ---- FONDOS --------------------------------------------- */

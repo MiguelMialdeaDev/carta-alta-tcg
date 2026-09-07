@@ -41,13 +41,14 @@
   --color-precio: oklch(42% 0.17 255);
   --color-stock-ok: oklch(45% 0.12 150);
 
-  /* Cabecera oscura. El morado de marca da 1,39:1 sobre este gris, o sea que no
-   * se ve: dentro de la cabecera se usa una versión más clara del mismo morado. */
-  --color-cabecera: oklch(30% 0.012 300);
-  --color-cabecera-ink: oklch(96% 0.005 300);
-  --color-cabecera-ink-2: oklch(78% 0.010 300);
-  --color-cabecera-velo: oklch(96% 0.005 300 / 0.10);
-  --color-brand-claro: oklch(72% 0.17 300);
+  /* Cabecera lila. Al ser un fondo CLARO, todo lo que va encima es oscuro. Si
+   * algún día se vuelve a oscurecer el fondo, hay que invertir estos cuatro o
+   * la cabecera se queda ilegible. */
+  --color-cabecera: oklch(77% 0.121 320);
+  --color-cabecera-ink: oklch(18% 0.030 300);      /* el nombre */
+  --color-cabecera-ink-2: oklch(32% 0.030 310);    /* las categorías */
+  --color-cabecera-z: oklch(35% 0.200 301);        /* la Z del nombre */
+  --color-cabecera-velo: oklch(18% 0.030 300 / 0.10);
 
   /* Estados */
   --color-ok: oklch(72% 0.16 150);
