@@ -79,8 +79,9 @@ const relacionados = productos
 
       <dl class="spec" style="margin-bottom: var(--space-lg);">
         <dt>Tipo</dt><dd>{producto.tipo}</dd>
+        {producto.contenido && <><dt>Contenido</dt><dd>{producto.contenido}</dd></>}
         <dt>Idioma</dt><dd>{producto.idioma ?? <span class="todo">dato pendiente</span>}</dd>
-        <dt>Expansión</dt><dd><span class="todo">dato pendiente</span></dd>
+        <dt>Expansión</dt><dd>{producto.expansion ?? <span class="todo">dato pendiente</span>}</dd>
         <dt>Envío</dt><dd>{eur(ENVIO.coste)} a {ENVIO.zona}, gratis desde {eur(ENVIO.gratisDesde)}</dd>
       </dl>
 

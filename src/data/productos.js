@@ -78,7 +78,9 @@ export const productos = [
     precio: 345,
     stock: null,
     destacado: true,
-    resumen: 'Display precintado de 24 sobres, 12 cartas por sobre. Versión inglesa.',
+    resumen: "Display precintado de 24 sobres. Para abrir en directo o para guardar sin tocar. El bloque completo tiene 128+1 tipos de carta.",
+    contenido: '24 sobres de 12 cartas',
+    expansion: "OP-17 · The World's Strongest Warriors",
     fotos: [
       {
         src: 'productos/caja-op17.webp',
@@ -100,7 +102,9 @@ export const productos = [
     precio: 4150,
     stock: null,
     destacado: false,
-    resumen: 'Case sin abrir con doce cajas, 288 sobres en total. Versión inglesa.',
+    resumen: "El formato de tienda y de quien abre en cantidad. Sale en su caja de transporte original, sin abrir, y va reforzado en el envío.",
+    contenido: '12 cajas, 288 sobres en total',
+    expansion: "OP-17 · The World's Strongest Warriors",
     fotos: [
       {
         src: 'productos/case-op17.webp',
@@ -122,7 +126,9 @@ export const productos = [
     precio: 59.9,
     stock: null,
     destacado: true,
-    resumen: 'Premium Card Collection, Best Selection volumen 6.',
+    resumen: "No lleva sobres: son doce cartas concretas con arte alternativo, pensadas para coleccionar.",
+    contenido: '12 cartas con arte alternativo',
+    expansion: null,
     fotos: [
       {
         src: 'productos/premium-vol6.webp',
@@ -144,7 +150,9 @@ export const productos = [
     precio: 36.9,
     stock: null,
     destacado: false,
-    resumen: "Double Pack Set del bloque OP-17, The World's Strongest Warriors.",
+    resumen: "La entrada más barata al bloque OP-17. La carta DON!! promocional viene en dos diseños posibles.",
+    contenido: '2 sobres y 1 carta DON!! promocional',
+    expansion: "OP-17 · The World's Strongest Warriors",
     // La primera manda: es la que sale en la rejilla y en el carrito.
     // La infografía de contenido se retiró el 2026-09-05 a petición de la tienda.
     // Para recuperarla: git checkout c0ff2cb -- public/productos/
@@ -169,7 +177,9 @@ export const productos = [
     precio: 32.5,
     stock: null,
     destacado: false,
-    resumen: 'Illustration Box volumen 7, edición 2026.',
+    resumen: "Lo que se busca aquí son las promocionales. Los cuatro sobres son dos de OP-15-EB04 y dos de OP-16.",
+    contenido: '4 sobres y 2 cartas promocionales',
+    expansion: 'OP-15-EB04 y OP-16',
     fotos: [
       {
         src: 'productos/illustration-box-7.webp',
@@ -191,7 +201,9 @@ export const productos = [
     precio: 32.5,
     stock: null,
     destacado: false,
-    resumen: 'Illustration Box volumen 8, edición 2026.',
+    resumen: "Lo que se busca aquí son las promocionales, en este caso de Kid y Killer. Los cuatro sobres son dos de OP-15-EB04 y dos de OP-16.",
+    contenido: '4 sobres y 2 cartas promocionales',
+    expansion: 'OP-15-EB04 y OP-16',
     fotos: [
       {
         src: 'productos/illustration-box-8.webp',
