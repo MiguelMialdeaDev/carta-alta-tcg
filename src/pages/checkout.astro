@@ -1,10 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
 import { productos, ENVIO, FUERA_DE_COBERTURA, eur } from '../data/productos.js';
-import { titulo } from '../data/marca.js';
+import { titulo, MARCA } from '../data/marca.js';
+import { PEDIDOS } from '../data/pedidos.js';
 import { u } from '../lib/url.js';
 
 const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio: p.precio }));
+const canal = { ...PEDIDOS, correo: MARCA.email, tienda: MARCA.nombre };
 ---
 
 <Base title={titulo('Finalizar pedido')}>
@@ -73,11 +75,27 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
           y añade algo antes de terminar.
         </p>
 
+        {/* Trampa para robots de formulario. Va oculta y una persona no la ve nunca:
+            si llega rellena, el envío se descarta sin avisar. */}
+        <div class="trampa" aria-hidden="true">
+          <label for="apodo">No rellenes esto</label>
+          <input id="apodo" name="apodo" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <div class="check" data-check>
+          <input id="acepto" type="checkbox" />
+          <label for="acepto">
+            Acepto que uséis mis datos para preparar y enviar este pedido.
+            <span class="todo">falta enlazar el aviso legal</span>
+          </label>
+        </div>
+        <span class="err" data-err-acepto hidden>Marca la casilla para poder mandarte el pedido.</span>
+
         <button class="btn btn-primary" type="submit" style="width: 100%; margin-top: var(--space-lg);" data-enviar>
           Confirmar pedido
         </button>
         <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-top: var(--space-sm);">
-          Al confirmar aceptas las condiciones de compra. <span class="todo">texto legal pendiente</span>
+          Al confirmar no se cobra nada aquí. Te escribimos al correo para cerrar el pago.
         </p>
       </form>
 
@@ -96,23 +114,43 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
     </div>
 
     <div class="panel" data-gracias hidden style="margin-top: var(--space-lg);">
-      <h2 style="font-size: var(--text-2xl);">Pedido confirmado</h2>
+      <h2 style="font-size: var(--text-2xl);">Pedido recibido</h2>
       <p style="color: var(--color-ink-2); margin-block: var(--space-sm) var(--space-md);">
-        Esto es una maqueta, así que aquí no se ha cobrado nada. En la tienda real llegaría el email de confirmación y el pedido entraría en el panel.
+        Ya lo tenemos. Te escribimos a tu correo para cerrar el pago y confirmarte el envío.
+        Si en unas horas no ves nada, mira en la carpeta de spam o respóndenos a {MARCA.email}.
       </p>
       <a class="btn btn-ghost" href={u('tienda/')}>Volver a la tienda</a>
+    </div>
+
+    {/* Si el envío automático no sale, el pedido no se pierde: se prepara escrito
+        y el cliente lo manda desde su propio correo. El carrito se queda intacto. */}
+    <div class="panel" data-fallo hidden style="margin-top: var(--space-lg);">
+      <h2 style="font-size: var(--text-2xl);">Casi está</h2>
+      <p style="color: var(--color-ink-2); margin-block: var(--space-sm) var(--space-md);">
+        Tu pedido está preparado pero no ha salido solo. Pulsa el botón, se abrirá tu correo
+        con todo escrito y solo tienes que darle a enviar. Nos llega igual.
+      </p>
+      <a class="btn btn-primary" data-mailto href={`mailto:${MARCA.email}`}>Mandarlo por correo</a>
+      <button class="btn btn-ghost" type="button" data-reintentar style="margin-top: var(--space-xs);">
+        Volver a intentarlo
+      </button>
+      <p style="color: var(--color-ink-3); font-size: var(--text-xs); margin-top: var(--space-md);">
+        No cierres esta página hasta mandarlo. Tu carrito sigue guardado.
+      </p>
     </div>
   </section>
 
   <script type="application/json" data-catalogo set:html={JSON.stringify(catalogo)}></script>
   <script type="application/json" data-envio-config set:html={JSON.stringify(ENVIO)}></script>
   <script type="application/json" data-fuera-config set:html={JSON.stringify(FUERA_DE_COBERTURA)}></script>
+  <script type="application/json" data-canal set:html={JSON.stringify(canal)}></script>
 
   <script is:inline>
     (function () {
       const catalogo = JSON.parse(document.querySelector('[data-catalogo]').textContent);
       const envioCfg = JSON.parse(document.querySelector('[data-envio-config]').textContent);
       const fueraCfg = JSON.parse(document.querySelector('[data-fuera-config]').textContent);
+      const canal = JSON.parse(document.querySelector('[data-canal]').textContent);
       const form = document.querySelector('[data-form]');
       const boton = document.querySelector('[data-enviar]');
       const items = document.querySelector('[data-items]');
@@ -120,7 +158,7 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
       let vacio = true;
 
       const notas = {
-        tarjeta: '',
+        tarjeta: 'Te escribimos al correo para cerrar el pago con tarjeta.',
         transferencia: 'Te mandamos los datos por email. El pedido sale cuando llega el ingreso.',
       };
 
@@ -177,6 +215,40 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
         document.querySelector('[data-total]').textContent = eur(subtotal + envio);
       }
 
+      // El pedido escrito en texto plano, con su total. Sirve igual para el correo
+      // automático que para el enlace mailto de reserva, así solo hay una versión
+      // que mantener y el total del asunto no puede contradecir al del detalle.
+      function redactarPedido() {
+        const carro = window.carro.leer();
+        const lineas = [];
+        let subtotal = 0;
+        Object.keys(carro).forEach(function (slug) {
+          const p = catalogo.find(function (x) { return x.slug === slug; });
+          if (!p) return;
+          subtotal += p.precio * carro[slug];
+          lineas.push(carro[slug] + ' x ' + p.nombre + '  ' + eur(p.precio * carro[slug]));
+        });
+        const envio = subtotal >= envioCfg.gratisDesde || subtotal === 0 ? 0 : envioCfg.coste;
+        lineas.push('');
+        lineas.push('Productos: ' + eur(subtotal));
+        lineas.push('Envío: ' + (envio === 0 && subtotal > 0 ? 'Gratis' : eur(envio)));
+        lineas.push('Total: ' + eur(subtotal + envio));
+        return { texto: lineas.join('\n'), total: subtotal + envio };
+      }
+
+      function datosDelFormulario() {
+        const val = function (id) { return document.getElementById(id).value.trim(); };
+        return {
+          nombre: val('nombre'),
+          email: val('email'),
+          telefono: val('telefono'),
+          direccion: val('direccion'),
+          cp: val('cp'),
+          ciudad: val('ciudad'),
+          pago: document.getElementById('pago').value,
+        };
+      }
+
       // Devuelve el nombre de la zona si el código postal cae fuera de península, o null.
       function zonaFuera(cp) {
         const limpio = String(cp).trim();
@@ -216,6 +288,16 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
           const valido = revisarCampo(campo, !ok ? false : true);
           if (!valido) ok = false;
         });
+        // La casilla de consentimiento va aparte: un checkbox siempre tiene valor,
+        // así que la regla de "tiene algo escrito" no vale para ella.
+        const acepto = document.getElementById('acepto');
+        const errAcepto = document.querySelector('[data-err-acepto]');
+        errAcepto.hidden = acepto.checked;
+        acepto.setAttribute('aria-invalid', String(!acepto.checked));
+        if (!acepto.checked) {
+          if (ok) acepto.focus();
+          ok = false;
+        }
         return ok;
       }
 
@@ -233,7 +315,75 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
         });
       })();
 
-      form.addEventListener('submit', function (e) {
+      const gracias = document.querySelector('[data-gracias]');
+      const fallo = document.querySelector('[data-fallo]');
+      const resumenPanel = document.querySelector('[data-resumen]');
+      const etiquetaBoton = boton.textContent.trim();
+
+      function mostrarPanel(cual) {
+        form.hidden = cual !== 'form';
+        resumenPanel.hidden = cual !== 'form';
+        gracias.hidden = cual !== 'gracias';
+        fallo.hidden = cual !== 'fallo';
+        const visible = cual === 'gracias' ? gracias : cual === 'fallo' ? fallo : form;
+        visible.scrollIntoView({ block: 'start' });
+      }
+
+      // Plan B: el pedido escrito en un mailto. No depende de terceros y llega
+      // igual, solo que lo manda el cliente desde su correo.
+      function prepararMailto(datos, pedido) {
+        const cuerpo = [
+          'Hola, quiero hacer este pedido:',
+          '',
+          pedido,
+          '',
+          'Nombre: ' + datos.nombre,
+          'Email: ' + datos.email,
+          'Teléfono: ' + datos.telefono,
+          'Dirección: ' + datos.direccion,
+          'CP y ciudad: ' + datos.cp + ' ' + datos.ciudad,
+          'Forma de pago: ' + datos.pago,
+        ].join('\n');
+        document.querySelector('[data-mailto]').href =
+          'mailto:' + canal.correo +
+          '?subject=' + encodeURIComponent('Pedido de ' + datos.nombre) +
+          '&body=' + encodeURIComponent(cuerpo);
+      }
+
+      async function mandar(datos, pedido, total) {
+        if (!canal.clave || canal.clave.length <= 10) return false;
+        const cuerpo = {
+          access_key: canal.clave,
+          subject: 'Pedido de ' + datos.nombre + ' · ' + eur(total),
+          from_name: canal.tienda,
+          replyto: datos.email,
+          nombre: datos.nombre,
+          email: datos.email,
+          telefono: datos.telefono,
+          direccion: datos.direccion,
+          cp: datos.cp,
+          ciudad: datos.ciudad,
+          forma_de_pago: datos.pago,
+          pedido: pedido,
+        };
+        try {
+          const r = await fetch(canal.endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+            body: JSON.stringify(cuerpo),
+          });
+          const json = await r.json().catch(function () { return {}; });
+          return r.ok && json.success === true;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      document.querySelector('[data-reintentar]').addEventListener('click', function () {
+        mostrarPanel('form');
+      });
+
+      form.addEventListener('submit', async function (e) {
         e.preventDefault();
         // Un botón deshabilitado no impide enviar el formulario con Enter.
         if (vacio) {
@@ -243,15 +393,30 @@ const catalogo = productos.map((p) => ({ slug: p.slug, nombre: p.nombre, precio:
           return;
         }
         if (!validar()) return;
+        // Si ha picado el robot, nos callamos y no mandamos nada.
+        if (document.getElementById('apodo').value !== '') return;
+
+        const datos = datosDelFormulario();
+        const pedido = redactarPedido();
+        prepararMailto(datos, pedido.texto);
+
+        boton.disabled = true;
         boton.dataset.state = 'loading';
-        boton.textContent = 'Confirmando';
-        setTimeout(function () {
+        boton.textContent = 'Enviando';
+
+        const ido = await mandar(datos, pedido.texto, pedido.total);
+
+        boton.disabled = false;
+        delete boton.dataset.state;
+        boton.textContent = etiquetaBoton;
+
+        if (ido) {
+          // Solo se vacía el carrito cuando el pedido ha salido de verdad.
           window.carro.vaciar();
-          form.hidden = true;
-          document.querySelector('[data-resumen]').hidden = true;
-          document.querySelector('[data-gracias]').hidden = false;
-          document.querySelector('[data-gracias]').scrollIntoView({ block: 'start' });
-        }, 700);
+          mostrarPanel('gracias');
+        } else {
+          mostrarPanel('fallo');
+        }
       });
 
       pintar();

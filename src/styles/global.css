@@ -590,6 +590,30 @@ a { color: inherit; }
 .field[data-invalid="true"] input { border-color: var(--color-warn); }
 .field .err { font-size: var(--text-xs); color: var(--color-warn); }
 
+/* Casilla de consentimiento. Fuera de .field a proposito: ahi el input ocupa el
+ * ancho entero y una casilla de 100% de ancho no la entiende nadie. */
+.check { display: flex; align-items: flex-start; gap: var(--space-sm); margin-top: var(--space-md); }
+.check input {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  accent-color: var(--color-brand);
+}
+.check label { font-size: var(--text-sm); color: var(--color-ink-2); }
+.check input[aria-invalid="true"] { outline: 2px solid var(--color-warn); outline-offset: 2px; }
+[data-err-acepto] { display: block; font-size: var(--text-xs); color: var(--color-warn); margin-top: var(--space-2xs); }
+
+/* Trampa para robots: fuera de la vista pero no display:none, que algunos
+ * rellenadores automaticos saltan lo que esta oculto del todo. */
+.trampa {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .panel {
   background: var(--color-paper-2);
   border: var(--rule);

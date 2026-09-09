@@ -12,15 +12,21 @@ Leyenda: `[ ]` pendiente · `[x]` cerrado · `[~]` en curso · `[P]` esperando a
 
 ## Bloqueantes (no son de diseño, son de negocio)
 
-- [M] **1. El checkout recoge datos personales y no los manda a ningún sitio.**
-  Nombre, email, teléfono, dirección, CP y ciudad. Al confirmar se vacía el carrito,
-  aparece "Pedido confirmado" y ahí acaba todo. No hay backend, ni email, ni pasarela.
-  Un pedido real se pierde y el cliente cree que ha comprado.
+- [x] **1. El checkout recoge datos personales y no los manda a ningún sitio.** (2026-09-09)
+  Resuelto. El pedido sale ahora por correo a la tienda. La configuración vive entera en
+  `src/data/pedidos.js`, con las instrucciones de alta dentro del propio fichero.
+  Comportamiento comprobado en las cinco ramas: éxito (vacía el carrito y enseña
+  "Pedido recibido"), el servicio responde que no, no hay red, el servicio responde raro,
+  y clave sin poner. En las cuatro últimas el carrito se queda intacto y aparece un panel
+  de reserva con el pedido escrito en un `mailto`, así que el pedido no se pierde nunca.
+  Añadidos también una casilla de consentimiento obligatoria y una trampa para robots.
+  **Queda un paso de Pablo:** dar de alta cardzadora@gmail.com en web3forms.com y pegar
+  la clave en `src/data/pedidos.js`. Hasta entonces funciona por la vía del `mailto`.
 
 - [P] **2. Sin textos legales.**
-  Cuatro huecos `.todo` vivos: datos fiscales y aviso legal en el pie, política de
-  devoluciones en la home, texto legal en el checkout. Tampoco hay política de
-  privacidad ni casilla de consentimiento en un formulario que pide datos personales.
+  Tres huecos `.todo` vivos: datos fiscales y aviso legal en el pie, y política de
+  devoluciones en la home. La casilla de consentimiento ya está puesta (punto 1), pero
+  le falta el enlace al aviso legal, que no existe. Sigue sin política de privacidad.
   Con la barra de demo retirada, la web se lee como tienda operativa.
 
 - [P] **3. Dos preventas anunciadas como "En stock, envío en 24 o 48 horas".**
@@ -59,9 +65,10 @@ Leyenda: `[ ]` pendiente · `[x]` cerrado · `[~]` en curso · `[P]` esperando a
   "No vendemos cartas sueltas ni producto abierto", dentro de la tarjeta
   "Aquí solo hay producto sellado".
 
-- [ ] **11. El aviso de maqueta sobrevive en la pantalla de pedido confirmado:**
-  "Esto es una maqueta, así que aquí no se ha cobrado nada". O se quita, y entonces el
-  punto 1 pasa a urgente, o se queda, y entonces la barra de bienvenida miente.
+- [x] **11. El aviso de maqueta sobrevive en la pantalla de pedido confirmado.** (2026-09-09)
+  Resuelto de camino al punto 1: ahora el pedido sale de verdad, así que la pantalla dice
+  lo que pasa realmente ("te escribimos al correo para cerrar el pago") en lugar de
+  "esto es una maqueta".
 
 - [ ] **12. Textos que no cuadran con el catálogo.**
   La home dice "Sobres, cajas y mazos" y no hay ni un mazo. One Piece dice "mazos de
