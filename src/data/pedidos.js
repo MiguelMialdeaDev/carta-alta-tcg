@@ -2,7 +2,21 @@
 //
 // La web es estática: no hay servidor propio que reciba el formulario. El pedido
 // se manda a un servicio que lo reenvía por correo a la tienda. El elegido es
-// Web3Forms porque no pide tarjeta, no guarda los datos y solo hace de cartero.
+// Web3Forms porque no pide tarjeta y el plan gratuito da de sobra (250 pedidos al
+// mes), pero conviene tener claro qué es y qué no es:
+//
+//   SÍ guarda los datos. En el plan gratuito el panel enseña 30 días de historial
+//   y la retención llega a 3 años. Es decir, es un ENCARGADO DEL TRATAMIENTO:
+//   hay que nombrarlo en la política de privacidad y aceptar su DPA.
+//   web3forms.com/legal/dpa
+//
+//   La clave viaja en el JavaScript de la página, a la vista de cualquiera. Está
+//   pensado así: solo sirve para mandar correo a la dirección que la dio de alta,
+//   no para suplantar a nadie. Lo peor que puede pasar es spam a la propia tienda,
+//   y contra eso van la trampa del formulario y su filtro antispam.
+//
+//   NO es una base de datos de pedidos. No baja stock, no tiene estados de pedido
+//   ni panel de tienda. Eso es la fase 3 con Supabase (ver productos.js).
 //
 // PARA CONECTARLO (5 minutos, lo hace la tienda):
 //   1. Entrar en https://web3forms.com
