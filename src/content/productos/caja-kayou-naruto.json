@@ -1,0 +1,15 @@
+{
+  "nombre": "Caja Kayou",
+  "juego": "naruto",
+  "tipo": "Caja",
+  "forma": "display",
+  "precio": 29.95,
+  "stock": 7,
+  "destacado": false,
+  "orden": 100,
+  "resumen": "Caja precintada con dieciocho sobres. La serie que más está subiendo entre coleccionistas.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Chino",
+  "fotos": []
+}

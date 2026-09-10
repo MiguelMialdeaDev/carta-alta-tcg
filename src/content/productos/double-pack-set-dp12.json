@@ -1,0 +1,24 @@
+{
+  "nombre": "Double Pack Set vol.12 [DP-12]",
+  "juego": "one-piece",
+  "tipo": "Double Pack",
+  "forma": "pack",
+  "precio": 36.9,
+  "stock": null,
+  "destacado": false,
+  "orden": 70,
+  "resumen": "La entrada más barata al bloque OP-17. La carta DON!! promocional viene en dos diseños posibles.",
+  "contenido": "2 sobres y 1 carta DON!! promocional",
+  "expansion": "OP-17 · The World's Strongest Warriors",
+  "idioma": null,
+  "fotos": [
+    {
+      "src": "productos/double-pack-set-dp12-caja.webp",
+      "mini": "productos/double-pack-set-dp12-caja-mini.webp",
+      "ancho": 1000,
+      "alto": 920,
+      "etiqueta": "La caja",
+      "alt": "Caja del Double Pack Set 12 de One Piece junto a las cartas que incluye"
+    }
+  ]
+}

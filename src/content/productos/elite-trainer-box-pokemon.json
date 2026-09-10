@@ -1,0 +1,15 @@
+{
+  "nombre": "Elite Trainer Box",
+  "juego": "pokemon",
+  "tipo": "Caja",
+  "forma": "etb",
+  "precio": 49.95,
+  "stock": 6,
+  "destacado": true,
+  "orden": 10,
+  "resumen": "Nueve sobres, dados, fundas y separadores. La entrada más cómoda a una expansión.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Español",
+  "fotos": []
+}

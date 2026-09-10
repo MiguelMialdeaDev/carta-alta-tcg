@@ -1,0 +1,15 @@
+{
+  "nombre": "Sobre Kayou",
+  "juego": "naruto",
+  "tipo": "Sobre",
+  "forma": "sobre",
+  "precio": 3.95,
+  "stock": 30,
+  "destacado": false,
+  "orden": 110,
+  "resumen": "Sobre suelto de caja precintada. Ideal para completar colección sin comprar la caja.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Chino",
+  "fotos": []
+}

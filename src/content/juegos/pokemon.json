@@ -1,0 +1,8 @@
+{
+  "nombre": "Pokémon",
+  "entradilla": "Elite Trainer Box, displays, booster box y blísters de Pokémon. Sellado, sin abrir ni reempaquetar.",
+  "mark": "var(--game-pokemon)",
+  "orden": 20,
+  "oculto": false,
+  "aviso": false
+}

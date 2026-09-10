@@ -1,0 +1,15 @@
+{
+  "nombre": "Tapete de juego",
+  "juego": "accesorios",
+  "tipo": "Tapete",
+  "forma": "accesorio",
+  "precio": 19.95,
+  "stock": 9,
+  "destacado": false,
+  "orden": 130,
+  "resumen": "Base antideslizante y superficie de tela. Protege las cartas y la mesa.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Estándar",
+  "fotos": []
+}

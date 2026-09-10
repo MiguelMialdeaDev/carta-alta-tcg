@@ -1,0 +1,24 @@
+{
+  "nombre": "Case OP-17 The World's Strongest Warriors",
+  "juego": "one-piece",
+  "tipo": "Case de 12 cajas",
+  "forma": "case",
+  "precio": 4150,
+  "stock": null,
+  "destacado": false,
+  "orden": 50,
+  "resumen": "El formato de tienda y de quien abre en cantidad. Sale en su caja de transporte original, sin abrir, y va reforzado en el envío.",
+  "contenido": "12 cajas, 288 sobres en total",
+  "expansion": "OP-17 · The World's Strongest Warriors",
+  "idioma": "Inglés",
+  "fotos": [
+    {
+      "src": "productos/case-op17.webp",
+      "mini": "productos/case-op17-mini.webp",
+      "ancho": 1000,
+      "alto": 1000,
+      "etiqueta": "El producto",
+      "alt": "Caja de transporte precintada de doce cajas de One Piece OP-17, junto a una caja expositora abierta"
+    }
+  ]
+}

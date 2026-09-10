@@ -1,0 +1,8 @@
+{
+  "nombre": "One Piece",
+  "entradilla": "Sobres, cajas y mazos de inicio del juego de cartas de One Piece. Todo precintado de fábrica.",
+  "mark": "var(--game-onepiece)",
+  "orden": 10,
+  "oculto": false,
+  "aviso": true
+}

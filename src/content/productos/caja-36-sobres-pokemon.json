@@ -1,0 +1,15 @@
+{
+  "nombre": "Caja de 36 sobres",
+  "juego": "pokemon",
+  "tipo": "Display",
+  "forma": "display",
+  "precio": 149.95,
+  "stock": 2,
+  "destacado": true,
+  "orden": 20,
+  "resumen": "Display completo precintado. Lo que se abre en directo y lo que se guarda para coleccionar.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Español",
+  "fotos": []
+}

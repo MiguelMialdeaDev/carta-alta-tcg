@@ -1,0 +1,15 @@
+{
+  "nombre": "Fundas mate, 100 unidades",
+  "juego": "accesorios",
+  "tipo": "Fundas",
+  "forma": "accesorio",
+  "precio": 9.95,
+  "stock": 25,
+  "destacado": false,
+  "orden": 120,
+  "resumen": "Acabado mate que no resbala al barajar. Tamaño estándar para cualquier juego.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Estándar",
+  "fotos": []
+}

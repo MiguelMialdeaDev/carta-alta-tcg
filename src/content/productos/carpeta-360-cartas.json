@@ -1,0 +1,15 @@
+{
+  "nombre": "Carpeta de 360 cartas",
+  "juego": "accesorios",
+  "tipo": "Carpeta",
+  "forma": "accesorio",
+  "precio": 24.95,
+  "stock": 4,
+  "destacado": false,
+  "orden": 140,
+  "resumen": "Cierre de cremallera y hojas fijas. Para llevar la colección sin que se mueva.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Estándar",
+  "fotos": []
+}

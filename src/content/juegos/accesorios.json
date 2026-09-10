@@ -1,0 +1,8 @@
+{
+  "nombre": "Accesorios",
+  "entradilla": "Protege de la mejor manera tu colección.",
+  "mark": "var(--game-accesorios)",
+  "orden": 40,
+  "oculto": false,
+  "aviso": true
+}

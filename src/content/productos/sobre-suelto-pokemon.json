@@ -1,0 +1,15 @@
+{
+  "nombre": "Sobre suelto",
+  "juego": "pokemon",
+  "tipo": "Sobre",
+  "forma": "sobre",
+  "precio": 4.95,
+  "stock": 40,
+  "destacado": false,
+  "orden": 30,
+  "resumen": "Sobre individual sacado de display precintado. Para probar suerte sin gastar de más.",
+  "contenido": null,
+  "expansion": null,
+  "idioma": "Español",
+  "fotos": []
+}

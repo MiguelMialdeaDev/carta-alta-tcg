@@ -1,0 +1,24 @@
+{
+  "nombre": "Illustration Box Vol.8",
+  "juego": "one-piece",
+  "tipo": "Illustration Box",
+  "forma": "etb",
+  "precio": 32.5,
+  "stock": null,
+  "destacado": false,
+  "orden": 90,
+  "resumen": "Lo que se busca aquí son las promocionales, en este caso de Kid y Killer. Los cuatro sobres son dos de OP-15-EB04 y dos de OP-16.",
+  "contenido": "4 sobres y 2 cartas promocionales",
+  "expansion": "OP-15-EB04 y OP-16",
+  "idioma": "Inglés",
+  "fotos": [
+    {
+      "src": "productos/illustration-box-8.webp",
+      "mini": "productos/illustration-box-8-mini.webp",
+      "ancho": 1000,
+      "alto": 1000,
+      "etiqueta": "El producto",
+      "alt": "Caja de la Illustration Box Vol.8 de One Piece vista de tres cuartos"
+    }
+  ]
+}

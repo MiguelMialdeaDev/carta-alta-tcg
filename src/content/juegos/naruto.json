@@ -1,0 +1,8 @@
+{
+  "nombre": "Naruto",
+  "entradilla": "Producto sellado de Naruto.",
+  "mark": "var(--game-naruto)",
+  "orden": 30,
+  "oculto": true,
+  "aviso": true
+}

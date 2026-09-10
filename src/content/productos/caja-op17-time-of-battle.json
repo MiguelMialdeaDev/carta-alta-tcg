@@ -1,0 +1,24 @@
+{
+  "nombre": "Caja OP-17 The World's Strongest Warriors",
+  "juego": "one-piece",
+  "tipo": "Display",
+  "forma": "display",
+  "precio": 345,
+  "stock": null,
+  "destacado": true,
+  "orden": 40,
+  "resumen": "Display precintado de 24 sobres. Para abrir en directo o para guardar sin tocar. El bloque completo tiene 128+1 tipos de carta.",
+  "contenido": "24 sobres de 12 cartas",
+  "expansion": "OP-17 · The World's Strongest Warriors",
+  "idioma": "Inglés",
+  "fotos": [
+    {
+      "src": "productos/caja-op17.webp",
+      "mini": "productos/caja-op17-mini.webp",
+      "ancho": 1000,
+      "alto": 1000,
+      "etiqueta": "El producto",
+      "alt": "Caja expositora abierta de One Piece OP-17 con los sobres dentro y dos sueltos delante"
+    }
+  ]
+}
