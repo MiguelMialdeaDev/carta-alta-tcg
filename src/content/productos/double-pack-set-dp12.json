@@ -13,10 +13,7 @@
   "idioma": null,
   "fotos": [
     {
-      "src": "productos/double-pack-set-dp12-caja.webp",
-      "mini": "productos/double-pack-set-dp12-caja-mini.webp",
-      "ancho": 1000,
-      "alto": 920,
+      "imagen": "double-pack-set-dp12-caja.webp",
       "etiqueta": "La caja",
       "alt": "Caja del Double Pack Set 12 de One Piece junto a las cartas que incluye"
     }

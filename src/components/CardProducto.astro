@@ -13,7 +13,7 @@ const ultimas = quedanPocas(producto);
 <li class="card" data-juego={producto.juego} style={`--mark: ${juego.mark};`}>
   <div class="card-media">
     {producto.fotos
-      ? <Foto foto={producto.fotos[0]} />
+      ? <Foto foto={producto.fotos[0]} anchos={[280, 560]} medidas="(max-width: 40rem) 45vw, 20rem" />
       : <Packshot forma={producto.forma} mark={juego.mark} alt={`${producto.nombre}, ${juego.nombre}`} />}
   </div>
   <div class="card-body">

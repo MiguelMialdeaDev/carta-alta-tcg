@@ -19,6 +19,26 @@ const fichasJuegos = import.meta.glob('../content/juegos/*.json', { eager: true 
 const fichasProductos = import.meta.glob('../content/productos/*.json', { eager: true });
 const fichaEnvio = import.meta.glob('../content/ajustes/envio.json', { eager: true });
 
+// Las fotos de producto viven en src/assets y no en public a propósito: ahí Astro
+// las mide, las recorta a los tamaños que hagan falta y les pone un nombre con
+// huella para que el navegador las guarde para siempre.
+//
+// La ventaja de verdad es para quien edita: en la ficha solo se dice qué fichero
+// es y qué se ve en él. El ancho, el alto y la versión reducida los saca Astro de
+// la propia imagen, así que no hay tres números que se puedan poner mal.
+const imagenes = import.meta.glob('../assets/productos/*.{webp,jpg,jpeg,png,avif}', { eager: true });
+
+function imagenDe(nombre, ficha) {
+  const clave = `../assets/productos/${nombre}`;
+  const modulo = imagenes[clave];
+  exigir(
+    modulo,
+    ficha,
+    `la foto "${nombre}" no está en src/assets/productos/. Súbela desde el panel o comprueba el nombre`,
+  );
+  return modulo.default ?? modulo;
+}
+
 function slugDe(ruta) {
   return ruta.split('/').pop().replace(/\.json$/, '');
 }
@@ -62,7 +82,13 @@ export const productos = leer(fichasProductos, (p) => {
     p.slug,
     `stock no válido (${p.stock}). Déjalo vacío si no lo tienes contado`,
   );
-  const fotos = Array.isArray(p.fotos) ? p.fotos.filter((f) => f && f.src) : [];
+  const fotos = (Array.isArray(p.fotos) ? p.fotos : [])
+    .filter((f) => f && f.imagen)
+    .map((f) => ({
+      imagen: imagenDe(f.imagen, p.slug),
+      etiqueta: f.etiqueta || '',
+      alt: f.alt || '',
+    }));
   return {
     ...p,
     orden: Number(p.orden) || 0,

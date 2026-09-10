@@ -13,10 +13,7 @@
   "idioma": "Inglés",
   "fotos": [
     {
-      "src": "productos/illustration-box-7.webp",
-      "mini": "productos/illustration-box-7-mini.webp",
-      "ancho": 1000,
-      "alto": 1000,
+      "imagen": "illustration-box-7.webp",
       "etiqueta": "El producto",
       "alt": "Caja de la Illustration Box Vol.7 de One Piece vista de tres cuartos"
     }

@@ -2,21 +2,24 @@
 // Galería de la ficha: una imagen grande y una tira de miniaturas debajo.
 // Sin JavaScript se ve la primera, que es la que manda. El script solo cambia
 // cuál está visible, así que si falla la ficha sigue teniendo su foto.
-import { u } from '../lib/url.js';
+import { Image } from 'astro:assets';
 
 const { fotos } = Astro.props;
 const principal = fotos[0];
 ---
 
 <div class="galeria" data-galeria>
-  <div class="galeria-marco" style={`aspect-ratio: ${principal.ancho} / ${principal.alto};`}>
+  <div
+    class="galeria-marco"
+    style={`aspect-ratio: ${principal.imagen.width} / ${principal.imagen.height};`}
+  >
     {fotos.map((f, i) => (
-      <img
+      <Image
         class="foto"
-        src={u(f.src)}
-        width={f.ancho}
-        height={f.alto}
+        src={f.imagen}
         alt={f.alt}
+        widths={[600, 1000]}
+        sizes="(max-width: 60rem) 92vw, 32rem"
         loading={i === 0 ? 'eager' : 'lazy'}
         decoding="async"
         hidden={i !== 0}
@@ -30,7 +33,7 @@ const principal = fotos[0];
       {fotos.map((f, i) => (
         <li>
           <button type="button" class="miniatura" data-ir={i} aria-current={i === 0 ? 'true' : 'false'}>
-            <img src={u(f.mini)} width="96" height="88" alt="" loading="lazy" decoding="async" />
+            <Image src={f.imagen} alt="" width={96} height={88} loading="lazy" decoding="async" />
             <span>{f.etiqueta}</span>
           </button>
         </li>

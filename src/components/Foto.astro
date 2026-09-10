@@ -2,18 +2,32 @@
 // Foto real de producto. Sustituye al packshot dibujado a mano en cuanto la
 // tienda sube una imagen suya. En la rejilla recorta para llenar la tarjeta,
 // en la ficha se ve entera.
-import { u } from '../lib/url.js';
+//
+// Los tamaños los genera Astro a partir del original: aquí solo se dice cuánto
+// espacio va a ocupar la foto en pantalla, y el navegador elige el fichero que
+// mejor le venga. Nadie tiene que escribir un ancho ni un alto a mano.
+import { Image } from 'astro:assets';
 
-const { foto, encaje = 'cover', ratio = '5 / 6', prioridad = false } = Astro.props;
-const src = encaje === 'cover' && foto.mini ? foto.mini : foto.src;
+const {
+  foto,
+  encaje = 'cover',
+  ratio = '5 / 6',
+  prioridad = false,
+  anchos = [400, 600, 1000],
+  medidas = '(max-width: 40rem) 92vw, 22rem',
+} = Astro.props;
+
+// alt vacío a propósito cuando la foto es decorativa (portada de categoría):
+// el nombre ya lo dice el texto de al lado y repetirlo molesta al lector de pantalla.
+const alt = foto.alt ?? '';
 ---
 
-<img
+<Image
   class="foto"
-  src={u(src)}
-  width={foto.ancho}
-  height={foto.alto}
-  alt={foto.alt}
+  src={foto.imagen}
+  alt={alt}
+  widths={anchos}
+  sizes={medidas}
   loading={prioridad ? 'eager' : 'lazy'}
   decoding="async"
   style={`aspect-ratio: ${ratio}; object-fit: ${encaje};`}
