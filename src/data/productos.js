@@ -29,7 +29,10 @@ const fichaEnvio = import.meta.glob('../content/ajustes/envio.json', { eager: tr
 const imagenes = import.meta.glob('../assets/productos/*.{webp,jpg,jpeg,png,avif}', { eager: true });
 
 function imagenDe(nombre, ficha) {
-  const clave = `../assets/productos/${nombre}`;
+  // Del panel puede llegar solo el nombre del fichero o la ruta entera, según
+  // cómo lo escriba. Nos quedamos con el nombre y así da igual cuál de las dos sea.
+  const limpio = String(nombre).split('/').pop().split('\\').pop();
+  const clave = `../assets/productos/${limpio}`;
   const modulo = imagenes[clave];
   exigir(
     modulo,

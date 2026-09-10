@@ -1,0 +1,232 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+#
+# Panel de la tienda. Lo que se toca aqui son las fichas de src/content/ y las
+# fotos de src/assets/productos/. Cada cambio guardado es un commit, la web se
+# reconstruye sola y en menos de un minuto esta publicado.
+#
+# REGLA IMPORTANTE si algun dia se tocan estos campos: un campo que no este
+# declarado aqui se pierde al guardar. Si se anade un dato a una ficha, hay que
+# anadirlo tambien a esta lista.
+
+backend:
+  name: github
+  repo: MiguelMialdeaDev/carta-alta-tcg
+  branch: main
+  # Con esto puesto, entrar al panel es pulsar "Iniciar sesion con GitHub".
+  # Sin esto puesto, se entra igual con "Sign In with Token" pegando un token
+  # personal de GitHub, que sirve para probar pero no para el dia a dia.
+  # base_url: https://PENDIENTE.workers.dev
+
+# Donde se guardan las fotos que se suban desde el panel. Van a src/assets y no
+# a public porque ahi es donde Astro las mide y les saca los tamanos.
+media_folder: src/assets/productos
+public_folder: ''
+
+# Como se convierte el nombre de un producto en su direccion web.
+#
+# Sin esto, Sveltia deja los acentos tal cual y "Dragon Ball Super" con tilde
+# acabaria en una direccion con tilde. Eso rompe la publicacion, porque la web
+# solo admite minusculas, numeros y guiones. Con ascii y clean_accents no puede
+# pasar. El limite de 60 es para que las direcciones no salgan kilometricas.
+slug:
+  encoding: ascii
+  clean_accents: true
+  maxlength: 60
+
+# El panel sale en el idioma del navegador de quien entra, no se configura aqui.
+app_title: Panel de CardZadora
+logo_url: /carta-alta-tcg/marca/isotipo.png
+site_url: https://miguelmialdeadev.github.io/carta-alta-tcg/
+display_url: https://miguelmialdeadev.github.io/carta-alta-tcg/
+
+collections:
+  # ---------------------------------------------------------------- productos
+  - name: productos
+    label: Productos
+    label_singular: Producto
+    folder: src/content/productos
+    extension: json
+    format: json
+    create: true
+    identifier_field: nombre
+    slug: '{{fields.nombre | slugify}}'
+    summary: '{{nombre}} · {{precio}} €'
+    sortable_fields: [orden, nombre, precio]
+    fields:
+      - { name: nombre, label: Nombre, widget: string }
+
+      - name: juego
+        label: Categoria
+        widget: relation
+        collection: juegos
+        value_field: '{{slug}}'
+        display_fields: [nombre]
+        search_fields: [nombre]
+        hint: De que categoria es. Si falta alguna, se crea antes en Categorias.
+
+      - name: precio
+        label: Precio
+        widget: number
+        value_type: float
+        min: 0
+        step: 0.05
+        hint: Solo el numero, sin el simbolo del euro. Los decimales con punto.
+
+      - name: stock
+        label: Unidades
+        widget: number
+        value_type: int
+        min: 0
+        required: false
+        hint: >-
+          Cuantas quedan. DEJALO VACIO si no las tienes contadas: la web dira que
+          hay stock sin decir un numero inventado. Con 0 sale como agotado, y con
+          3 o menos avisa de que quedan pocas.
+
+      - name: tipo
+        label: Tipo
+        widget: string
+        hint: Como se llama el formato. Por ejemplo Display, Caja, Sobre, Coleccion.
+
+      - name: forma
+        label: Dibujo cuando no hay foto
+        widget: select
+        default: display
+        options:
+          - { label: Caja expositora, value: display }
+          - { label: Caja tipo Elite Trainer Box, value: etb }
+          - { label: Sobre, value: sobre }
+          - { label: Mazo, value: mazo }
+          - { label: Pack de dos sobres, value: pack }
+          - { label: Case, value: case }
+          - { label: Accesorio, value: accesorio }
+        hint: >-
+          Solo se usa mientras el producto no tenga foto. En cuanto subas una, la
+          foto manda y esto deja de verse.
+
+      - name: resumen
+        label: Descripcion
+        widget: text
+        hint: Un parrafo corto explicando que es y para quien. Sale en la ficha y en Google.
+
+      - { name: contenido, label: Que lleva dentro, widget: string, required: false, hint: 'Por ejemplo: 24 sobres de 12 cartas.' }
+      - { name: expansion, label: Expansion, widget: string, required: false, hint: 'Por ejemplo: OP-17 · The World''s Strongest Warriors.' }
+
+      - name: idioma
+        label: Idioma
+        widget: select
+        required: false
+        options: ['Español', 'Inglés', 'Japonés', 'Chino', 'Estándar']
+        hint: Dejalo vacio si no lo sabes seguro. Vale mas un hueco que un dato mal.
+
+      - name: destacado
+        label: Sacarlo en la portada
+        widget: boolean
+        default: false
+        hint: En la portada caben cuatro. Si marcas mas, salen los cuatro primeros por orden.
+
+      - name: orden
+        label: Orden
+        widget: number
+        value_type: int
+        default: 100
+        hint: Numero mas bajo, mas arriba en el listado. Van de diez en diez para poder colar uno en medio.
+
+      - name: fotos
+        label: Fotos
+        label_singular: Foto
+        widget: list
+        required: false
+        summary: '{{fields.etiqueta}}'
+        hint: >-
+          La primera es la que manda: es la que sale en el listado y en el carrito.
+          No hace falta recortarlas ni ajustar el tamano, de eso se encarga la web.
+        fields:
+          - { name: imagen, label: Fichero, widget: image }
+          - name: alt
+            label: Que se ve en la foto
+            widget: string
+            hint: >-
+              Descrito para quien no puede verla. Por ejemplo: caja expositora
+              abierta con los sobres dentro. No pongas aqui el nombre del producto.
+          - { name: etiqueta, label: Etiqueta, widget: string, required: false, hint: 'Solo si hay varias fotos. Por ejemplo: La caja, El contenido.' }
+
+  # -------------------------------------------------------------- categorias
+  - name: juegos
+    label: Categorias
+    label_singular: Categoria
+    folder: src/content/juegos
+    extension: json
+    format: json
+    create: true
+    identifier_field: nombre
+    slug: '{{fields.nombre | slugify}}'
+    summary: '{{nombre}}'
+    sortable_fields: [orden, nombre]
+    fields:
+      - { name: nombre, label: Nombre, widget: string }
+      - { name: entradilla, label: Frase de la categoria, widget: text, hint: Sale bajo el titulo de la categoria y en Google. Una linea o dos. }
+
+      - name: mark
+        label: Color
+        widget: select
+        default: var(--game-accesorios)
+        options:
+          - { label: Rojo, value: 'var(--game-onepiece)' }
+          - { label: Ambar, value: 'var(--game-pokemon)' }
+          - { label: Verde, value: 'var(--game-naruto)' }
+          - { label: Azul, value: 'var(--game-magic)' }
+          - { label: Gris, value: 'var(--game-accesorios)' }
+        hint: >-
+          Un toque de color para distinguir la categoria. Va apagado a proposito:
+          en esta web los unicos colores fuertes son el morado y el oro de la marca.
+
+      - name: oculto
+        label: Esconder la categoria
+        widget: boolean
+        default: false
+        hint: >-
+          Desaparece del menu, de la portada y del listado de todo. Sus productos
+          tampoco se pueden comprar. Sirve para guardar una categoria sin borrarla.
+
+      - name: aviso
+        label: Enseñar el aviso de "solo producto sellado"
+        widget: boolean
+        default: true
+        hint: El recuadro que dice que solo vendemos sellado y que escriban si buscan algo.
+
+      - name: orden
+        label: Orden
+        widget: number
+        value_type: int
+        default: 100
+        hint: Numero mas bajo, mas a la izquierda en el menu.
+
+  # ----------------------------------------------------------------- ajustes
+  - name: ajustes
+    label: Ajustes de la tienda
+    files:
+      - name: envio
+        label: Envio
+        file: src/content/ajustes/envio.json
+        fields:
+          - name: coste
+            label: Lo que cuesta el envio
+            widget: number
+            value_type: float
+            min: 0
+            step: 0.05
+            hint: Solo el numero. Sale en la portada, en cada ficha, en el carrito y en el checkout.
+          - name: gratisDesde
+            label: A partir de cuanto sale gratis
+            widget: number
+            value_type: float
+            min: 0
+            hint: Pedidos de este importe o mas no pagan envio.
+          - name: zona
+            label: A donde se envia
+            widget: string
+            hint: >-
+              Se escribe tal cual en la web, en minusculas. Ojo, esto es solo el
+              texto: los codigos postales que se bloquean estan en el codigo, asi
+              que si algun dia se abre Baleares o Canarias hay que avisarnos.

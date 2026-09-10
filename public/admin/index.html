@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Panel de CardZadora</title>
+  </head>
+  <body>
+    <!--
+      El panel es una sola aplicacion que se descarga de un CDN. No se instala
+      nada en el proyecto y no toca la tienda: lo unico que hace es escribir las
+      fichas de src/content/ y subir fotos a src/assets/productos/.
+
+      La version va clavada a proposito. Sveltia todavia va por la 0.x y publica
+      casi a diario, asi que una actualizacion automatica podria dejar el panel
+      raro un lunes por la manana. Para subir de version: cambia el numero de
+      abajo, comprueba que el panel sigue yendo, y ya.
+
+      Aunque el panel se rompiera, la tienda seguiria funcionando igual: es
+      estatica y no depende de esto para nada.
+    -->
+    <script src="https://unpkg.com/@sveltia/cms@0.209.0/dist/sveltia-cms.js"></script>
+  </body>
+</html>
