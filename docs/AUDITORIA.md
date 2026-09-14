@@ -1,5 +1,40 @@
 # Auditoría de CardZadora
 
+> **PROYECTO EN SUSPENSIÓN desde el 2026-09-14.**
+>
+> Motivo: la mujer de Pablo tiene que darse de alta como autónoma antes de que
+> esto pueda funcionar de verdad. Son unos meses. Hasta entonces no se puede
+> cobrar, no se puede dar de alta Stripe y los textos legales no tienen titular
+> que poner.
+>
+> **Disparador para retomarlo:** que ella esté dada de alta.
+>
+> La web se queda como está, publicada y con `noindex`. No se toca nada más.
+
+## Decisiones que tomó Pablo el 2026-09-14, para no volver a preguntarlas
+
+| Tema | Decisión |
+|---|---|
+| Precios | **Llevan el IVA incluido.** Cierra el punto 2 de la lista de tareas |
+| Las dos preventas | **No son preventas.** Las tiene en stock, van como productos normales. El dato de que eran preventa salía de las fichas de monkeyxcards, no de él |
+| Fotos con "SAMPLE" | **Se quedan.** Decisión tomada a sabiendas, no descuido |
+| Naruto | **Sigue escondido** por ahora |
+| Dominio | Es **cardzadora.com**, no cardzadora.es |
+| Tarjeta de "detrás del mostrador" | **Fuera.** No van a poner foto ni nombre |
+| Catálogo de Pokémon | Está en https://monkeyxcards.com/collections/pokemon-tcg, pendiente de pasarlo a fichas |
+| Stock real de One Piece | Pablo lo va a preguntar |
+| Canal de pedidos | Web3Forms quedó en duda. Miguel apunta que quizá haga falta Supabase. **Sin decidir**, se revisa al retomar |
+| Stripe | **Aparcado** hasta el alta de autónoma |
+
+## Lo que queda a medias y dónde está
+
+- `docs/BORRADOR-aviso-legal.md`: uno de los cuatro textos legales, escrito y sin
+  enganchar a la web. Faltan privacidad, condiciones de compra y devoluciones.
+- El checkout ofrece "Tarjeta" como forma de pago y **no hay forma de cobrarla**.
+  Al retomar, o entra Stripe o esa opción se quita.
+
+---
+
 Hecha el 2026-09-09 sobre el despliegue en vivo (commit `2359a5d`) y sobre el código.
 Todo lo de aquí está comprobado, no supuesto.
 
