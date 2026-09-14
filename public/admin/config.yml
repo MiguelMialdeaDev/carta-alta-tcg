@@ -167,6 +167,19 @@ collections:
       - { name: nombre, label: Nombre, widget: string }
       - { name: entradilla, label: Frase de la categoria, widget: text, hint: Sale bajo el titulo de la categoria y en Google. Una linea o dos. }
 
+      - name: portada
+        label: Imagen de la categoria
+        widget: image
+        required: false
+        media_folder: /src/assets/portadas
+        public_folder: ''
+        hint: >-
+          La imagen ancha que sale en la portada de la web. Apaisada, mas ancha que
+          alta. Si la dejas vacia se usa la foto del primer producto que tenga una,
+          y si no hay ninguna sale un dibujo. Pon fotos de producto, nunca dibujos
+          de la serie sacados de internet: esos son de Bandai y la reclamacion nos
+          llegaria a nosotros.
+
       - name: mark
         label: Color
         widget: select

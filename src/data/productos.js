@@ -28,6 +28,18 @@ const fichaEnvio = import.meta.glob('../content/ajustes/envio.json', { eager: tr
 // la propia imagen, así que no hay tres números que se puedan poner mal.
 const imagenes = import.meta.glob('../assets/productos/*.{webp,jpg,jpeg,png,avif}', { eager: true });
 
+// Portadas de categoria. Van aparte de las fotos de producto porque no son lo
+// mismo: una foto de producto enseña UNA caja, y una portada es la imagen ancha
+// que representa a toda la categoria en la home.
+const portadas = import.meta.glob('../assets/portadas/*.{webp,jpg,jpeg,png,avif}', { eager: true });
+
+function portadaImagen(nombre, ficha) {
+  const limpio = String(nombre).split('/').pop().split('\\').pop();
+  const modulo = portadas[`../assets/portadas/${limpio}`];
+  exigir(modulo, ficha, `la portada "${nombre}" no está en src/assets/portadas/`);
+  return modulo.default ?? modulo;
+}
+
 function imagenDe(nombre, ficha) {
   // Del panel puede llegar solo el nombre del fichero o la ruta entera, según
   // cómo lo escriba. Nos quedamos con el nombre y así da igual cuál de las dos sea.
@@ -71,6 +83,7 @@ export const juegos = leer(fichasJuegos, (j) => {
     oculto: j.oculto === true,
     // Sin decir nada, una categoría enseña el aviso de "solo producto sellado".
     aviso: j.aviso !== false,
+    portada: j.portada ? portadaImagen(j.portada, j.slug) : null,
   };
 });
 
@@ -150,9 +163,21 @@ export function productosVisibles() {
 // ya lleva el color del juego. Así ninguna categoría se queda sin imagen y no se
 // usa arte de Bandai, Nintendo ni Wizards como decoración.
 export function portadaDe(slug) {
+  const juego = juegoDe(slug);
+
+  // 1. La portada que haya puesto la tienda para esa categoría. Manda sobre todo
+  //    lo demás porque es una decisión, no un apaño.
+  if (juego && juego.portada) {
+    return { tipo: 'foto', foto: { imagen: juego.portada, alt: '' } };
+  }
+
+  // 2. Si no hay, la foto del primer producto que tenga una.
   const lista = productosDe(slug);
   const conFoto = lista.find((p) => p.fotos);
   if (conFoto) return { tipo: 'foto', foto: conFoto.fotos[0] };
+
+  // 3. Y si tampoco, el dibujo a mano. Nunca arte de Bandai, Nintendo ni Wizards
+  //    de decoración: eso es de ellos y la reclamación le llegaría a la tienda.
   return { tipo: 'dibujo', escena: slug === 'accesorios' ? 'accesorios' : 'cajas' };
 }
 
